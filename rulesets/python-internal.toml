@@ -1,0 +1,17 @@
+# Python - Internal
+# Moderate checks for internal tools and services
+
+[code.linting.ruff]
+enabled = true
+format = true
+line-length = 100
+
+[code.linting.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = ["E501"]
+
+[code.types.ty]
+enabled = true
+
+[code.unused.vulture]
+enabled = true

@@ -7,15 +7,22 @@ priority: 2
 
 ## API Contracts
 
-All APIs must use the standard base packages.
+All APIs must use the standard base packages with Zod as the single source of truth.
 
 ### Requirements
 
 - Use `@palindrom/fastify-base` for TypeScript APIs (Fastify)
 - Use `palindrom-ai/llm` for Python LLM APIs (FastAPI)
-- REST is the default protocol
-- All endpoints documented in OpenAPI
-- Use standardized error format
+- Define all schemas in Zod (TypeScript)
+- Generate OpenAPI from Zod, generate Pydantic from OpenAPI
+- Check generated files into version control
+- CI validates generated files are up to date
+
+### Type Flow
+
+```
+Zod schemas ──► fastify-base ──► openapi.yaml ──► llm package ──► Pydantic
+```
 
 ### Installation
 
@@ -29,12 +36,12 @@ pnpm add @palindrom/fastify-base
 pip install palindrom-llm
 ```
 
-### API Types
+### Generation Commands
 
-| API Type | Package | Framework |
-|----------|---------|-----------|
-| General backend | `@palindrom/fastify-base` | Fastify |
-| LLM services | `palindrom-ai/llm` | FastAPI |
+```bash
+pnpm generate:types        # Generate OpenAPI + Pydantic
+pnpm generate:types --check # CI validation (fails if drift)
+```
 
 ### Error Format
 
@@ -48,6 +55,18 @@ pip install palindrom-llm
 }
 ```
 
-### Unified APIs
+### Zod Example
 
-When combining TypeScript + Python services, both packages integrate to present a single API with one OpenAPI schema. Refer to package docs for integration setup.
+```typescript
+import { z } from 'zod';
+
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  name: z.string().min(1),
+});
+
+export type User = z.infer<typeof UserSchema>;
+```
+
+This generates TypeScript types, OpenAPI schemas, and Pydantic models.

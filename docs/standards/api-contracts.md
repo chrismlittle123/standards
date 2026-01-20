@@ -9,7 +9,7 @@
 
 ## Overview
 
-All APIs must use the standard base packages. These enforce consistent error formats, versioning, and OpenAPI schema generation.
+All APIs must use the standard base packages. These enforce consistent error formats, validation, and OpenAPI schema generation.
 
 | API Type | Package | Framework |
 |----------|---------|-----------|
@@ -17,6 +17,70 @@ All APIs must use the standard base packages. These enforce consistent error for
 | LLM services | `palindrom-ai/llm` | FastAPI (Python) |
 
 **Do not create APIs from scratch.** Use the base packages.
+
+---
+
+## Type Flow
+
+**Zod is the single source of truth for all API types.**
+
+```
+Zod schemas (TypeScript)
+    │
+    ├──► fastify-base ──► openapi.yaml
+    │                          │
+    │                          ▼
+    └──────────────────► llm package ──► Pydantic models
+```
+
+1. Define schemas in Zod (TypeScript)
+2. `fastify-base` generates `openapi.yaml` from Zod + error types
+3. `llm` package reads `openapi.yaml` and generates Pydantic models
+4. Both artifacts are checked into version control
+
+---
+
+## Generation Workflow
+
+### Commands
+
+```bash
+# Generate OpenAPI from Zod schemas
+pnpm generate:openapi
+
+# Generate Pydantic models from OpenAPI
+pnpm generate:pydantic
+
+# Or generate both
+pnpm generate:types
+```
+
+### CI Validation
+
+CI must validate that generated files are up to date:
+
+```bash
+pnpm generate:types --check
+```
+
+This fails if Zod schemas changed but generated files weren't regenerated.
+
+---
+
+## Project Structure
+
+```
+my-project/
+├── api/                    # Fastify (TypeScript)
+│   └── schemas/            # Zod schemas (source of truth)
+│       ├── user.ts
+│       └── errors.ts
+├── llm-service/            # FastAPI (Python)
+│   └── models/             # Generated Pydantic models
+│       └── generated.py
+├── openapi.yaml            # Generated from Zod
+└── package.json
+```
 
 ---
 
@@ -35,7 +99,7 @@ When a product has both TypeScript and Python components, they integrate to pres
 - **Single API** to the user
 - **Single OpenAPI schema**
 
-The `@palindrom/fastify-base` and `palindrom-ai/llm` packages handle this integration. Refer to the package documentation for setup.
+The shared `openapi.yaml` serves as the contract between services.
 
 ---
 
@@ -57,10 +121,10 @@ pip install palindrom-llm
 
 | Concern | Handled By |
 |---------|------------|
-| Error format | Standardized error responses |
-| Versioning | URL path versioning (`/v1/...`) |
-| OpenAPI generation | Auto-generated from route definitions |
-| Request validation | Schema validation on inputs |
+| Schema validation | Zod (TS) / Pydantic (Python) |
+| Error format | Standardized error types |
+| OpenAPI generation | Auto-generated from Zod |
+| Pydantic generation | Auto-generated from OpenAPI |
 | Health checks | `/health` endpoint included |
 | CORS | Configured defaults |
 | Request IDs | Correlation ID middleware |
@@ -69,7 +133,7 @@ pip install palindrom-llm
 
 ## Error Format
 
-All APIs return errors in a consistent format (enforced by packages):
+All APIs return errors in a consistent format (defined in Zod, enforced by packages):
 
 ```json
 {
@@ -81,13 +145,33 @@ All APIs return errors in a consistent format (enforced by packages):
 }
 ```
 
+Error types are defined in Zod and flow through to OpenAPI and Pydantic.
+
 ---
 
-## OpenAPI
+## Zod Schema Example
 
-- All endpoints must be documented in OpenAPI
-- Schemas are auto-generated from route definitions
-- The packages handle schema merging for unified APIs
+```typescript
+// schemas/user.ts
+import { z } from 'zod';
+
+export const UserSchema = z.object({
+  id: z.string().uuid(),
+  email: z.string().email(),
+  name: z.string().min(1),
+  createdAt: z.string().datetime(),
+});
+
+export const CreateUserSchema = UserSchema.omit({ id: true, createdAt: true });
+
+export type User = z.infer<typeof UserSchema>;
+export type CreateUser = z.infer<typeof CreateUserSchema>;
+```
+
+This generates:
+- TypeScript types (via `z.infer`)
+- OpenAPI schemas (via `fastify-base`)
+- Pydantic models (via `llm` package from OpenAPI)
 
 ---
 
@@ -95,10 +179,10 @@ All APIs return errors in a consistent format (enforced by packages):
 
 Refer to the package repositories for:
 
-- Route definition patterns
-- Error handling
-- Validation setup
-- OpenAPI customization
-- Integration between Fastify and FastAPI
+- Zod schema patterns
+- Route definition with validation
+- OpenAPI generation commands
+- Pydantic generation setup
+- Error type definitions
 
 The package READMEs are the source of truth.

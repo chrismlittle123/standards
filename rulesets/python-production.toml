@@ -1,0 +1,22 @@
+# Python - Production
+# Strict checks for production-grade code
+
+[code.linting.ruff]
+enabled = true
+format = true
+line-length = 100
+
+[code.linting.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "S", "C4", "RUF"]
+
+[code.types.ty]
+enabled = true
+
+[code.unused.vulture]
+enabled = true
+
+[code.security.secrets]
+enabled = true
+
+[code.security.pipaudit]
+enabled = true

@@ -1,0 +1,10 @@
+# Python - Prototype
+# Relaxed checks for rapid prototyping
+
+[code.linting.ruff]
+enabled = true
+line-length = 120
+
+[code.linting.ruff.lint]
+select = ["E", "F"]
+ignore = ["E501", "F401", "F841"]

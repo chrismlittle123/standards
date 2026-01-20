@@ -1,0 +1,5 @@
+# TypeScript - Prototype
+# Relaxed checks for rapid prototyping
+
+[code.linting.eslint]
+enabled = true

@@ -8,7 +8,9 @@ description = "Standards for TypeScript services exposing REST APIs"
 guidelines = [
   "auth",
   "api-contracts",
+  "backend-deployment",
   "ci-cd",
+  "database",
   "error-handling",
   "observability",
   "secrets"

@@ -8,6 +8,7 @@ description = "Standards for Python LLM services exposing APIs via FastAPI"
 guidelines = [
   "auth",
   "api-contracts",
+  "backend-deployment",
   "ci-cd",
   "error-handling",
   "llm-observability",
@@ -21,4 +22,5 @@ preamble = """
 You are working on a Python LLM service that exposes a FastAPI API.
 Follow these guidelines strictly when writing or reviewing code.
 Use palindrom-ai/llm for all LLM calls. Trace all LLM operations to Langfuse.
+Deploy using ECS Fargate for consistent latency on LLM requests.
 """

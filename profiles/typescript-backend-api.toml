@@ -9,12 +9,11 @@ guidelines = [
   "auth",
   "api-contracts",
   "ci-cd",
-  "data-engineering",
   "error-handling",
   "observability",
-  "llm-observability",
   "secrets"
 ]
+rulesets = ["typescript-production"]
 
 [context]
 preamble = """

@@ -1,0 +1,23 @@
+# Profile for Python LLM services using FastAPI
+
+[profile]
+name = "LLM Service"
+description = "Standards for Python LLM services exposing APIs via FastAPI"
+
+[includes]
+guidelines = [
+  "auth",
+  "api-contracts",
+  "ci-cd",
+  "error-handling",
+  "llm-observability",
+  "observability",
+  "secrets"
+]
+
+[context]
+preamble = """
+You are working on a Python LLM service that exposes a FastAPI API.
+Follow these guidelines strictly when writing or reviewing code.
+Use palindrom-ai/llm for all LLM calls. Trace all LLM operations to Langfuse.
+"""

@@ -1,0 +1,20 @@
+# Profile for Python data pipelines running on Databricks
+
+[profile]
+name = "Python Data Pipeline"
+description = "Standards for data engineering pipelines on Databricks"
+
+[includes]
+guidelines = [
+  "ci-cd",
+  "data-engineering",
+  "observability",
+  "secrets"
+]
+
+[context]
+preamble = """
+You are working on a Python data pipeline running on Databricks.
+Follow these guidelines strictly when writing or reviewing code.
+Use PySpark for all transformations. Follow the medallion architecture.
+"""

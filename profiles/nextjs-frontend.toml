@@ -1,0 +1,22 @@
+# Profile for Next.js frontend applications
+
+[profile]
+name = "Next.js Frontend"
+description = "Standards for Next.js frontend applications deployed to Vercel"
+
+[includes]
+guidelines = [
+  "auth",
+  "ci-cd",
+  "frontend",
+  "observability",
+  "secrets"
+]
+rulesets = ["typescript-production"]
+
+[context]
+preamble = """
+You are working on a Next.js frontend application.
+Follow these guidelines strictly when writing or reviewing code.
+Use palindrom-ai/ui for all components. Keep business logic in backend services.
+"""

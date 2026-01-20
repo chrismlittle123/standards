@@ -7,31 +7,39 @@ priority: 2
 
 ## Observability
 
-Instrument all services with structured logging, metrics, and tracing.
+All application observability must use the `@palindrom/logging` package (Better Stack).
 
 ### Requirements
 
-- Use structured JSON logging with consistent field names
-- Include `requestId`, `userId`, and `traceId` in all log entries
-- Log at appropriate levels: `debug` for development, `info` for normal operations, `warn` for recoverable issues, `error` for failures
-- Never log sensitive data (passwords, tokens, PII)
+- Use `@palindrom/logging` for all logging and error tracking — never integrate Better Stack directly
+- Use structured JSON logging with consistent fields
+- Include `requestId` in all log entries for correlation
+- Never log secrets, passwords, or unmasked API keys
 
-### Logging Example
+### Installation
 
-```typescript
-import { logger } from '@company/observability';
-
-logger.info('Request processed', {
-  requestId: ctx.requestId,
-  userId: ctx.user?.id,
-  duration: Date.now() - startTime,
-  endpoint: req.path,
-  status: res.statusCode,
-});
+```bash
+pnpm add @palindrom/logging
 ```
 
-### Metrics
+### Required Log Fields
 
-- Track request count, latency percentiles, and error rates
-- Use consistent metric naming: `service_operation_unit`
-- Add relevant labels but avoid high cardinality
+| Field | Description |
+|-------|-------------|
+| `timestamp` | ISO 8601 timestamp |
+| `level` | debug, info, warn, error |
+| `message` | Human-readable message |
+| `requestId` | Correlation ID |
+| `service` | Service name |
+| `environment` | development, staging, production |
+
+### Log Levels
+
+| Level | Use For |
+|-------|---------|
+| `debug` | Development only |
+| `info` | Normal operations |
+| `warn` | Recoverable issues |
+| `error` | Failures requiring attention |
+
+Refer to [palindrom-ai/logging](https://github.com/palindrom-ai/logging) for implementation details.

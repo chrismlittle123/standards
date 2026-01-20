@@ -9,6 +9,7 @@ guidelines = [
   "auth",
   "error-handling",
   "observability",
+  "llm-observability",
   "secrets"
 ]
 

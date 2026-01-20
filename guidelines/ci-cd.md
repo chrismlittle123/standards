@@ -3,6 +3,7 @@ id: ci-cd
 title: CI/CD & Deployment
 category: operations
 priority: 2
+tags: [typescript, python, github-actions, sst, deployment]
 ---
 
 ## CI/CD & Deployment

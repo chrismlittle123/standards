@@ -3,6 +3,7 @@ id: error-handling
 title: Error Handling
 category: reliability
 priority: 1
+tags: [typescript, python, errors, backend]
 ---
 
 ## Error Handling

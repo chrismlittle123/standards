@@ -2,73 +2,48 @@
 
 Composable coding standards for AI-assisted development.
 
-## Quick Start
-
-```bash
-# Generate all outputs
-pnpm generate
-
-# Generate only profiles
-pnpm generate:profiles
-
-# Generate only rulesets
-pnpm generate:rulesets
-```
-
 ## Structure
 
 ```
 standards/
-├── guidelines/     # Individual standards (Markdown)
-├── profiles/       # Composition configs (TOML)
+├── guidelines/     # Individual standards (Markdown with frontmatter)
 ├── rulesets/       # Tool configurations (TOML)
-├── generator/      # Build tool
-├── generated/      # Generated output
-└── docs/           # Reference docs & ideas
+├── schemas/        # JSON schemas for validation
+├── generator/      # Ruleset documentation generator
+└── generated/      # Generated ruleset docs
 ```
-
-## How It Works
-
-**Guidelines** are individual standards covering one topic each (auth, secrets, observability, etc.)
-
-**Profiles** compose guidelines + rulesets into a single document for a project type.
-
-**Rulesets** define tool configurations (ESLint, TSC, Ruff, MyPy).
-
-```
-guidelines/*.md  ─┐
-                  ├──► generator ──► generated/profiles/*.md
-profiles/*.toml  ─┤
-                  │
-rulesets/*.toml ──┴──► generator ──► generated/rulesets/*.md
-```
-
-## Profiles
-
-| Profile | Use For |
-|---------|---------|
-| `typescript-backend-api` | Fastify REST APIs |
-| `llm-service` | Python FastAPI + LLM services |
-| `python-data-pipeline` | Databricks data pipelines |
-| `nextjs-frontend` | Next.js frontend apps |
 
 ## Guidelines
 
-| Guideline | Summary |
-|-----------|---------|
-| `auth` | Use `@palindrom/auth` |
-| `api-contracts` | Zod → OpenAPI → Pydantic |
-| `backend-deployment` | ECS Fargate for heavy, Lambda for simple |
-| `ci-cd` | GitHub Actions + SST |
-| `database` | RDS PostgreSQL + Drizzle ORM |
-| `data-engineering` | Databricks + medallion architecture |
-| `error-handling` | Structured errors with AppError |
-| `frontend` | Next.js + `palindrom-ai/ui` + Vercel |
-| `llm-observability` | Langfuse via `palindrom-ai/llm` |
-| `observability` | Better Stack via `@palindrom/logging` |
-| `secrets` | AWS Secrets Manager |
+Guidelines are atomic standards covering one topic each. Each has frontmatter with metadata and tags for smart matching.
+
+```yaml
+---
+id: database
+title: Database
+category: infrastructure
+priority: 6
+tags: [typescript, database, postgresql, drizzle, orm, backend]
+---
+```
+
+| Guideline | Tags | Summary |
+|-----------|------|---------|
+| `auth` | typescript, python, auth, security, backend | Use `@palindrom/auth` |
+| `api-contracts` | typescript, python, api, zod, pydantic, backend | Zod → OpenAPI → Pydantic |
+| `backend-deployment` | typescript, python, aws, ecs, lambda, deployment, backend | ECS Fargate for heavy, Lambda for simple |
+| `ci-cd` | typescript, python, github-actions, sst, deployment | GitHub Actions + SST |
+| `data-engineering` | python, databricks, pyspark, data, etl | Databricks + medallion architecture |
+| `database` | typescript, database, postgresql, drizzle, orm, backend | RDS PostgreSQL + Drizzle ORM |
+| `error-handling` | typescript, python, errors, backend | Structured errors with AppError |
+| `frontend` | typescript, nextjs, react, frontend, vercel | Next.js + `palindrom-ai/ui` + Vercel |
+| `llm-observability` | python, llm, langfuse, observability, ai | Langfuse via `palindrom-ai/llm` |
+| `observability` | typescript, python, logging, observability, backend | Better Stack via `@palindrom/logging` |
+| `secrets` | typescript, python, aws, secrets, security | AWS Secrets Manager |
 
 ## Rulesets
+
+Tool configurations at different strictness levels:
 
 | Ruleset | Language | Strictness |
 |---------|----------|------------|
@@ -79,15 +54,24 @@ rulesets/*.toml ──┴──► generator ──► generated/rulesets/*.md
 | `python-internal` | Python | Medium |
 | `python-prototype` | Python | Relaxed |
 
+Generate ruleset documentation:
+
+```bash
+pnpm generate
+```
+
 ## Usage
 
-Give an AI assistant the relevant profile from `generated/profiles/`:
+This repo is consumed by the `check-my-toolkit` MCP server, which dynamically composes relevant guidelines based on project context.
 
-```
-generated/profiles/typescript-backend-api.md
-generated/profiles/llm-service.md
-generated/profiles/python-data-pipeline.md
-generated/profiles/nextjs-frontend.md
-```
+The MCP server:
+1. Reads guideline metadata and tags
+2. Matches guidelines to project context
+3. Composes relevant standards into a single document
+4. Returns to the AI agent
 
-The profile contains everything the AI needs to write compliant code.
+## Schemas
+
+JSON schemas for validation:
+- `schemas/guideline.schema.json` - Guideline frontmatter schema
+- `schemas/ruleset.schema.json` - Ruleset TOML schema

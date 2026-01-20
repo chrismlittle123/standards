@@ -3,6 +3,7 @@ id: data-engineering
 title: Data Engineering
 category: data
 priority: 3
+tags: [python, databricks, pyspark, data, etl]
 ---
 
 ## Data Engineering

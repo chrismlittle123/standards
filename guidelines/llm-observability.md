@@ -3,6 +3,7 @@ id: llm-observability
 title: LLM Observability
 category: operations
 priority: 3
+tags: [python, llm, langfuse, observability, ai]
 ---
 
 ## LLM Observability

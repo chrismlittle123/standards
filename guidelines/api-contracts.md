@@ -3,6 +3,7 @@ id: api-contracts
 title: API Contracts
 category: architecture
 priority: 2
+tags: [typescript, python, api, zod, pydantic, backend]
 ---
 
 ## API Contracts

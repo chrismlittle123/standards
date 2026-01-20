@@ -3,6 +3,7 @@ id: database
 title: Database
 category: infrastructure
 priority: 6
+tags: [typescript, database, postgresql, drizzle, orm, backend]
 ---
 
 ## Database

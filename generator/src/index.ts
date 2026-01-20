@@ -1,7 +1,6 @@
 import { readdir, readFile, writeFile, mkdir } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import matter from 'gray-matter';
 import { parse as parseToml } from '@iarna/toml';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,238 +10,13 @@ const __dirname = dirname(__filename);
 // Types
 // =============================================================================
 
-interface Guideline {
-  id: string;
-  title: string;
-  category: string;
-  priority: number;
-  content: string;
-}
-
-interface Profile {
-  profile: {
-    name: string;
-    description: string;
-  };
-  includes?: {
-    guidelines?: string[];
-    rulesets?: string[];
-  };
-  context?: {
-    preamble?: string;
-    postamble?: string;
-  };
-  content?: {
-    markdown?: string;
-  };
-}
-
-// =============================================================================
-// Profile Generation
-// =============================================================================
-
-async function loadGuidelines(dir: string): Promise<Map<string, Guideline>> {
-  const guidelines = new Map<string, Guideline>();
-
-  let files: string[];
-  try {
-    files = await readdir(dir);
-  } catch {
-    console.warn(`Guidelines directory not found: ${dir}`);
-    return guidelines;
-  }
-
-  for (const file of files) {
-    if (!file.endsWith('.md')) continue;
-
-    const content = await readFile(join(dir, file), 'utf-8');
-    const { data, content: body } = matter(content);
-
-    if (!data.id) {
-      console.warn(`Skipping ${file}: missing 'id' in frontmatter`);
-      continue;
-    }
-
-    guidelines.set(data.id, {
-      id: data.id,
-      title: data.title ?? data.id,
-      category: data.category ?? 'general',
-      priority: data.priority ?? 99,
-      content: body.trim(),
-    });
-  }
-
-  return guidelines;
-}
-
-async function loadProfile(path: string): Promise<Profile> {
-  const content = await readFile(path, 'utf-8');
-  return parseToml(content) as unknown as Profile;
-}
-
-function composeProfile(
-  profile: Profile,
-  guidelines: Map<string, Guideline>,
-  rulesets: Map<string, string>
-): string {
-  const parts: string[] = [];
-
-  // Add preamble if present
-  const preamble = profile.context?.preamble?.trim();
-  if (preamble) {
-    parts.push(preamble);
-  }
-
-  // Add custom markdown content if present
-  const customMarkdown = profile.content?.markdown?.trim();
-  if (customMarkdown) {
-    if (parts.length > 0) parts.push('---');
-    parts.push(customMarkdown);
-  }
-
-  // Add guidelines if present
-  const guidelineIds = profile.includes?.guidelines ?? [];
-  if (guidelineIds.length > 0) {
-    const included = guidelineIds
-      .map((id) => {
-        const guideline = guidelines.get(id);
-        if (!guideline) {
-          console.warn(`Warning: guideline '${id}' not found`);
-        }
-        return guideline;
-      })
-      .filter((g): g is Guideline => g !== undefined)
-      .sort((a, b) => a.priority - b.priority);
-
-    if (included.length > 0) {
-      if (parts.length > 0) parts.push('---');
-      parts.push(included.map((g) => g.content).join('\n\n---\n\n'));
-    }
-  }
-
-  // Add rulesets if present
-  const rulesetIds = profile.includes?.rulesets ?? [];
-  if (rulesetIds.length > 0) {
-    const rulesetParts: string[] = [];
-    for (const id of rulesetIds) {
-      const rulesetContent = rulesets.get(id);
-      if (!rulesetContent) {
-        console.warn(`Warning: ruleset '${id}' not found`);
-        continue;
-      }
-      rulesetParts.push(rulesetContent);
-    }
-
-    if (rulesetParts.length > 0) {
-      if (parts.length > 0) parts.push('---');
-      parts.push('## Code Quality Rules\n\n' + rulesetParts.join('\n\n---\n\n'));
-    }
-  }
-
-  // Add postamble if present
-  const postamble = profile.context?.postamble?.trim();
-  if (postamble) {
-    if (parts.length > 0) parts.push('---');
-    parts.push(postamble);
-  }
-
-  return parts.join('\n\n').trim();
-}
-
-function generateProfileMarkdown(profile: Profile, content: string): string {
-  return `<!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Profile: ${profile.profile.name} -->
-<!-- Run "pnpm generate:profiles" to update -->
-
-# ${profile.profile.name}
-
-${profile.profile.description}
-
----
-
-${content}
-`;
-}
-
-async function loadRulesetsForProfiles(dir: string): Promise<Map<string, string>> {
-  const rulesetContents = new Map<string, string>();
-
-  let files: string[];
-  try {
-    files = await readdir(dir);
-  } catch {
-    console.warn(`Rulesets directory not found: ${dir}`);
-    return rulesetContents;
-  }
-
-  for (const file of files) {
-    if (!file.endsWith('.toml')) continue;
-
-    const rulesetId = file.replace('.toml', '');
-    const ruleset = await loadRuleset(join(dir, file));
-    const markdown = generateRulesetMarkdown(file, ruleset);
-
-    // Strip the header comments and title from ruleset markdown for embedding
-    const lines = markdown.split('\n');
-    const contentStart = lines.findIndex((line) => line.startsWith('## '));
-    const content = contentStart >= 0 ? lines.slice(contentStart).join('\n') : markdown;
-
-    rulesetContents.set(rulesetId, content);
-  }
-
-  return rulesetContents;
-}
-
-async function generateProfiles(
-  guidelinesDir: string,
-  profilesDir: string,
-  rulesetsDir: string,
-  outputDir: string
-): Promise<void> {
-  console.log('Loading guidelines...');
-  const guidelines = await loadGuidelines(guidelinesDir);
-  console.log(`Loaded ${guidelines.size} guidelines`);
-
-  console.log('Loading rulesets...');
-  const rulesets = await loadRulesetsForProfiles(rulesetsDir);
-  console.log(`Loaded ${rulesets.size} rulesets`);
-
-  let profileFiles: string[];
-  try {
-    profileFiles = await readdir(profilesDir);
-  } catch {
-    console.error(`Profiles directory not found: ${profilesDir}`);
-    process.exit(1);
-  }
-
-  const tomlFiles = profileFiles.filter((f) => f.endsWith('.toml'));
-  if (tomlFiles.length === 0) {
-    console.warn('No profile files found');
-    return;
-  }
-
-  const outDir = join(outputDir, 'profiles');
-  await mkdir(outDir, { recursive: true });
-
-  for (const file of tomlFiles) {
-    const profile = await loadProfile(join(profilesDir, file));
-    const profileId = file.replace('.toml', '');
-
-    const content = composeProfile(profile, guidelines, rulesets);
-    const markdown = generateProfileMarkdown(profile, content);
-
-    await writeFile(join(outDir, `${profileId}.md`), markdown);
-    console.log(`Generated profile: ${profileId}.md`);
-  }
+interface RulesetConfig {
+  [key: string]: unknown;
 }
 
 // =============================================================================
 // Ruleset Generation
 // =============================================================================
-
-interface RulesetConfig {
-  [key: string]: unknown;
-}
 
 async function loadRuleset(path: string): Promise<RulesetConfig> {
   const content = await readFile(path, 'utf-8');
@@ -274,12 +48,6 @@ function generateRulesetMarkdown(filename: string, config: RulesetConfig): strin
     `# ${filename.replace('.toml', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
     '',
   ];
-
-  // Extract comment from first line if present
-  const firstKey = Object.keys(config)[0];
-  if (firstKey && typeof config[firstKey] === 'string' && !firstKey.includes('.')) {
-    // Skip, it's probably a title comment handled by TOML parser
-  }
 
   // Process sections
   function processSection(obj: Record<string, unknown>, prefix: string = '', depth: number = 2): void {
@@ -377,33 +145,12 @@ async function generateRulesets(
 // =============================================================================
 
 const repoRoot = join(__dirname, '..', '..');
-const guidelinesDir = join(repoRoot, 'guidelines');
-const profilesDir = join(repoRoot, 'profiles');
 const rulesetsDir = join(repoRoot, 'rulesets');
 const outputDir = join(repoRoot, 'generated');
 
-const command = process.argv[2];
-
 async function main() {
-  switch (command) {
-    case 'profiles':
-      await generateProfiles(guidelinesDir, profilesDir, rulesetsDir, outputDir);
-      console.log(`\nProfiles written to: ${outputDir}/profiles/`);
-      break;
-
-    case 'rulesets':
-      await generateRulesets(rulesetsDir, outputDir);
-      console.log(`\nRulesets written to: ${outputDir}/rulesets/`);
-      break;
-
-    default:
-      // Run both
-      await generateProfiles(guidelinesDir, profilesDir, rulesetsDir, outputDir);
-      console.log(`\nProfiles written to: ${outputDir}/profiles/`);
-      await generateRulesets(rulesetsDir, outputDir);
-      console.log(`Rulesets written to: ${outputDir}/rulesets/`);
-      break;
-  }
+  await generateRulesets(rulesetsDir, outputDir);
+  console.log(`\nRulesets written to: ${outputDir}/rulesets/`);
 }
 
 main().catch(console.error);

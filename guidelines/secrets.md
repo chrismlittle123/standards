@@ -3,6 +3,7 @@ id: secrets
 title: Secrets Management
 category: security
 priority: 1
+tags: [typescript, python, aws, secrets, security]
 ---
 
 ## Secrets Management

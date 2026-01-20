@@ -380,7 +380,7 @@ const repoRoot = join(__dirname, '..', '..');
 const guidelinesDir = join(repoRoot, 'guidelines');
 const profilesDir = join(repoRoot, 'profiles');
 const rulesetsDir = join(repoRoot, 'rulesets');
-const outputDir = join(repoRoot, 'dist');
+const outputDir = join(repoRoot, 'generated');
 
 const command = process.argv[2];
 

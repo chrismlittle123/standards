@@ -3,6 +3,7 @@ id: observability
 title: Observability
 category: operations
 priority: 2
+tags: [typescript, python, logging, observability, backend]
 ---
 
 ## Observability

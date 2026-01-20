@@ -3,6 +3,7 @@ id: auth
 title: Authentication
 category: security
 priority: 1
+tags: [typescript, python, auth, security, backend]
 ---
 
 ## Authentication

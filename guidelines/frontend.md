@@ -3,6 +3,7 @@ id: frontend
 title: Frontend
 category: architecture
 priority: 5
+tags: [typescript, nextjs, react, frontend, vercel]
 ---
 
 ## Frontend

@@ -1,19 +1,16 @@
 {
   "name": "@palindrom/standards-generator",
-  "version": "0.1.0",
-  "description": "Generate IDE-specific guidelines from composable standards",
+  "version": "0.2.0",
+  "description": "Generate ruleset documentation from TOML configs",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "generate": "tsx src/index.ts",
-    "generate:profiles": "tsx src/index.ts profiles",
-    "generate:rulesets": "tsx src/index.ts rulesets",
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {
-    "@iarna/toml": "^2.2.5",
-    "gray-matter": "^4.0.3"
+    "@iarna/toml": "^2.2.5"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

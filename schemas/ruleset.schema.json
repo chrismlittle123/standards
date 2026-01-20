@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/palindrom-ai/standards/schemas/ruleset.schema.json",
+  "title": "Ruleset",
+  "description": "Schema for ruleset TOML configuration",
+  "type": "object",
+  "properties": {
+    "eslint": {
+      "type": "object",
+      "description": "ESLint configuration",
+      "properties": {
+        "severity": {
+          "type": "string",
+          "enum": ["error", "warn", "off"]
+        },
+        "ignore": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "tsc": {
+      "type": "object",
+      "description": "TypeScript compiler configuration",
+      "properties": {
+        "require": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        }
+      }
+    },
+    "prettier": {
+      "type": "object",
+      "description": "Prettier configuration",
+      "additionalProperties": true
+    },
+    "ruff": {
+      "type": "object",
+      "description": "Ruff (Python linter) configuration",
+      "properties": {
+        "select": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "ignore": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "rules": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "mypy": {
+      "type": "object",
+      "description": "MyPy (Python type checker) configuration",
+      "properties": {
+        "require": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

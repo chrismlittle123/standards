@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/palindrom-ai/standards/schemas/guideline.schema.json",
+  "title": "Guideline",
+  "description": "Schema for guideline frontmatter",
+  "type": "object",
+  "required": ["id", "title", "category", "priority", "tags"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the guideline (kebab-case)",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable title"
+    },
+    "category": {
+      "type": "string",
+      "description": "Grouping category",
+      "enum": ["security", "architecture", "infrastructure", "operations", "data", "reliability"]
+    },
+    "priority": {
+      "type": "integer",
+      "description": "Sort order (lower = higher priority)",
+      "minimum": 1
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags for smart matching",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9-]*$"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}

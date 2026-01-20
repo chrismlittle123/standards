@@ -3,6 +3,7 @@ id: backend-deployment
 title: Backend Deployment
 category: infrastructure
 priority: 7
+tags: [typescript, python, aws, ecs, lambda, deployment, backend]
 ---
 
 ## Backend Deployment

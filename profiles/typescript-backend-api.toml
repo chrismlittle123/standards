@@ -9,6 +9,7 @@ guidelines = [
   "auth",
   "api-contracts",
   "ci-cd",
+  "data-engineering",
   "error-handling",
   "observability",
   "llm-observability",

@@ -7,46 +7,48 @@ priority: 1
 
 ## Secrets Management
 
-Never hardcode secrets. Use environment variables or a secrets manager.
+All secrets must be stored in AWS Secrets Manager. No local `.env` files.
 
 ### Requirements
 
-- Load secrets from environment variables or a secrets manager at runtime
-- Never commit secrets to version control
-- Use `.env.example` files to document required variables (without values)
-- Rotate secrets regularly and support zero-downtime rotation
+- No `.env` files — never store secrets locally
+- All secrets in AWS Secrets Manager
+- Local dev authenticates via AWS SSO
+- CI/CD authenticates via OIDC (no static keys)
 
-### Environment Variables
+### Local Development
 
-```typescript
-// config.ts
-const config = {
-  database: {
-    url: requireEnv('DATABASE_URL'),
-    poolSize: parseInt(process.env.DB_POOL_SIZE ?? '10'),
-  },
-  auth: {
-    jwtSecret: requireEnv('JWT_SECRET'),
-    sessionSecret: requireEnv('SESSION_SECRET'),
-  },
-};
-
-function requireEnv(name: string): string {
-  const value = process.env[name];
-  if (!value) {
-    throw new Error(`Missing required environment variable: ${name}`);
-  }
-  return value;
-}
+```bash
+aws sso login --profile palindrom
 ```
 
-### .gitignore
+Secrets are loaded automatically by the base packages.
 
-Always include:
+### GitHub Actions
+
+```yaml
+permissions:
+  id-token: write
+  contents: read
+
+steps:
+  - uses: aws-actions/configure-aws-credentials@v4
+    with:
+      role-to-assume: arn:aws:iam::ACCOUNT_ID:role/github-actions
+      aws-region: eu-west-2
 ```
-.env
-.env.local
-.env.*.local
-*.pem
-*.key
+
+### Secret Naming
+
 ```
+{service}/{environment}
+```
+
+Examples: `api/production`, `llm-service/staging`
+
+### What NOT to Do
+
+- Create `.env` files
+- Store AWS access keys in GitHub
+- Commit secrets to git
+- Share secrets via Slack

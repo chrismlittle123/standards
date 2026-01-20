@@ -1,0 +1,9 @@
+{
+  "name": "@palindrom/standards",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Composable coding standards and guidelines",
+  "scripts": {
+    "generate": "pnpm --filter @palindrom/standards-generator generate"
+  }
+}

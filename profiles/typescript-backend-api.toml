@@ -1,0 +1,19 @@
+# Profile for TypeScript backend services exposing REST APIs
+
+[profile]
+name = "TypeScript Backend API"
+description = "Standards for TypeScript services exposing REST APIs"
+
+[includes]
+guidelines = [
+  "auth",
+  "error-handling",
+  "observability",
+  "secrets"
+]
+
+[context]
+preamble = """
+You are working on a TypeScript backend service that exposes a REST API.
+Follow these guidelines strictly when writing or reviewing code.
+"""

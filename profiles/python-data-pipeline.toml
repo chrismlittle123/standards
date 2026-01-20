@@ -11,6 +11,7 @@ guidelines = [
   "observability",
   "secrets"
 ]
+rulesets = ["python-production"]
 
 [context]
 preamble = """

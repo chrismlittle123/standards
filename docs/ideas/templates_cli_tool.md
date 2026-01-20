@@ -88,7 +88,8 @@ my-api/
 │   ├── repositories/
 │   │   └── example.repository.ts
 │   ├── lib/
-│   │   └── ai.ts               # @company/ai configuration
+│   │   ├── ai.ts               # @company/ai configuration
+│   │   └── monitoring.ts       # Better Stack error tracking + logging
 │   ├── types/
 │   │   └── index.ts
 │   ├── utils/
@@ -113,6 +114,7 @@ my-api/
 - Fastify with TypeScript
 - SST v3 deployment configuration
 - `@company/ai` pre-configured
+- Better Stack error tracking + structured logging
 - OpenAPI documentation setup
 - Biome linting/formatting
 - Vitest for testing
@@ -149,6 +151,7 @@ my-app/
 │   │   └── chat/               # Chat interface components
 │   ├── lib/
 │   │   ├── ai.ts               # AI client config
+│   │   ├── monitoring.ts       # Better Stack error tracking
 │   │   └── utils.ts
 │   └── styles/
 │       └── globals.css         # Tailwind + company theme
@@ -168,6 +171,7 @@ my-app/
 - shadcn/ui with company theme pre-configured
 - Tailwind CSS
 - AI streaming endpoint example
+- Better Stack error tracking (browser + server)
 - Biome linting/formatting
 - Vercel deployment ready
 
@@ -292,7 +296,8 @@ my-agent/
 │   │   ├── index.ts
 │   │   └── example.tool.ts
 │   ├── lib/
-│   │   └── ai.ts
+│   │   ├── ai.ts
+│   │   └── monitoring.ts       # Better Stack error tracking
 │   └── types/
 ├── prompts/
 │   └── agent/
@@ -320,6 +325,7 @@ my-agent/
 - Golden dataset setup
 - LLM-as-judge configurations
 - Scheduled evaluation workflow
+- Better Stack error tracking + logging
 
 ---
 
@@ -504,6 +510,59 @@ When templates are updated in the CLI package:
 ---
 
 ## Integration with Other Tools
+
+### With Better Stack
+
+All templates come with Better Stack pre-configured for error tracking and logging:
+
+```typescript
+// Generated in src/lib/monitoring.ts
+import * as Logtail from '@logtail/node';
+import * as BetterStack from '@betterstack/errors';
+
+// Error tracking (Sentry-compatible API)
+BetterStack.init({
+  dsn: process.env.BETTERSTACK_DSN,
+  environment: process.env.STAGE || 'development',
+});
+
+// Structured logging
+export const logger = new Logtail.Logtail(process.env.BETTERSTACK_SOURCE_TOKEN);
+
+// Helper for capturing errors with context
+export function captureError(error: Error, context?: Record<string, unknown>) {
+  BetterStack.captureException(error, { extra: context });
+  logger.error(error.message, { error, ...context });
+}
+
+// Fastify plugin for automatic error tracking
+export const monitoringPlugin = fp(async (fastify) => {
+  fastify.setErrorHandler((error, request, reply) => {
+    BetterStack.captureException(error, {
+      tags: { route: request.url, method: request.method },
+      user: { id: request.user?.id },
+    });
+    reply.status(500).send({ error: 'Internal Server Error' });
+  });
+});
+```
+
+For Next.js projects, client-side error tracking is also configured:
+
+```typescript
+// Generated in src/lib/monitoring.ts (Next.js)
+import * as BetterStack from '@betterstack/errors';
+
+BetterStack.init({
+  dsn: process.env.NEXT_PUBLIC_BETTERSTACK_DSN,
+  environment: process.env.NEXT_PUBLIC_VERCEL_ENV || 'development',
+});
+
+// Use in error boundaries or catch blocks
+export function captureError(error: Error) {
+  BetterStack.captureException(error);
+}
+```
 
 ### With `@company/ai`
 

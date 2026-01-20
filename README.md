@@ -58,7 +58,9 @@ rulesets/*.toml ──┴──► generator ──► dist/rulesets/*.md
 |-----------|---------|
 | `auth` | Use `@example-org/auth` |
 | `api-contracts` | Zod → OpenAPI → Pydantic |
+| `backend-deployment` | ECS Fargate for heavy, Lambda for simple |
 | `ci-cd` | GitHub Actions + SST |
+| `database` | RDS PostgreSQL + Drizzle ORM |
 | `data-engineering` | Databricks + medallion architecture |
 | `error-handling` | Structured errors with AppError |
 | `frontend` | Next.js + `example-org/ui` + Vercel |

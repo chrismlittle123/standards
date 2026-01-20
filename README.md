@@ -23,7 +23,7 @@ standards/
 ├── profiles/       # Composition configs (TOML)
 ├── rulesets/       # Tool configurations (TOML)
 ├── generator/      # Build tool
-├── dist/           # Generated output
+├── generated/      # Generated output
 └── docs/           # Reference docs & ideas
 ```
 
@@ -37,10 +37,10 @@ standards/
 
 ```
 guidelines/*.md  ─┐
-                  ├──► generator ──► dist/profiles/*.md
+                  ├──► generator ──► generated/profiles/*.md
 profiles/*.toml  ─┤
                   │
-rulesets/*.toml ──┴──► generator ──► dist/rulesets/*.md
+rulesets/*.toml ──┴──► generator ──► generated/rulesets/*.md
 ```
 
 ## Profiles
@@ -81,13 +81,13 @@ rulesets/*.toml ──┴──► generator ──► dist/rulesets/*.md
 
 ## Usage
 
-Give an AI assistant the relevant profile from `dist/profiles/`:
+Give an AI assistant the relevant profile from `generated/profiles/`:
 
 ```
-dist/profiles/typescript-backend-api.md
-dist/profiles/llm-service.md
-dist/profiles/python-data-pipeline.md
-dist/profiles/nextjs-frontend.md
+generated/profiles/typescript-backend-api.md
+generated/profiles/llm-service.md
+generated/profiles/python-data-pipeline.md
+generated/profiles/nextjs-frontend.md
 ```
 
 The profile contains everything the AI needs to write compliant code.

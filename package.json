@@ -4,6 +4,8 @@
   "private": true,
   "description": "Composable coding standards and guidelines",
   "scripts": {
-    "generate": "pnpm --filter @palindrom/standards-generator generate"
+    "generate": "pnpm --filter @palindrom/standards-generator generate",
+    "generate:profiles": "pnpm --filter @palindrom/standards-generator generate:profiles",
+    "generate:rulesets": "pnpm --filter @palindrom/standards-generator generate:rulesets"
   }
 }

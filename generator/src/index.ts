@@ -7,6 +7,10 @@ import { parse as parseToml } from '@iarna/toml';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// =============================================================================
+// Types
+// =============================================================================
+
 interface Guideline {
   id: string;
   title: string;
@@ -20,13 +24,21 @@ interface Profile {
     name: string;
     description: string;
   };
-  includes: {
-    guidelines: string[];
+  includes?: {
+    guidelines?: string[];
   };
   context?: {
     preamble?: string;
+    postamble?: string;
+  };
+  content?: {
+    markdown?: string;
   };
 }
+
+// =============================================================================
+// Profile Generation
+// =============================================================================
 
 async function loadGuidelines(dir: string): Promise<Map<string, Guideline>> {
   const guidelines = new Map<string, Guideline>();
@@ -67,44 +79,61 @@ async function loadProfile(path: string): Promise<Profile> {
   return parseToml(content) as unknown as Profile;
 }
 
-function composeGuidelines(
+function composeProfile(
   profile: Profile,
   guidelines: Map<string, Guideline>
 ): string {
-  const included = profile.includes.guidelines
-    .map((id) => {
-      const guideline = guidelines.get(id);
-      if (!guideline) {
-        console.warn(`Warning: guideline '${id}' not found`);
-      }
-      return guideline;
-    })
-    .filter((g): g is Guideline => g !== undefined)
-    .sort((a, b) => a.priority - b.priority);
+  const parts: string[] = [];
 
-  const sections = included.map((g) => g.content);
+  // Add preamble if present
+  const preamble = profile.context?.preamble?.trim();
+  if (preamble) {
+    parts.push(preamble);
+  }
 
-  const preamble = profile.context?.preamble ?? '';
+  // Add custom markdown content if present
+  const customMarkdown = profile.content?.markdown?.trim();
+  if (customMarkdown) {
+    if (parts.length > 0) parts.push('---');
+    parts.push(customMarkdown);
+  }
 
-  return [preamble, '', '---', '', sections.join('\n\n---\n\n')]
-    .join('\n')
-    .trim();
+  // Add guidelines if present
+  const guidelineIds = profile.includes?.guidelines ?? [];
+  if (guidelineIds.length > 0) {
+    const included = guidelineIds
+      .map((id) => {
+        const guideline = guidelines.get(id);
+        if (!guideline) {
+          console.warn(`Warning: guideline '${id}' not found`);
+        }
+        return guideline;
+      })
+      .filter((g): g is Guideline => g !== undefined)
+      .sort((a, b) => a.priority - b.priority);
+
+    if (included.length > 0) {
+      if (parts.length > 0) parts.push('---');
+      parts.push(included.map((g) => g.content).join('\n\n---\n\n'));
+    }
+  }
+
+  // Add postamble if present
+  const postamble = profile.context?.postamble?.trim();
+  if (postamble) {
+    if (parts.length > 0) parts.push('---');
+    parts.push(postamble);
+  }
+
+  return parts.join('\n\n').trim();
 }
 
-function generateClaudeMd(profile: Profile, content: string): string {
-  return `<!-- AUTO-GENERATED FROM STANDARDS REPO — DO NOT EDIT -->
+function generateProfileMarkdown(profile: Profile, content: string): string {
+  return `<!-- AUTO-GENERATED — DO NOT EDIT -->
 <!-- Profile: ${profile.profile.name} -->
-<!-- Run "pnpm generate" to update -->
+<!-- Run "pnpm generate:profiles" to update -->
 
-# Guidelines
-
-${content}
-`;
-}
-
-function generateCursorRules(profile: Profile, content: string): string {
-  // Cursor uses the same markdown content
-  return `# ${profile.profile.name}
+# ${profile.profile.name}
 
 ${profile.profile.description}
 
@@ -114,16 +143,7 @@ ${content}
 `;
 }
 
-function generateMetadata(profile: Profile, guidelineIds: string[]): object {
-  return {
-    profile: profile.profile.name,
-    description: profile.profile.description,
-    guidelines: guidelineIds,
-    generatedAt: new Date().toISOString(),
-  };
-}
-
-async function generate(
+async function generateProfiles(
   guidelinesDir: string,
   profilesDir: string,
   outputDir: string
@@ -146,39 +166,189 @@ async function generate(
     return;
   }
 
+  const outDir = join(outputDir, 'profiles');
+  await mkdir(outDir, { recursive: true });
+
   for (const file of tomlFiles) {
     const profile = await loadProfile(join(profilesDir, file));
     const profileId = file.replace('.toml', '');
-    const outDir = join(outputDir, 'profiles', profileId);
 
-    await mkdir(outDir, { recursive: true });
+    const content = composeProfile(profile, guidelines);
+    const markdown = generateProfileMarkdown(profile, content);
 
-    const content = composeGuidelines(profile, guidelines);
-
-    await writeFile(join(outDir, 'CLAUDE.md'), generateClaudeMd(profile, content));
-
-    await writeFile(
-      join(outDir, '.cursorrules'),
-      generateCursorRules(profile, content)
-    );
-
-    await writeFile(join(outDir, 'guidelines.md'), content);
-
-    await writeFile(
-      join(outDir, 'metadata.json'),
-      JSON.stringify(generateMetadata(profile, profile.includes.guidelines), null, 2)
-    );
-
-    console.log(`Generated: ${profileId}`);
+    await writeFile(join(outDir, `${profileId}.md`), markdown);
+    console.log(`Generated profile: ${profileId}.md`);
   }
-
-  console.log(`\nOutput written to: ${outputDir}/profiles/`);
 }
 
-// CLI entry - resolve paths relative to repo root
+// =============================================================================
+// Ruleset Generation
+// =============================================================================
+
+interface RulesetConfig {
+  [key: string]: unknown;
+}
+
+async function loadRuleset(path: string): Promise<RulesetConfig> {
+  const content = await readFile(path, 'utf-8');
+  return parseToml(content) as RulesetConfig;
+}
+
+function formatValue(value: unknown): string {
+  if (typeof value === 'string') return `\`${value}\``;
+  if (typeof value === 'number' || typeof value === 'boolean') return `\`${value}\``;
+  if (typeof value === 'object' && value !== null) {
+    if (Array.isArray(value)) {
+      return value.map((v) => `\`${v}\``).join(', ');
+    }
+    // Object with properties like { severity: "error", max: 4 }
+    const entries = Object.entries(value)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(', ');
+    return `{ ${entries} }`;
+  }
+  return String(value);
+}
+
+function generateRulesetMarkdown(filename: string, config: RulesetConfig): string {
+  const lines: string[] = [
+    '<!-- AUTO-GENERATED — DO NOT EDIT -->',
+    `<!-- Ruleset: ${filename} -->`,
+    '<!-- Run "pnpm generate:rulesets" to update -->',
+    '',
+    `# ${filename.replace('.toml', '').split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}`,
+    '',
+  ];
+
+  // Extract comment from first line if present
+  const firstKey = Object.keys(config)[0];
+  if (firstKey && typeof config[firstKey] === 'string' && !firstKey.includes('.')) {
+    // Skip, it's probably a title comment handled by TOML parser
+  }
+
+  // Process sections
+  function processSection(obj: Record<string, unknown>, prefix: string = '', depth: number = 2): void {
+    for (const [key, value] of Object.entries(obj)) {
+      if (value === null || value === undefined) continue;
+
+      if (typeof value === 'object' && !Array.isArray(value)) {
+        const heading = '#'.repeat(Math.min(depth, 4));
+        const title = key.split('.').pop() || key;
+        const formattedTitle = title
+          .split(/[-_]/)
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+          .join(' ');
+
+        lines.push(`${heading} ${formattedTitle}`);
+        lines.push('');
+
+        // Check if this is a rules object (values are rule configs)
+        const isRulesSection = key.includes('rules') || key.endsWith('.rules');
+
+        if (isRulesSection) {
+          lines.push('| Rule | Config |');
+          lines.push('|------|--------|');
+          for (const [ruleName, ruleConfig] of Object.entries(value as Record<string, unknown>)) {
+            lines.push(`| \`${ruleName}\` | ${formatValue(ruleConfig)} |`);
+          }
+          lines.push('');
+        } else if (key.includes('require') || key.endsWith('.require')) {
+          // TSC require section - table format
+          lines.push('| Option | Value |');
+          lines.push('|--------|-------|');
+          for (const [optName, optValue] of Object.entries(value as Record<string, unknown>)) {
+            lines.push(`| \`${optName}\` | ${formatValue(optValue)} |`);
+          }
+          lines.push('');
+        } else {
+          // Check for simple key-value pairs
+          const entries = Object.entries(value as Record<string, unknown>);
+          const hasNestedObjects = entries.some(([, v]) => typeof v === 'object' && !Array.isArray(v));
+
+          if (!hasNestedObjects && entries.length > 0) {
+            // Simple section with key-value pairs
+            for (const [k, v] of entries) {
+              lines.push(`- **${k}**: ${formatValue(v)}`);
+            }
+            lines.push('');
+          } else {
+            // Recurse into nested objects
+            processSection(value as Record<string, unknown>, key, depth + 1);
+          }
+        }
+      }
+    }
+  }
+
+  processSection(config as Record<string, unknown>);
+
+  return lines.join('\n');
+}
+
+async function generateRulesets(
+  rulesetsDir: string,
+  outputDir: string
+): Promise<void> {
+  let rulesetFiles: string[];
+  try {
+    rulesetFiles = await readdir(rulesetsDir);
+  } catch {
+    console.error(`Rulesets directory not found: ${rulesetsDir}`);
+    return;
+  }
+
+  const tomlFiles = rulesetFiles.filter((f) => f.endsWith('.toml'));
+  if (tomlFiles.length === 0) {
+    console.warn('No ruleset files found');
+    return;
+  }
+
+  const outDir = join(outputDir, 'rulesets');
+  await mkdir(outDir, { recursive: true });
+
+  for (const file of tomlFiles) {
+    const ruleset = await loadRuleset(join(rulesetsDir, file));
+    const rulesetId = file.replace('.toml', '');
+
+    const markdown = generateRulesetMarkdown(file, ruleset);
+
+    await writeFile(join(outDir, `${rulesetId}.md`), markdown);
+    console.log(`Generated ruleset: ${rulesetId}.md`);
+  }
+}
+
+// =============================================================================
+// CLI
+// =============================================================================
+
 const repoRoot = join(__dirname, '..', '..');
 const guidelinesDir = join(repoRoot, 'guidelines');
 const profilesDir = join(repoRoot, 'profiles');
+const rulesetsDir = join(repoRoot, 'rulesets');
 const outputDir = join(repoRoot, 'dist');
 
-generate(guidelinesDir, profilesDir, outputDir);
+const command = process.argv[2];
+
+async function main() {
+  switch (command) {
+    case 'profiles':
+      await generateProfiles(guidelinesDir, profilesDir, outputDir);
+      console.log(`\nProfiles written to: ${outputDir}/profiles/`);
+      break;
+
+    case 'rulesets':
+      await generateRulesets(rulesetsDir, outputDir);
+      console.log(`\nRulesets written to: ${outputDir}/rulesets/`);
+      break;
+
+    default:
+      // Run both
+      await generateProfiles(guidelinesDir, profilesDir, outputDir);
+      console.log(`\nProfiles written to: ${outputDir}/profiles/`);
+      await generateRulesets(rulesetsDir, outputDir);
+      console.log(`Rulesets written to: ${outputDir}/rulesets/`);
+      break;
+  }
+}
+
+main().catch(console.error);

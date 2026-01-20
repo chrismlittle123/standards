@@ -7,6 +7,8 @@
   "scripts": {
     "build": "tsc",
     "generate": "tsx src/index.ts",
+    "generate:profiles": "tsx src/index.ts profiles",
+    "generate:rulesets": "tsx src/index.ts rulesets",
     "dev": "tsx watch src/index.ts"
   },
   "dependencies": {

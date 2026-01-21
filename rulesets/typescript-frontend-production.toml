@@ -1,0 +1,25 @@
+# TypeScript - Frontend Production
+# For React/frontend projects, extends typescript-production with frontend-specific overrides
+
+[extends]
+base = "typescript-production"
+
+[code.linting.eslint.rules]
+
+# Frontend-specific overrides
+"max-lines-per-function" = { severity = "error", max = 100 }
+"max-lines" = { severity = "error", max = 500 }
+"import/no-cycle" = "off"
+"@typescript-eslint/no-empty-object-type" = "off"
+
+# =============================================================================
+# Naming Conventions
+# =============================================================================
+
+[code.naming]
+enabled = true
+
+[[code.naming.rules]]
+extensions = ["tsx"]
+file_case = "kebab-case"
+folder_case = "kebab-case"

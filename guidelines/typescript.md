@@ -20,7 +20,7 @@ TypeScript is the default language for almost everything.
 | Infrastructure | SST config, Pulumi |
 | Configuration | ESLint, Prettier, build tools |
 | CLI tools | Internal tooling |
-| Shared packages | `@palindrom/auth`, `@palindrom/logging` |
+| Shared packages | `palindrom-ai/auth`, `palindrom-ai/logging` |
 
 ### When NOT to Use TypeScript
 
@@ -28,7 +28,7 @@ Only use Python when you need an existing Python `palindrom-ai/` package:
 
 - `palindrom-ai/llm` — LLM services
 - `palindrom-ai/databricks-utils` — Data pipelines
-- `palindrom-ai/livekit` — Voice/video agents
+- `palindrom-ai/livekit-agents` — Voice/video agents
 
 See [Python guideline](./python.md) for those cases.
 

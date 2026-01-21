@@ -3,7 +3,7 @@ id: python
 title: Python
 category: architecture
 priority: 2
-tags: [python, llm, databricks, livekit]
+tags: [python, llm, databricks, livekit-agents]
 ---
 
 ## Python
@@ -16,7 +16,7 @@ Python is only used when you need an existing Python `palindrom-ai/` package.
 |---------|----------|
 | `palindrom-ai/llm` | LLM services, RAG, evals |
 | `palindrom-ai/databricks-utils` | Data pipelines, PySpark |
-| `palindrom-ai/livekit` | Voice/video agents |
+| `palindrom-ai/livekit-agents` | Voice/video agents |
 
 If your service doesn't need one of these packages, use TypeScript instead.
 
@@ -53,7 +53,7 @@ Python code lives in dedicated package repos:
 
 ```
 palindrom-ai/llm/           # LLM package
-palindrom-ai/livekit/       # LiveKit package
+palindrom-ai/livekit-agents/       # LiveKit package
 palindrom-ai/databricks-utils/  # Data utils
 ```
 

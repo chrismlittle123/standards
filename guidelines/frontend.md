@@ -20,10 +20,11 @@ All frontends use Next.js with the `palindrom-ai/ui` component library.
 
 ### Architecture
 
-Frontend and backend are always separate:
+Frontend and backend are separate services but colocated in a monorepo (best practice):
 
-- Separate repositories
-- Separate deployments
+- Separate deployments (Vercel for frontend, AWS for backend)
+- Same repository when using a monorepo
+- Frontend imports types from backend (single source of truth)
 - Frontend calls backend APIs — no business logic in Next.js
 
 ### API Routes
@@ -43,3 +44,7 @@ Use `palindrom-ai/ui` for all components. For new components, extend the library
 ```bash
 pnpm add palindrom-ai/ui
 ```
+
+### API Client Generation
+
+`palindrom-ai/ui` includes tooling to generate a typed API client from your backend's OpenAPI spec. This ensures frontend API calls are type-safe and stay in sync with the backend.

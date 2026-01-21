@@ -15,12 +15,12 @@ Use `palindrom-ai/databricks-utils` for all data engineering on Databricks.
 - Use `palindrom-ai/databricks-utils` for shared utilities
 - All transformations in Python (PySpark)
 - Deploy with Databricks Asset Bundles
-- Alert failures to Better Stack via `@palindrom/logging`
+- Alert failures to Better Stack via `palindrom-ai/logging`
 
 ### Installation
 
 ```bash
-pip install palindrom-databricks-utils
+pip install palindrom-ai/databricks-utils
 ```
 
 ### Stack

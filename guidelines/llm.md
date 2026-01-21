@@ -19,7 +19,7 @@ Use the `palindrom-ai/llm` package for all LLM functionality.
 ### Installation
 
 ```bash
-pip install palindrom-llm
+pip install palindrom-ai/llm
 ```
 
 ### What the Package Provides
@@ -55,7 +55,7 @@ All LLM calls must include:
 
 ### Correlation with App Logs
 
-Use the same `requestId` in both `@palindrom/logging` and `palindrom-ai/llm` to correlate:
+Use the same `requestId` in both `palindrom-ai/logging` and `palindrom-ai/llm` to correlate:
 - Better Stack error → Langfuse LLM trace
 - LLM latency spike → App request that triggered it
 

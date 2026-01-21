@@ -8,11 +8,11 @@ tags: [typescript, python, logging, observability, backend]
 
 ## Observability
 
-All application observability must use the `@palindrom/logging` package (Better Stack).
+All application observability must use the `palindrom-ai/logging` package (Better Stack).
 
 ### Requirements
 
-- Use `@palindrom/logging` for all logging and error tracking — never integrate Better Stack directly
+- Use `palindrom-ai/logging` for all logging and error tracking — never integrate Better Stack directly
 - Use structured JSON logging with consistent fields
 - Include `requestId` in all log entries for correlation
 - Never log secrets, passwords, or unmasked API keys
@@ -20,7 +20,7 @@ All application observability must use the `@palindrom/logging` package (Better 
 ### Installation
 
 ```bash
-pnpm add @palindrom/logging
+pnpm add palindrom-ai/logging
 ```
 
 ### Required Log Fields

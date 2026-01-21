@@ -8,11 +8,11 @@ tags: [typescript, python, github-actions, sst, deployment]
 
 ## CI/CD & Deployment
 
-Use the `@palindrom-ai/github-actions` reusable workflows for all CI/CD.
+Use the `palindrom-ai/github-actions` reusable workflows for all CI/CD.
 
 ### Requirements
 
-- Use `@palindrom-ai/github-actions` for all workflows — never write raw workflow YAML
+- Use `palindrom-ai/github-actions` for all workflows — never write raw workflow YAML
 - OIDC authentication to AWS (no static keys)
 - Trunk-based development (merge to main)
 

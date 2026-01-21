@@ -2,8 +2,19 @@
   "name": "@palindrom/standards",
   "version": "0.2.0",
   "private": true,
+  "type": "module",
   "description": "Composable coding standards and guidelines",
   "scripts": {
-    "generate": "pnpm --filter @palindrom/standards-generator generate"
+    "build": "tsc",
+    "generate": "tsx src/index.ts",
+    "dev": "tsx watch src/index.ts"
+  },
+  "dependencies": {
+    "@iarna/toml": "^2.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
   }
 }

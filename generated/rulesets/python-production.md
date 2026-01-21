@@ -1,6 +1,6 @@
 <!-- AUTO-GENERATED — DO NOT EDIT -->
 <!-- Ruleset: python-production.toml -->
-<!-- Run "pnpm generate:rulesets" to update -->
+<!-- Run "pnpm generate" to update -->
 
 # Python Production
 

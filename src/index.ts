@@ -321,6 +321,11 @@ function generateJekyllConfig(): string {
 description: Composable coding standards and guidelines
 remote_theme: just-the-docs/just-the-docs
 
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-include-cache
+
 # Aux links for the upper right navigation
 aux_links:
   "GitHub":

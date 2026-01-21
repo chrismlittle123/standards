@@ -3,7 +3,6 @@
 
 [code.linting.ruff]
 enabled = true
-format = true
 line-length = 100
 
 [code.linting.ruff.lint]

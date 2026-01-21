@@ -46,7 +46,7 @@ Use TypeScript for:
 |------|---------|
 | Python 3.12+ | Runtime |
 | uv | Package manager |
-| Ruff | Linting & formatting |
+| Ruff | Linting |
 | pytest | Testing |
 
 ### Package Structure

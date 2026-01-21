@@ -18,7 +18,7 @@ TypeScript is the default language for almost everything.
 | Backend APIs | Fastify services |
 | Frontend | Next.js applications |
 | Infrastructure | SST config, Pulumi |
-| Configuration | ESLint, Prettier, build tools |
+| Configuration | ESLint, build tools |
 | CLI tools | Internal tooling |
 | Shared packages | `palindrom-ai/auth`, `palindrom-ai/logging` |
 
@@ -40,7 +40,6 @@ See [Python guideline](./python.md) for those cases.
 | pnpm | Package manager |
 | TypeScript 5.4+ | Language |
 | ESLint | Linting |
-| Prettier | Formatting |
 
 ### Naming Conventions
 
@@ -52,7 +51,7 @@ See [Python guideline](./python.md) for those cases.
 
 - Use strict TypeScript (`strict: true`)
 - Use pnpm (not npm or yarn)
-- Use ESLint for linting, Prettier for formatting
+- Use ESLint for linting
 - Use `check-my-toolkit` to enforce standards
 - Prefer `type` over `interface` for consistency
 - Max 400 lines per file, 50 lines per function

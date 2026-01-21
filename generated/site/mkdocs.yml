@@ -44,24 +44,31 @@ nav:
   - Home: index.md
   - Guidelines:
       - guidelines/index.md
-      - "Authentication": guidelines/auth.md
-      - "Secrets Management": guidelines/secrets.md
-      - "TypeScript": guidelines/typescript.md
-      - "CI/CD & Deployment": guidelines/ci-cd.md
-      - "Observability": guidelines/observability.md
-      - "Python": guidelines/python.md
-      - "REST APIs": guidelines/rest-apis.md
-      - "Data Engineering": guidelines/data-engineering.md
-      - "LLM Services": guidelines/llm.md
-      - "Monorepo": guidelines/monorepo.md
-      - "Frontend": guidelines/frontend.md
-      - "Database": guidelines/database.md
-      - "Backend Deployment": guidelines/backend-deployment.md
+      - Languages:
+          - "Python": guidelines/python.md
+          - "TypeScript": guidelines/typescript.md
+      - Architecture:
+          - "Frontend": guidelines/frontend.md
+          - "Monorepo": guidelines/monorepo.md
+          - "REST APIs": guidelines/rest-apis.md
+      - Infrastructure:
+          - "Backend Deployment": guidelines/backend-deployment.md
+          - "CI/CD & Deployment": guidelines/ci-cd.md
+          - "Database": guidelines/database.md
+      - Data & AI:
+          - "Data Engineering": guidelines/data-engineering.md
+          - "LLM Services": guidelines/llm.md
+      - Security & Operations:
+          - "Authentication": guidelines/auth.md
+          - "Observability": guidelines/observability.md
+          - "Secrets Management": guidelines/secrets.md
   - Rulesets:
       - rulesets/index.md
-      - "Typescript Internal": rulesets/typescript-internal.md
-      - "Typescript Production": rulesets/typescript-production.md
-      - "Typescript Prototype": rulesets/typescript-prototype.md
-      - "Python Internal": rulesets/python-internal.md
-      - "Python Production": rulesets/python-production.md
-      - "Python Prototype": rulesets/python-prototype.md
+      - Python:
+          - "Python Internal": rulesets/python-internal.md
+          - "Python Production": rulesets/python-production.md
+          - "Python Prototype": rulesets/python-prototype.md
+      - TypeScript:
+          - "TypeScript Internal": rulesets/typescript-internal.md
+          - "TypeScript Production": rulesets/typescript-production.md
+          - "TypeScript Prototype": rulesets/typescript-prototype.md

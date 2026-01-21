@@ -272,13 +272,13 @@ function generateRulesetsIndex(rulesetIds: string[]): string {
 }
 
 function generateMkDocsConfig(guidelines: Guideline[], rulesetIds: string[]): string {
-  const guidelineNav = guidelines.map(g => `        - "${g.frontmatter.title}": guidelines/${g.frontmatter.id}.md`).join('\n');
+  const guidelineNav = guidelines.map(g => `      - "${g.frontmatter.title}": guidelines/${g.frontmatter.id}.md`).join('\n');
 
   const tsRulesets = rulesetIds.filter(r => r.startsWith('typescript')).sort()
-    .map(id => `        - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
+    .map(id => `      - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
 
   const pyRulesets = rulesetIds.filter(r => r.startsWith('python')).sort()
-    .map(id => `        - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
+    .map(id => `      - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
 
   return `site_name: Palindrom Standards
 site_url: https://palindrom-ai.github.io/standards/

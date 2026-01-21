@@ -1,8 +1,7 @@
-<!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: python-production.toml -->
-<!-- Run "pnpm generate" to update -->
-
 # Python Production
+
+<!-- AUTO-GENERATED — DO NOT EDIT -->
+<!-- Run "pnpm generate" to update -->
 
 ## Code
 

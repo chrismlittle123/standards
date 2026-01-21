@@ -1,9 +1,3 @@
----
-title: "LLM Observability"
-layout: default
-parent: Guidelines
----
-
 
 ## LLM Observability
 

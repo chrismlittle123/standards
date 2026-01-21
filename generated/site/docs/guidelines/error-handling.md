@@ -1,9 +1,3 @@
----
-title: "Error Handling"
-layout: default
-parent: Guidelines
----
-
 
 ## Error Handling
 

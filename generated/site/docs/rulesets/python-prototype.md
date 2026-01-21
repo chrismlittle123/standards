@@ -1,14 +1,7 @@
----
-title: "Python Prototype"
-layout: default
-parent: Rulesets
----
+# Python Prototype
 
 <!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: python-prototype.toml -->
 <!-- Run "pnpm generate" to update -->
-
-# Python Prototype
 
 ## Code
 

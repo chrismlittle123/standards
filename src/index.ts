@@ -41,7 +41,6 @@ function parseFrontmatter(content: string): { frontmatter: GuidelineFrontmatter;
   const yamlContent = match[1];
   const body = match[2];
 
-  // Simple YAML parsing for our known structure
   const frontmatter: Record<string, unknown> = {};
   for (const line of yamlContent.split('\n')) {
     const colonIndex = line.indexOf(':');
@@ -50,12 +49,9 @@ function parseFrontmatter(content: string): { frontmatter: GuidelineFrontmatter;
     const key = line.slice(0, colonIndex).trim();
     let value: unknown = line.slice(colonIndex + 1).trim();
 
-    // Parse arrays
     if (typeof value === 'string' && value.startsWith('[')) {
       value = value.slice(1, -1).split(',').map(s => s.trim());
-    }
-    // Parse numbers
-    else if (typeof value === 'string' && /^\d+$/.test(value)) {
+    } else if (typeof value === 'string' && /^\d+$/.test(value)) {
       value = parseInt(value, 10);
     }
 
@@ -93,30 +89,19 @@ function formatValue(value: unknown): string {
   return String(value);
 }
 
-function generateRulesetMarkdown(filename: string, config: RulesetConfig, forSite: boolean = false): string {
+function generateRulesetMarkdown(filename: string, config: RulesetConfig): string {
   const rulesetId = filename.replace('.toml', '');
   const title = toTitleCase(rulesetId);
 
-  const lines: string[] = [];
+  const lines: string[] = [
+    `# ${title}`,
+    '',
+    '<!-- AUTO-GENERATED — DO NOT EDIT -->',
+    '<!-- Run "pnpm generate" to update -->',
+    '',
+  ];
 
-  if (forSite) {
-    // Add Jekyll frontmatter for the site
-    lines.push('---');
-    lines.push(`title: "${title}"`);
-    lines.push('layout: default');
-    lines.push(`parent: Rulesets`);
-    lines.push('---');
-    lines.push('');
-  }
-
-  lines.push('<!-- AUTO-GENERATED — DO NOT EDIT -->');
-  lines.push(`<!-- Ruleset: ${filename} -->`);
-  lines.push('<!-- Run "pnpm generate" to update -->');
-  lines.push('');
-  lines.push(`# ${title}`);
-  lines.push('');
-
-  function processSection(obj: Record<string, unknown>, prefix: string = '', depth: number = 2): void {
+  function processSection(obj: Record<string, unknown>, depth: number = 2): void {
     for (const [key, value] of Object.entries(obj)) {
       if (value === null || value === undefined) continue;
 
@@ -157,7 +142,7 @@ function generateRulesetMarkdown(filename: string, config: RulesetConfig, forSit
             }
             lines.push('');
           } else {
-            processSection(value as Record<string, unknown>, key, depth + 1);
+            processSection(value as Record<string, unknown>, depth + 1);
           }
         }
       }
@@ -170,7 +155,7 @@ function generateRulesetMarkdown(filename: string, config: RulesetConfig, forSit
 }
 
 // =============================================================================
-// Site Generation
+// Site Generation (MkDocs Material)
 // =============================================================================
 
 async function loadGuidelines(guidelinesDir: string): Promise<Guideline[]> {
@@ -184,39 +169,24 @@ async function loadGuidelines(guidelinesDir: string): Promise<Guideline[]> {
     guidelines.push({ frontmatter, content: body, filename: file });
   }
 
-  // Sort by priority
   return guidelines.sort((a, b) => a.frontmatter.priority - b.frontmatter.priority);
 }
 
 function generateGuidelineForSite(guideline: Guideline): string {
-  const lines: string[] = [
-    '---',
-    `title: "${guideline.frontmatter.title}"`,
-    'layout: default',
-    'parent: Guidelines',
-    '---',
-    '',
-    guideline.content
-  ];
-  return lines.join('\n');
+  // MkDocs doesn't need frontmatter, just the content with a title
+  return guideline.content;
 }
 
 function generateSiteIndex(guidelines: Guideline[], rulesetIds: string[]): string {
   const lines: string[] = [
-    '---',
-    'title: Home',
-    'layout: default',
-    'nav_order: 1',
-    '---',
-    '',
     '# Palindrom Standards',
     '',
     'Composable coding standards and guidelines for Palindrom projects.',
     '',
     '## Quick Links',
     '',
-    '- [Guidelines](./guidelines/) - Architectural and implementation standards',
-    '- [Rulesets](./rulesets/) - Linting and tooling configurations',
+    '- [Guidelines](guidelines/index.md) - Architectural and implementation standards',
+    '- [Rulesets](rulesets/index.md) - Linting and tooling configurations',
     '',
     '## Guidelines Overview',
     '',
@@ -226,7 +196,7 @@ function generateSiteIndex(guidelines: Guideline[], rulesetIds: string[]): strin
 
   for (const g of guidelines) {
     const tags = Array.isArray(g.frontmatter.tags) ? g.frontmatter.tags.join(', ') : g.frontmatter.tags;
-    lines.push(`| [${g.frontmatter.title}](./guidelines/${g.frontmatter.id}.html) | ${g.frontmatter.category} | ${tags} |`);
+    lines.push(`| [${g.frontmatter.title}](guidelines/${g.frontmatter.id}.md) | ${g.frontmatter.category} | ${tags} |`);
   }
 
   lines.push('');
@@ -237,7 +207,7 @@ function generateSiteIndex(guidelines: Guideline[], rulesetIds: string[]): strin
 
   for (const id of rulesetIds.sort()) {
     const [lang, tier] = id.split('-');
-    lines.push(`| [${toTitleCase(id)}](./rulesets/${id}.html) | ${toTitleCase(lang)} | ${toTitleCase(tier)} |`);
+    lines.push(`| [${toTitleCase(id)}](rulesets/${id}.md) | ${toTitleCase(lang)} | ${toTitleCase(tier)} |`);
   }
 
   return lines.join('\n');
@@ -245,20 +215,12 @@ function generateSiteIndex(guidelines: Guideline[], rulesetIds: string[]): strin
 
 function generateGuidelinesIndex(guidelines: Guideline[]): string {
   const lines: string[] = [
-    '---',
-    'title: Guidelines',
-    'layout: default',
-    'nav_order: 2',
-    'has_children: true',
-    '---',
-    '',
     '# Guidelines',
     '',
     'Architectural and implementation standards for Palindrom projects.',
     '',
   ];
 
-  // Group by category
   const byCategory = new Map<string, Guideline[]>();
   for (const g of guidelines) {
     const cat = g.frontmatter.category;
@@ -270,7 +232,7 @@ function generateGuidelinesIndex(guidelines: Guideline[]): string {
     lines.push(`## ${toTitleCase(category)}`);
     lines.push('');
     for (const g of items) {
-      lines.push(`- [${g.frontmatter.title}](./${g.frontmatter.id}.html)`);
+      lines.push(`- [${g.frontmatter.title}](${g.frontmatter.id}.md)`);
     }
     lines.push('');
   }
@@ -280,13 +242,6 @@ function generateGuidelinesIndex(guidelines: Guideline[]): string {
 
 function generateRulesetsIndex(rulesetIds: string[]): string {
   const lines: string[] = [
-    '---',
-    'title: Rulesets',
-    'layout: default',
-    'nav_order: 3',
-    'has_children: true',
-    '---',
-    '',
     '# Rulesets',
     '',
     'Linting and tooling configurations at different strictness tiers.',
@@ -302,7 +257,7 @@ function generateRulesetsIndex(rulesetIds: string[]): string {
   ];
 
   for (const id of rulesetIds.filter(r => r.startsWith('typescript')).sort()) {
-    lines.push(`- [${toTitleCase(id)}](./${id}.html)`);
+    lines.push(`- [${toTitleCase(id)}](${id}.md)`);
   }
 
   lines.push('');
@@ -310,47 +265,74 @@ function generateRulesetsIndex(rulesetIds: string[]): string {
   lines.push('');
 
   for (const id of rulesetIds.filter(r => r.startsWith('python')).sort()) {
-    lines.push(`- [${toTitleCase(id)}](./${id}.html)`);
+    lines.push(`- [${toTitleCase(id)}](${id}.md)`);
   }
 
   return lines.join('\n');
 }
 
-function generateJekyllConfig(): string {
-  return `title: Palindrom Standards
-description: Composable coding standards and guidelines
-baseurl: /standards
-url: https://palindrom-ai.github.io
-remote_theme: just-the-docs/just-the-docs
+function generateMkDocsConfig(guidelines: Guideline[], rulesetIds: string[]): string {
+  const guidelineNav = guidelines.map(g => `        - "${g.frontmatter.title}": guidelines/${g.frontmatter.id}.md`).join('\n');
 
-plugins:
-  - jekyll-remote-theme
-  - jekyll-seo-tag
-  - jekyll-include-cache
+  const tsRulesets = rulesetIds.filter(r => r.startsWith('typescript')).sort()
+    .map(id => `        - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
 
-# Aux links for the upper right navigation
-aux_links:
-  "GitHub":
-    - "https://github.com/palindrom-ai/standards"
+  const pyRulesets = rulesetIds.filter(r => r.startsWith('python')).sort()
+    .map(id => `        - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
 
-# Footer content
-footer_content: "Palindrom Standards"
+  return `site_name: Palindrom Standards
+site_url: https://palindrom-ai.github.io/standards/
+site_description: Composable coding standards and guidelines for Palindrom projects
 
-# Color scheme
-color_scheme: dark
+repo_name: palindrom-ai/standards
+repo_url: https://github.com/palindrom-ai/standards
 
-# Search
-search_enabled: true
-search:
-  heading_level: 2
-  previews: 3
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
 
-# Back to top link
-back_to_top: true
-back_to_top_text: "Back to top"
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - admonition
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Guidelines:
+      - guidelines/index.md
+${guidelineNav}
+  - Rulesets:
+      - rulesets/index.md
+${tsRulesets}
+${pyRulesets}
 `;
 }
-
 
 // =============================================================================
 // Main
@@ -361,6 +343,7 @@ const rulesetsDir = join(repoRoot, 'rulesets');
 const guidelinesDir = join(repoRoot, 'guidelines');
 const outputDir = join(repoRoot, 'generated');
 const siteDir = join(outputDir, 'site');
+const docsDir = join(siteDir, 'docs');
 
 async function main() {
   // Generate raw rulesets (for programmatic use)
@@ -374,24 +357,24 @@ async function main() {
     const rulesetId = file.replace('.toml', '');
     rulesetIds.push(rulesetId);
 
-    const markdown = generateRulesetMarkdown(file, ruleset, false);
+    const markdown = generateRulesetMarkdown(file, ruleset);
     await writeFile(join(outputDir, 'rulesets', `${rulesetId}.md`), markdown);
     console.log(`Generated ruleset: ${rulesetId}.md`);
   }
 
-  // Generate site
-  console.log('\nGenerating site...');
+  // Generate MkDocs site
+  console.log('\nGenerating MkDocs site...');
 
-  await mkdir(join(siteDir, 'guidelines'), { recursive: true });
-  await mkdir(join(siteDir, 'rulesets'), { recursive: true });
+  await mkdir(join(docsDir, 'guidelines'), { recursive: true });
+  await mkdir(join(docsDir, 'rulesets'), { recursive: true });
 
   // Load and process guidelines
   const guidelines = await loadGuidelines(guidelinesDir);
 
   for (const guideline of guidelines) {
     const siteContent = generateGuidelineForSite(guideline);
-    await writeFile(join(siteDir, 'guidelines', `${guideline.frontmatter.id}.md`), siteContent);
-    console.log(`Generated guideline page: ${guideline.frontmatter.id}.md`);
+    await writeFile(join(docsDir, 'guidelines', `${guideline.frontmatter.id}.md`), siteContent);
+    console.log(`Generated guideline: ${guideline.frontmatter.id}.md`);
   }
 
   // Generate rulesets for site
@@ -399,27 +382,27 @@ async function main() {
     const ruleset = await loadRuleset(join(rulesetsDir, file));
     const rulesetId = file.replace('.toml', '');
 
-    const markdown = generateRulesetMarkdown(file, ruleset, true);
-    await writeFile(join(siteDir, 'rulesets', `${rulesetId}.md`), markdown);
+    const markdown = generateRulesetMarkdown(file, ruleset);
+    await writeFile(join(docsDir, 'rulesets', `${rulesetId}.md`), markdown);
     console.log(`Generated ruleset page: ${rulesetId}.md`);
   }
 
   // Generate index pages
-  await writeFile(join(siteDir, 'index.md'), generateSiteIndex(guidelines, rulesetIds));
+  await writeFile(join(docsDir, 'index.md'), generateSiteIndex(guidelines, rulesetIds));
   console.log('Generated: index.md');
 
-  await writeFile(join(siteDir, 'guidelines', 'index.md'), generateGuidelinesIndex(guidelines));
+  await writeFile(join(docsDir, 'guidelines', 'index.md'), generateGuidelinesIndex(guidelines));
   console.log('Generated: guidelines/index.md');
 
-  await writeFile(join(siteDir, 'rulesets', 'index.md'), generateRulesetsIndex(rulesetIds));
+  await writeFile(join(docsDir, 'rulesets', 'index.md'), generateRulesetsIndex(rulesetIds));
   console.log('Generated: rulesets/index.md');
 
-  // Generate Jekyll config
-  await writeFile(join(siteDir, '_config.yml'), generateJekyllConfig());
-  console.log('Generated: _config.yml');
+  // Generate MkDocs config
+  await writeFile(join(siteDir, 'mkdocs.yml'), generateMkDocsConfig(guidelines, rulesetIds));
+  console.log('Generated: mkdocs.yml');
 
-  console.log(`\nSite generated at: ${siteDir}/`);
-  console.log('To deploy: Enable GitHub Pages in repo settings, pointing to generated/site/');
+  console.log(`\nMkDocs site generated at: ${siteDir}/`);
+  console.log('To preview locally: cd generated/site && mkdocs serve');
 }
 
 main().catch(console.error);

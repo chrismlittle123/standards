@@ -1,9 +1,3 @@
----
-title: "Observability"
-layout: default
-parent: Guidelines
----
-
 
 ## Observability
 

@@ -1,9 +1,3 @@
----
-title: "Data Engineering"
-layout: default
-parent: Guidelines
----
-
 
 ## Data Engineering
 

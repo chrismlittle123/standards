@@ -1,9 +1,3 @@
----
-title: "API Contracts"
-layout: default
-parent: Guidelines
----
-
 
 ## API Contracts
 

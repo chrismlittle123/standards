@@ -1,9 +1,3 @@
----
-title: "Frontend"
-layout: default
-parent: Guidelines
----
-
 
 ## Frontend
 

@@ -1,9 +1,3 @@
----
-title: "CI/CD & Deployment"
-layout: default
-parent: Guidelines
----
-
 
 ## CI/CD & Deployment
 

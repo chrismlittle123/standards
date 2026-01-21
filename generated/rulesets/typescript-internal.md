@@ -1,8 +1,7 @@
-<!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: typescript-internal.toml -->
-<!-- Run "pnpm generate" to update -->
-
 # Typescript Internal
+
+<!-- AUTO-GENERATED — DO NOT EDIT -->
+<!-- Run "pnpm generate" to update -->
 
 ## Code
 

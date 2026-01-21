@@ -1,9 +1,3 @@
----
-title: "Database"
-layout: default
-parent: Guidelines
----
-
 
 ## Database
 

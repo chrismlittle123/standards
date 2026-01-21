@@ -1,8 +1,7 @@
-<!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: typescript-production.toml -->
-<!-- Run "pnpm generate" to update -->
-
 # Typescript Production
+
+<!-- AUTO-GENERATED — DO NOT EDIT -->
+<!-- Run "pnpm generate" to update -->
 
 ## Code
 

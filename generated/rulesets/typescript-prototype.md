@@ -1,8 +1,7 @@
-<!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: typescript-prototype.toml -->
-<!-- Run "pnpm generate" to update -->
-
 # Typescript Prototype
+
+<!-- AUTO-GENERATED — DO NOT EDIT -->
+<!-- Run "pnpm generate" to update -->
 
 ## Code
 

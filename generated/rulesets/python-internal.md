@@ -1,8 +1,7 @@
-<!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: python-internal.toml -->
-<!-- Run "pnpm generate" to update -->
-
 # Python Internal
+
+<!-- AUTO-GENERATED — DO NOT EDIT -->
+<!-- Run "pnpm generate" to update -->
 
 ## Code
 

@@ -1,9 +1,3 @@
----
-title: "Secrets Management"
-layout: default
-parent: Guidelines
----
-
 
 ## Secrets Management
 

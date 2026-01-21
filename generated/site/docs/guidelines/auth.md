@@ -1,9 +1,3 @@
----
-title: "Authentication"
-layout: default
-parent: Guidelines
----
-
 
 ## Authentication
 

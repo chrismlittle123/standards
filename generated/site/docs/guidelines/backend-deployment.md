@@ -1,9 +1,3 @@
----
-title: "Backend Deployment"
-layout: default
-parent: Guidelines
----
-
 
 ## Backend Deployment
 

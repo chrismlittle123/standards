@@ -1,14 +1,7 @@
----
-title: "Python Internal"
-layout: default
-parent: Rulesets
----
+# Python Internal
 
 <!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: python-internal.toml -->
 <!-- Run "pnpm generate" to update -->
-
-# Python Internal
 
 ## Code
 

@@ -1,14 +1,7 @@
----
-title: "Python Production"
-layout: default
-parent: Rulesets
----
+# Python Production
 
 <!-- AUTO-GENERATED — DO NOT EDIT -->
-<!-- Ruleset: python-production.toml -->
 <!-- Run "pnpm generate" to update -->
-
-# Python Production
 
 ## Code
 

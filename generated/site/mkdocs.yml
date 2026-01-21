@@ -1,0 +1,65 @@
+site_name: Palindrom Standards
+site_url: https://palindrom-ai.github.io/standards/
+site_description: Composable coding standards and guidelines for Palindrom projects
+
+repo_name: palindrom-ai/standards
+repo_url: https://github.com/palindrom-ai/standards
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - admonition
+  - pymdownx.details
+
+nav:
+  - Home: index.md
+  - Guidelines:
+      - guidelines/index.md
+        - "Authentication": guidelines/auth.md
+        - "Error Handling": guidelines/error-handling.md
+        - "Secrets Management": guidelines/secrets.md
+        - "API Contracts": guidelines/api-contracts.md
+        - "CI/CD & Deployment": guidelines/ci-cd.md
+        - "Observability": guidelines/observability.md
+        - "Data Engineering": guidelines/data-engineering.md
+        - "LLM Observability": guidelines/llm-observability.md
+        - "Frontend": guidelines/frontend.md
+        - "Database": guidelines/database.md
+        - "Backend Deployment": guidelines/backend-deployment.md
+  - Rulesets:
+      - rulesets/index.md
+        - "Typescript Internal": rulesets/typescript-internal.md
+        - "Typescript Production": rulesets/typescript-production.md
+        - "Typescript Prototype": rulesets/typescript-prototype.md
+        - "Python Internal": rulesets/python-internal.md
+        - "Python Production": rulesets/python-production.md
+        - "Python Prototype": rulesets/python-prototype.md

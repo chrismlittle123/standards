@@ -27,9 +27,9 @@ Use TypeScript for:
 
 ### Requirements
 
-- All Python code MUST be abstracted into `palindrom-ai/` packages
-- No standalone Python scripts in application repos
-- If you're writing Python, you're either:
+- All significant Python code should be abstracted into `palindrom-ai/` packages
+- Standalone Python scripts are allowed but should be kept minimal (e.g., one-off scripts, simple utilities)
+- If you're writing substantial Python, you're either:
   1. Contributing to an existing package, or
   2. Creating a new `palindrom-ai/` package
 

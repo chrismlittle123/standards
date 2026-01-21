@@ -16,6 +16,7 @@ Auth is integrated into the base packages — you don't install it directly:
 
 - **TypeScript APIs:** `palindrom-ai/fastify-base` includes auth middleware
 - **Python LLM services:** `palindrom-ai/llm` includes auth validation
+- **Frontend BFF:** Auth token exchange in Next.js API routes is allowed for the BFF layer
 
 ### Supported Methods
 

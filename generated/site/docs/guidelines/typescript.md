@@ -32,11 +32,21 @@ See [Python guideline](./python.md) for those cases.
 | Node.js 22 LTS | Runtime |
 | pnpm | Package manager |
 | TypeScript 5.4+ | Language |
-| Biome | Linting & formatting |
+| ESLint | Linting |
+| Prettier | Formatting |
 
 ### Requirements
 
 - Use strict TypeScript (`strict: true`)
 - Use pnpm (not npm or yarn)
-- Use Biome for linting and formatting
+- Use ESLint for linting, Prettier for formatting
+- Use `check-my-toolkit` to enforce standards
 - Prefer `type` over `interface` for consistency
+
+### Standards Enforcement
+
+```bash
+pnpm add -D check-my-toolkit
+```
+
+Run `check-my-toolkit` in CI to validate project structure and configuration against Palindrom standards.

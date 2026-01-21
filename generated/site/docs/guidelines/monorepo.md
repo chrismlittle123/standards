@@ -8,14 +8,16 @@ All monorepos use Turborepo with pnpm workspaces.
 | Tool | Purpose |
 |------|---------|
 | Turborepo | Task orchestration, caching |
-| pnpm workspaces | Package management |
+| pnpm workspaces | TypeScript package management |
+| uv | Python package management |
 
 ### Requirements
 
-- Use Turborepo for all monorepos
-- Use pnpm workspaces for package linking
+- Use Turborepo for all monorepos (works with multiple languages)
+- Use pnpm workspaces for TypeScript package linking
+- Use uv for Python dependencies
 - Enable remote caching in CI (via Vercel)
-- Never use npm or yarn in monorepos
+- Never use npm or yarn
 
 ### Standard Structure
 
@@ -78,10 +80,30 @@ pnpm lint             # Lint everything
 pnpm test             # Test everything
 ```
 
+### Multi-Language Support
+
+For monorepos with both TypeScript and Python:
+
+```
+my-monorepo/
+├── apps/
+│   ├── web/              # Next.js (pnpm)
+│   └── api/              # Fastify (pnpm)
+├── packages/
+│   └── shared/           # Shared types (pnpm)
+├── python/
+│   └── llm-service/      # Python LLM service (uv)
+├── turbo.json
+├── pnpm-workspace.yaml
+└── pyproject.toml        # Root Python config
+```
+
+Turborepo orchestrates tasks across both ecosystems.
+
 ### Why Turborepo
 
 - Intelligent caching (never rebuild unchanged packages)
 - Parallel task execution
 - Remote caching for CI
 - Simple configuration (single `turbo.json`)
-- Works with pnpm workspaces
+- Works with pnpm workspaces and uv

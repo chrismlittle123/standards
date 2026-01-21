@@ -20,7 +20,7 @@ Use `palindrom-ai/databricks-utils` for all data engineering on Databricks.
 ### Installation
 
 ```bash
-pip install palindrom-ai/databricks-utils
+uv add palindrom-ai/databricks-utils
 ```
 
 ### Stack

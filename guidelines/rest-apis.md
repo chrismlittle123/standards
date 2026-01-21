@@ -34,7 +34,7 @@ pnpm add palindrom-ai/fastify-base
 
 **Python:**
 ```bash
-pip install palindrom-ai/llm
+uv add palindrom-ai/llm
 ```
 
 ### Generation Commands

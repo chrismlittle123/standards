@@ -318,14 +318,49 @@ function generateRulesetsIndex(rulesetIds: string[]): string {
   return lines.join('\n');
 }
 
+// Category display names and order
+const CATEGORY_CONFIG: Record<string, { displayName: string; order: number }> = {
+  'architecture': { displayName: 'Architecture', order: 1 },
+  'data': { displayName: 'Data & AI', order: 2 },
+  'infrastructure': { displayName: 'Infrastructure', order: 3 },
+  'operations': { displayName: 'Operations', order: 4 },
+  'security': { displayName: 'Security', order: 5 },
+  'reliability': { displayName: 'Reliability', order: 6 },
+};
+
 function generateMkDocsConfig(guidelines: Guideline[], rulesetIds: string[]): string {
-  const guidelineNav = guidelines.map(g => `      - "${g.frontmatter.title}": guidelines/${g.frontmatter.id}.md`).join('\n');
+  // Group guidelines by category
+  const byCategory = new Map<string, Guideline[]>();
+  for (const g of guidelines) {
+    const cat = g.frontmatter.category;
+    if (!byCategory.has(cat)) byCategory.set(cat, []);
+    byCategory.get(cat)!.push(g);
+  }
+
+  // Sort categories by configured order, then alphabetically within each category
+  const sortedCategories = [...byCategory.entries()]
+    .sort(([a], [b]) => {
+      const orderA = CATEGORY_CONFIG[a]?.order ?? 99;
+      const orderB = CATEGORY_CONFIG[b]?.order ?? 99;
+      return orderA - orderB;
+    });
+
+  // Generate nav items for guidelines grouped by category
+  const guidelineNav = sortedCategories.map(([category, items]) => {
+    const displayName = CATEGORY_CONFIG[category]?.displayName ?? toTitleCase(category);
+    const sortedItems = items.sort((a, b) => a.frontmatter.title.localeCompare(b.frontmatter.title));
+    const itemsNav = sortedItems
+      .map(g => `          - "${g.frontmatter.title}": guidelines/${g.frontmatter.id}.md`)
+      .join('\n');
+    return `      - ${displayName}:\n${itemsNav}`;
+  }).join('\n');
+
+  // Generate nav items for rulesets grouped by language
+  const pyRulesets = rulesetIds.filter(r => r.startsWith('python')).sort()
+    .map(id => `          - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
 
   const tsRulesets = rulesetIds.filter(r => r.startsWith('typescript')).sort()
-    .map(id => `      - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
-
-  const pyRulesets = rulesetIds.filter(r => r.startsWith('python')).sort()
-    .map(id => `      - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
+    .map(id => `          - "${toTitleCase(id)}": rulesets/${id}.md`).join('\n');
 
   return `site_name: Palindrom Standards
 site_url: https://palindrom-ai.github.io/standards/
@@ -376,8 +411,10 @@ nav:
 ${guidelineNav}
   - Rulesets:
       - rulesets/index.md
-${tsRulesets}
+      - Python:
 ${pyRulesets}
+      - TypeScript:
+${tsRulesets}
 `;
 }
 

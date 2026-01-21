@@ -44,23 +44,23 @@ nav:
   - Home: index.md
   - Guidelines:
       - guidelines/index.md
-      - Languages:
-          - "Python": guidelines/python.md
-          - "TypeScript": guidelines/typescript.md
       - Architecture:
           - "Frontend": guidelines/frontend.md
           - "Monorepo": guidelines/monorepo.md
+          - "Python": guidelines/python.md
           - "REST APIs": guidelines/rest-apis.md
-      - Infrastructure:
-          - "Backend Deployment": guidelines/backend-deployment.md
-          - "CI/CD & Deployment": guidelines/ci-cd.md
-          - "Database": guidelines/database.md
+          - "TypeScript": guidelines/typescript.md
       - Data & AI:
           - "Data Engineering": guidelines/data-engineering.md
+      - Infrastructure:
+          - "Backend Deployment": guidelines/backend-deployment.md
+          - "Database": guidelines/database.md
+      - Operations:
+          - "CI/CD & Deployment": guidelines/ci-cd.md
           - "LLM Services": guidelines/llm.md
-      - Security & Operations:
-          - "Authentication": guidelines/auth.md
           - "Observability": guidelines/observability.md
+      - Security:
+          - "Authentication": guidelines/auth.md
           - "Secrets Management": guidelines/secrets.md
   - Rulesets:
       - rulesets/index.md
@@ -69,6 +69,6 @@ nav:
           - "Python Production": rulesets/python-production.md
           - "Python Prototype": rulesets/python-prototype.md
       - TypeScript:
-          - "TypeScript Internal": rulesets/typescript-internal.md
-          - "TypeScript Production": rulesets/typescript-production.md
-          - "TypeScript Prototype": rulesets/typescript-prototype.md
+          - "Typescript Internal": rulesets/typescript-internal.md
+          - "Typescript Production": rulesets/typescript-production.md
+          - "Typescript Prototype": rulesets/typescript-prototype.md

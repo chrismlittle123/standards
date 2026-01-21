@@ -15,7 +15,7 @@ All frontends use Next.js with the `palindrom-ai/ui` component library.
 - Next.js (App Router)
 - TypeScript
 - Tailwind CSS
-- `palindrom-ai/ui` (shadcn/ui-based components)
+- `palindrom-ai/ui` (shared component library)
 - Vercel for deployment
 
 ### Architecture
@@ -39,12 +39,20 @@ Only allowed as a thin BFF layer:
 
 ### Components
 
-Use `palindrom-ai/ui` for all components. For new components, extend the library rather than adding one-off components to your project.
+Use `palindrom-ai/ui` for all standard components. This gives all Palindrom apps a consistent look and feel.
 
 ```bash
 pnpm add palindrom-ai/ui
 ```
 
+- Use `palindrom-ai/ui` components by default for simplicity
+- Custom components are allowed when needed, but prefer extending the library
+- Built with React + Tailwind CSS
+
 ### API Client Generation
 
-`palindrom-ai/ui` includes tooling to generate a typed API client from your backend's OpenAPI spec. This ensures frontend API calls are type-safe and stay in sync with the backend.
+`palindrom-ai/ui` includes tooling to generate a typed API client from your backend's OpenAPI spec. Works with both TypeScript (Fastify) and Python (FastAPI via `palindrom-ai/llm`) backends.
+
+- Type-safe frontend API calls
+- Stays in sync with backend schemas (Zod → OpenAPI → client)
+- No manual API client code

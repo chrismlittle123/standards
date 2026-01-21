@@ -16,7 +16,7 @@ Composable coding standards and guidelines for Palindrom projects.
 | [TypeScript](guidelines/typescript.md) | architecture | typescript, nodejs, backend, frontend |
 | [CI/CD & Deployment](guidelines/ci-cd.md) | operations | typescript, python, github-actions, sst, deployment |
 | [Observability](guidelines/observability.md) | operations | typescript, python, logging, observability, backend |
-| [Python](guidelines/python.md) | architecture | python, llm, databricks, livekit |
+| [Python](guidelines/python.md) | architecture | python, llm, databricks, livekit-agents |
 | [REST APIs](guidelines/rest-apis.md) | architecture | typescript, python, api, zod, pydantic, backend |
 | [Data Engineering](guidelines/data-engineering.md) | data | python, databricks, pyspark, data, etl |
 | [LLM Services](guidelines/llm.md) | operations | python, llm, langfuse, observability, ai, rag, evals |

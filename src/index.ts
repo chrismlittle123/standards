@@ -334,8 +334,8 @@ aux_links:
 # Footer content
 footer_content: "Palindrom Standards"
 
-# Color scheme (light/dark)
-color_scheme: light
+# Color scheme
+color_scheme: dark
 
 # Search
 search_enabled: true
@@ -346,6 +346,228 @@ search:
 # Back to top link
 back_to_top: true
 back_to_top_text: "Back to top"
+`;
+}
+
+function generateCustomStyles(): string {
+  return `/* GitHub/Linear inspired dark theme overrides */
+
+:root {
+  --body-background-color: #0d1117;
+  --sidebar-color: #010409;
+  --body-text-color: #e6edf3;
+  --body-heading-color: #ffffff;
+  --link-color: #58a6ff;
+  --nav-child-link-color: #8b949e;
+  --search-background-color: #0d1117;
+  --search-result-preview-color: #8b949e;
+  --border-color: #30363d;
+  --code-background-color: #161b22;
+  --table-background-color: #0d1117;
+  --feedback-color: #8b949e;
+}
+
+/* Sidebar */
+.side-bar {
+  background-color: #010409;
+  border-right: 1px solid #30363d;
+}
+
+.site-title {
+  color: #ffffff !important;
+  font-weight: 600;
+}
+
+/* Navigation */
+.nav-list-link {
+  color: #e6edf3;
+}
+
+.nav-list-link:hover,
+.nav-list-link.active {
+  color: #58a6ff;
+  background-color: rgba(88, 166, 255, 0.1);
+}
+
+.nav-list-expander {
+  color: #8b949e;
+}
+
+/* Main content */
+.main {
+  background-color: #0d1117;
+}
+
+.main-content {
+  color: #e6edf3;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Links */
+a {
+  color: #58a6ff;
+}
+
+a:hover {
+  color: #79c0ff;
+}
+
+/* Code blocks */
+code {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}
+
+pre {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+}
+
+pre code {
+  border: none;
+  padding: 0;
+}
+
+/* Tables - GitHub style */
+.table-wrapper {
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+table {
+  background-color: #0d1117;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #161b22;
+  color: #e6edf3;
+  font-weight: 600;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #30363d;
+}
+
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #21262d;
+  color: #e6edf3;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: #161b22;
+}
+
+/* Search */
+.search-input {
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  border-radius: 6px;
+}
+
+.search-input:focus {
+  border-color: #58a6ff;
+  box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.3);
+}
+
+.search-results {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+}
+
+.search-result {
+  border-bottom: 1px solid #30363d;
+}
+
+.search-result:hover {
+  background-color: #21262d;
+}
+
+/* Buttons */
+.site-button {
+  background-color: #21262d;
+  border: 1px solid #30363d;
+  color: #e6edf3;
+  border-radius: 6px;
+}
+
+.site-button:hover {
+  background-color: #30363d;
+  border-color: #8b949e;
+}
+
+/* Footer */
+.site-footer {
+  color: #8b949e;
+  border-top: 1px solid #30363d;
+}
+
+/* Anchor links */
+.anchor-heading svg {
+  color: #8b949e;
+}
+
+.anchor-heading:hover svg {
+  color: #58a6ff;
+}
+
+/* Horizontal rules */
+hr {
+  border-color: #30363d;
+}
+
+/* Back to top */
+#back-to-top {
+  color: #8b949e;
+}
+
+#back-to-top:hover {
+  color: #58a6ff;
+}
+
+/* Header bar */
+.main-header {
+  background-color: #010409;
+  border-bottom: 1px solid #30363d;
+}
+
+/* Aux nav */
+.aux-nav-list-item a {
+  color: #e6edf3;
+}
+
+/* Breadcrumbs */
+.breadcrumb-nav-list-item {
+  color: #8b949e;
+}
+
+/* Lists */
+ul, ol {
+  color: #e6edf3;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid #30363d;
+  color: #8b949e;
+  background-color: #161b22;
+}
 `;
 }
 
@@ -381,6 +603,7 @@ async function main() {
 
   await mkdir(join(siteDir, 'guidelines'), { recursive: true });
   await mkdir(join(siteDir, 'rulesets'), { recursive: true });
+  await mkdir(join(siteDir, '_includes'), { recursive: true });
 
   // Load and process guidelines
   const guidelines = await loadGuidelines(guidelinesDir);
@@ -414,6 +637,11 @@ async function main() {
   // Generate Jekyll config
   await writeFile(join(siteDir, '_config.yml'), generateJekyllConfig());
   console.log('Generated: _config.yml');
+
+  // Generate custom styles
+  const headCustom = `<style>\n${generateCustomStyles()}\n</style>`;
+  await writeFile(join(siteDir, '_includes', 'head_custom.html'), headCustom);
+  console.log('Generated: _includes/head_custom.html');
 
   console.log(`\nSite generated at: ${siteDir}/`);
   console.log('To deploy: Enable GitHub Pages in repo settings, pointing to generated/site/');

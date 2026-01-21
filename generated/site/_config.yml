@@ -15,8 +15,8 @@ aux_links:
 # Footer content
 footer_content: "Palindrom Standards"
 
-# Color scheme (light/dark)
-color_scheme: light
+# Color scheme
+color_scheme: dark
 
 # Search
 search_enabled: true

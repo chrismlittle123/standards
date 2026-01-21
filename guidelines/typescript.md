@@ -42,6 +42,12 @@ See [Python guideline](./python.md) for those cases.
 | ESLint | Linting |
 | Prettier | Formatting |
 
+### Naming Conventions
+
+- Use `kebab-case` for file names (e.g., `user-service.ts`, `api-client.ts`)
+- Use `kebab-case` for folder names (e.g., `user-management/`, `api-handlers/`)
+- This applies to React components too (e.g., `user-profile.tsx`, not `UserProfile.tsx`)
+
 ### Requirements
 
 - Use strict TypeScript (`strict: true`)
@@ -49,6 +55,7 @@ See [Python guideline](./python.md) for those cases.
 - Use ESLint for linting, Prettier for formatting
 - Use `check-my-toolkit` to enforce standards
 - Prefer `type` over `interface` for consistency
+- Max 400 lines per file, 50 lines per function
 
 ### Standards Enforcement
 

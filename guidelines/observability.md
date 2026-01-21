@@ -19,8 +19,14 @@ All application observability must use the `palindrom-ai/logging` package (Bette
 
 ### Installation
 
+**TypeScript:**
 ```bash
 pnpm add palindrom-ai/logging
+```
+
+**Python:**
+```bash
+uv add palindrom-ai/logging
 ```
 
 ### Required Log Fields

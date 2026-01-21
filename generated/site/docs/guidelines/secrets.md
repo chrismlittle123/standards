@@ -20,6 +20,8 @@ Secrets are loaded automatically by the base packages.
 
 ### GitHub Actions
 
+Prefer using `palindrom-ai/github-actions` reusable workflows which handle OIDC automatically. If writing custom workflows, use this pattern:
+
 ```yaml
 permissions:
   id-token: write

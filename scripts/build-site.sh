@@ -9,13 +9,12 @@ echo "Generating site content..."
 cd "$ROOT_DIR"
 pnpm generate
 
-echo "Building Jekyll site..."
+echo "Building MkDocs site..."
 cd "$SITE_DIR"
-bundle install --quiet
-bundle exec jekyll build --destination _site
+mkdocs build --site-dir _site
 
 echo ""
 echo "Site built at: $SITE_DIR/_site"
 echo ""
 echo "To preview locally, run:"
-echo "  cd $SITE_DIR && bundle exec jekyll serve"
+echo "  cd $SITE_DIR && mkdocs serve"

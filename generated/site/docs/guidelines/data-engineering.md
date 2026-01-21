@@ -1,7 +1,20 @@
 
 ## Data Engineering
 
-All data engineering runs on Databricks using Python (PySpark).
+Use `palindrom-ai/databricks-utils` for all data engineering on Databricks.
+
+### Requirements
+
+- Use `palindrom-ai/databricks-utils` for shared utilities
+- All transformations in Python (PySpark)
+- Deploy with Databricks Asset Bundles
+- Alert failures to Better Stack via `@palindrom/logging`
+
+### Installation
+
+```bash
+pip install palindrom-databricks-utils
+```
 
 ### Stack
 
@@ -24,28 +37,11 @@ All data engineering runs on Databricks using Python (PySpark).
 | Silver | Cleaned, validated, deduplicated |
 | Gold | Business-ready, aggregations, features |
 
-### Requirements
-
-- All transformations in Python (no SQL-only notebooks)
-- Store all data in S3 as Parquet
-- Deploy with Databricks Asset Bundles
-- Test pipelines with pytest
-- Alert failures to Better Stack
-
 ### Deployment
 
 ```bash
 databricks bundle deploy -t dev
 databricks bundle deploy -t prod
-```
-
-### Testing
-
-```python
-def test_no_null_user_ids(spark_session):
-    df = spark_session.read.parquet("s3://palindrom-data/gold/aggregations/")
-    null_count = df.filter(col("user_id").isNull()).count()
-    assert null_count == 0
 ```
 
 ### What NOT to Do
@@ -55,3 +51,5 @@ def test_no_null_user_ids(spark_session):
 - Store data in workspace storage
 - Deploy manually
 - Skip testing
+
+Refer to [palindrom-ai/databricks-utils](https://github.com/palindrom-ai/databricks-utils) for utilities.

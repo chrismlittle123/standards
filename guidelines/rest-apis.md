@@ -1,12 +1,12 @@
 ---
-id: api-contracts
-title: API Contracts
+id: rest-apis
+title: REST APIs
 category: architecture
 priority: 2
 tags: [typescript, python, api, zod, pydantic, backend]
 ---
 
-## API Contracts
+## REST APIs
 
 All APIs must use the standard base packages with Zod as the single source of truth.
 

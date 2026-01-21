@@ -1,58 +1,47 @@
 
 ## Backend Deployment
 
-All backends deploy to AWS via SST. Choose the right compute for your workload.
+Use the `@palindrom-ai/infra` package for all AWS deployments.
+
+### Requirements
+
+- Use `@palindrom-ai/infra` for all infrastructure — never write raw SST/CDK directly
+- Choose the right compute for your workload (see below)
+- All infrastructure changes go through the package
+
+### Installation
+
+```bash
+pnpm add @palindrom-ai/infra
+```
+
+### What the Package Provides
+
+| Component | AWS Service | Use Case |
+|-----------|-------------|----------|
+| `Api` | ECS Fargate | Always-on containers, LLM services |
+| `Function` | Lambda | Event-driven, simple APIs |
+| `Database` | RDS PostgreSQL | Data storage |
+| `Storage` | S3 | File uploads |
 
 ### When to Use What
 
-| Workload | Compute | Why |
-|----------|---------|-----|
-| LLM services, long requests | ECS Fargate | No cold starts, no timeout limits |
-| Simple APIs, low traffic | Lambda | Scales to zero, cost effective |
+| Workload | Component | Why |
+|----------|-----------|-----|
+| LLM services, long requests | `Api` (ECS) | No cold starts, no timeout limits |
+| Simple APIs, low traffic | `Function` (Lambda) | Scales to zero, cost effective |
 
-### ECS Fargate (Heavy Workloads)
-
-For LLM services and APIs with long-running requests:
+### Usage
 
 ```typescript
-// sst.config.ts
-new Service(stack, "api", {
-  path: ".",
-  port: 3000,
-  cpu: "0.5 vCPU",
-  memory: "1 GB",
-  scaling: {
-    minContainers: 1,
-    maxContainers: 4,
-  },
+import { Api, Database, Storage, Function } from '@palindrom-ai/infra';
+
+const db = new Database("Main");
+const bucket = new Storage("Uploads");
+
+const api = new Api("Backend", {
+  link: [db, bucket],
 });
 ```
 
-Requires a `Dockerfile` in the project root.
-
-### Lambda (Simple APIs)
-
-For simple, low-traffic APIs:
-
-```typescript
-// sst.config.ts
-new Function(stack, "api", {
-  handler: "src/index.handler",
-  runtime: "nodejs20.x",
-  timeout: "30 seconds",
-});
-```
-
-### Docker
-
-ECS deployments require a Dockerfile:
-
-```dockerfile
-FROM node:20-slim
-WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm && pnpm install --frozen-lockfile
-COPY . .
-RUN pnpm build
-CMD ["node", "dist/index.js"]
-```
+Refer to [palindrom-ai/infra](https://github.com/palindrom-ai/infra) for full documentation.

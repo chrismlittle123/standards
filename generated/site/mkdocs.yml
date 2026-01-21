@@ -45,13 +45,15 @@ nav:
   - Guidelines:
       - guidelines/index.md
       - "Authentication": guidelines/auth.md
-      - "Error Handling": guidelines/error-handling.md
       - "Secrets Management": guidelines/secrets.md
-      - "API Contracts": guidelines/api-contracts.md
+      - "TypeScript": guidelines/typescript.md
       - "CI/CD & Deployment": guidelines/ci-cd.md
       - "Observability": guidelines/observability.md
+      - "Python": guidelines/python.md
+      - "REST APIs": guidelines/rest-apis.md
       - "Data Engineering": guidelines/data-engineering.md
-      - "LLM Observability": guidelines/llm-observability.md
+      - "LLM Services": guidelines/llm.md
+      - "Monorepo": guidelines/monorepo.md
       - "Frontend": guidelines/frontend.md
       - "Database": guidelines/database.md
       - "Backend Deployment": guidelines/backend-deployment.md

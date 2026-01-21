@@ -1,15 +1,24 @@
 
 ## CI/CD & Deployment
 
-All CI/CD runs on GitHub Actions. All deployments use SST (with Pulumi when SST doesn't support a resource).
+Use the `@palindrom-ai/github-actions` reusable workflows for all CI/CD.
 
 ### Requirements
 
-- GitHub Actions for all CI/CD
-- SST for infrastructure and deployment
-- Pulumi within SST for unsupported resources
+- Use `@palindrom-ai/github-actions` for all workflows — never write raw workflow YAML
 - OIDC authentication to AWS (no static keys)
 - Trunk-based development (merge to main)
+
+### What the Package Provides
+
+| Action | Purpose |
+|--------|---------|
+| `lint` | Run linting (Biome/ESLint/Ruff) |
+| `test` | Run tests with coverage reporting |
+| `build` | Build TypeScript/Python packages |
+| `deploy-sst` | Deploy via SST with OIDC auth |
+| `publish-npm` | Publish packages to npm registry |
+| `docker-build` | Build and push Docker images |
 
 ### Environments
 
@@ -43,5 +52,8 @@ All must pass before deploy:
 
 - Deploy from local machine
 - Use long-lived AWS keys
+- Write custom workflow YAML
 - Skip checks
 - Deploy directly to production
+
+Refer to [palindrom-ai/github-actions](https://github.com/palindrom-ai/github-actions) for usage.

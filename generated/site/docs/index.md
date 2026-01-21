@@ -12,13 +12,15 @@ Composable coding standards and guidelines for Palindrom projects.
 | Guideline | Category | Tags |
 |-----------|----------|------|
 | [Authentication](guidelines/auth.md) | security | typescript, python, auth, security, backend |
-| [Error Handling](guidelines/error-handling.md) | reliability | typescript, python, errors, backend |
 | [Secrets Management](guidelines/secrets.md) | security | typescript, python, aws, secrets, security |
-| [API Contracts](guidelines/api-contracts.md) | architecture | typescript, python, api, zod, pydantic, backend |
+| [TypeScript](guidelines/typescript.md) | architecture | typescript, nodejs, backend, frontend |
 | [CI/CD & Deployment](guidelines/ci-cd.md) | operations | typescript, python, github-actions, sst, deployment |
 | [Observability](guidelines/observability.md) | operations | typescript, python, logging, observability, backend |
+| [Python](guidelines/python.md) | architecture | python, llm, databricks, livekit |
+| [REST APIs](guidelines/rest-apis.md) | architecture | typescript, python, api, zod, pydantic, backend |
 | [Data Engineering](guidelines/data-engineering.md) | data | python, databricks, pyspark, data, etl |
-| [LLM Observability](guidelines/llm-observability.md) | operations | python, llm, langfuse, observability, ai |
+| [LLM Services](guidelines/llm.md) | operations | python, llm, langfuse, observability, ai, rag, evals |
+| [Monorepo](guidelines/monorepo.md) | architecture | typescript, turborepo, pnpm, monorepo |
 | [Frontend](guidelines/frontend.md) | architecture | typescript, nextjs, react, frontend, vercel |
 | [Database](guidelines/database.md) | infrastructure | typescript, database, postgresql, drizzle, orm, backend |
 | [Backend Deployment](guidelines/backend-deployment.md) | infrastructure | typescript, python, aws, ecs, lambda, deployment, backend |

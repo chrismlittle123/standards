@@ -22,6 +22,9 @@ interface GuidelineFrontmatter {
   tags: string[];
 }
 
+// Valid categories from schema
+const VALID_CATEGORIES = ['security', 'architecture', 'infrastructure', 'operations', 'data', 'reliability'] as const;
+
 interface Guideline {
   frontmatter: GuidelineFrontmatter;
   content: string;
@@ -63,6 +66,45 @@ function parseFrontmatter(content: string): { frontmatter: GuidelineFrontmatter;
 
 function toTitleCase(str: string): string {
   return str.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+}
+
+function validateFrontmatter(frontmatter: GuidelineFrontmatter, filename: string): void {
+  const errors: string[] = [];
+
+  // Required fields
+  if (!frontmatter.id) errors.push('missing required field: id');
+  if (!frontmatter.title) errors.push('missing required field: title');
+  if (!frontmatter.category) errors.push('missing required field: category');
+  if (frontmatter.priority === undefined) errors.push('missing required field: priority');
+  if (!frontmatter.tags || !Array.isArray(frontmatter.tags)) errors.push('missing required field: tags (must be array)');
+
+  // id pattern: kebab-case
+  if (frontmatter.id && !/^[a-z][a-z0-9-]*$/.test(frontmatter.id)) {
+    errors.push(`invalid id "${frontmatter.id}" — must be kebab-case (e.g., "my-guideline")`);
+  }
+
+  // category enum
+  if (frontmatter.category && !VALID_CATEGORIES.includes(frontmatter.category as typeof VALID_CATEGORIES[number])) {
+    errors.push(`invalid category "${frontmatter.category}" — must be one of: ${VALID_CATEGORIES.join(', ')}`);
+  }
+
+  // priority minimum
+  if (frontmatter.priority !== undefined && (typeof frontmatter.priority !== 'number' || frontmatter.priority < 1)) {
+    errors.push(`invalid priority "${frontmatter.priority}" — must be integer >= 1`);
+  }
+
+  // tags pattern
+  if (Array.isArray(frontmatter.tags)) {
+    for (const tag of frontmatter.tags) {
+      if (!/^[a-z][a-z0-9-]*$/.test(tag)) {
+        errors.push(`invalid tag "${tag}" — must be kebab-case`);
+      }
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(`Schema validation failed for ${filename}:\n  - ${errors.join('\n  - ')}`);
+  }
 }
 
 // =============================================================================
@@ -166,9 +208,14 @@ async function loadGuidelines(guidelinesDir: string): Promise<Guideline[]> {
   for (const file of mdFiles) {
     const content = await readFile(join(guidelinesDir, file), 'utf-8');
     const { frontmatter, body } = parseFrontmatter(content);
+
+    // Validate frontmatter against schema
+    validateFrontmatter(frontmatter, file);
+
     guidelines.push({ frontmatter, content: body, filename: file });
   }
 
+  console.log(`Validated ${guidelines.length} guidelines against schema`);
   return guidelines.sort((a, b) => a.frontmatter.priority - b.frontmatter.priority);
 }
 

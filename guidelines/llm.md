@@ -19,7 +19,7 @@ Use the `palindrom-ai/llm` package for all LLM functionality.
 ### Installation
 
 ```bash
-pip install palindrom-ai/llm
+uv add palindrom-ai/llm
 ```
 
 ### What the Package Provides

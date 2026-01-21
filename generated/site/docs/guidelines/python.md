@@ -17,11 +17,13 @@ If your service doesn't need one of these packages, use TypeScript instead.
 
 Use TypeScript for:
 - AWS Lambda functions
-- Backend APIs (use Fastify, not FastAPI)
+- Backend APIs (use Fastify via `palindrom-ai/fastify-base`)
 - Frontend
 - Infrastructure config
 - CLI tools
 - General backend services
+
+**Note:** FastAPI is only used internally within `palindrom-ai/llm` — never build FastAPI services directly.
 
 ### Requirements
 

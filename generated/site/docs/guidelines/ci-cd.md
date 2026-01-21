@@ -13,12 +13,22 @@ Use the `palindrom-ai/github-actions` reusable workflows for all CI/CD.
 
 | Action | Purpose |
 |--------|---------|
-| `lint` | Run linting (Biome/ESLint/Ruff) |
+| `lint` | Run linting and standards checks |
 | `test` | Run tests with coverage reporting |
 | `build` | Build TypeScript/Python packages |
 | `deploy-sst` | Deploy via SST with OIDC auth |
 | `publish-npm` | Publish packages to npm registry |
 | `docker-build` | Build and push Docker images |
+
+### Standards Enforcement
+
+All repos must use `check-my-toolkit` to validate against Palindrom standards:
+
+```bash
+pnpm add -D check-my-toolkit
+```
+
+This is run automatically in CI via the `lint` action.
 
 ### Environments
 

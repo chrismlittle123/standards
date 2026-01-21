@@ -319,6 +319,8 @@ function generateRulesetsIndex(rulesetIds: string[]): string {
 function generateJekyllConfig(): string {
   return `title: Palindrom Standards
 description: Composable coding standards and guidelines
+baseurl: /standards
+url: https://palindrom-ai.github.io
 remote_theme: just-the-docs/just-the-docs
 
 plugins:

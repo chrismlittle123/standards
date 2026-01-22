@@ -31,7 +31,7 @@ tags: [typescript, database, postgresql, drizzle, orm, backend]
 |-----------|------|---------|
 | `auth` | typescript, python, auth, security, backend | Use `@palindrom/auth` |
 | `api-contracts` | typescript, python, api, zod, pydantic, backend | Zod → OpenAPI → Pydantic |
-| `backend-deployment` | typescript, python, aws, ecs, lambda, deployment, backend | ECS Fargate for heavy, Lambda for simple |
+| `backend-deployment` | typescript, python, gcp, cloud-run, cloud-functions, deployment, backend | Cloud Run for heavy, Cloud Functions for simple |
 | `ci-cd` | typescript, python, github-actions, pulumi, deployment | GitHub Actions + Pulumi |
 | `data-engineering` | python, databricks, pyspark, data, etl | Databricks + medallion architecture |
 | `database` | typescript, database, postgresql, drizzle, orm, backend | RDS PostgreSQL + Drizzle ORM |

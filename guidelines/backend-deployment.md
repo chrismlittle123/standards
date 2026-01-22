@@ -3,12 +3,12 @@ id: backend-deployment
 title: Backend Deployment
 category: infrastructure
 priority: 7
-tags: [typescript, python, aws, ecs, lambda, deployment, backend]
+tags: [typescript, python, gcp, cloud-run, cloud-functions, deployment, backend]
 ---
 
 ## Backend Deployment
 
-Use the `palindrom-ai/infra` package for all AWS deployments.
+Use the `palindrom-ai/infra` package for all GCP deployments.
 
 ### Requirements
 
@@ -24,19 +24,19 @@ pnpm add palindrom-ai/infra
 
 ### What the Package Provides
 
-| Component | AWS Service | Use Case |
+| Component | GCP Service | Use Case |
 |-----------|-------------|----------|
-| `Api` | ECS Fargate | Always-on containers, LLM services |
-| `Function` | Lambda | Event-driven, simple APIs |
-| `Database` | RDS PostgreSQL | Data storage |
-| `Storage` | S3 | File uploads |
+| `Api` | Cloud Run | Always-on containers, LLM services |
+| `Function` | Cloud Functions | Event-driven, simple APIs |
+| `Database` | Cloud SQL PostgreSQL | Data storage |
+| `Storage` | Cloud Storage | File uploads |
 
 ### When to Use What
 
 | Workload | Component | Why |
 |----------|-----------|-----|
-| LLM services, long requests | `Api` (ECS) | No cold starts, no timeout limits |
-| Simple APIs, low traffic | `Function` (Lambda) | Scales to zero, cost effective |
+| LLM services, long requests | `Api` (Cloud Run) | No cold starts, no timeout limits |
+| Simple APIs, low traffic | `Function` (Cloud Functions) | Scales to zero, cost effective |
 
 ### Usage
 

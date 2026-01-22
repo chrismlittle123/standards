@@ -23,7 +23,7 @@ Composable coding standards and guidelines for Palindrom projects.
 | [Monorepo](guidelines/monorepo.md) | architecture | typescript, turborepo, pnpm, monorepo |
 | [Frontend](guidelines/frontend.md) | architecture | typescript, nextjs, react, frontend, vercel |
 | [Database](guidelines/database.md) | infrastructure | typescript, database, postgresql, drizzle, orm, backend |
-| [Backend Deployment](guidelines/backend-deployment.md) | infrastructure | typescript, python, aws, ecs, lambda, deployment, backend |
+| [Backend Deployment](guidelines/backend-deployment.md) | infrastructure | typescript, python, gcp, cloud-run, cloud-functions, deployment, backend |
 
 ## Rulesets Overview
 

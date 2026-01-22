@@ -8,7 +8,7 @@ Use `palindrom-ai/databricks-utils` for all data engineering on Databricks.
 - Use `palindrom-ai/databricks-utils` for shared utilities
 - All transformations in Python (PySpark)
 - Deploy with Databricks Asset Bundles
-- Alert failures to Better Stack via `palindrom-ai/logging`
+- Alert failures to Better Stack via `palindrom-ai/monitoring`
 
 ### Installation
 

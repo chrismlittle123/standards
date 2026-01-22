@@ -1,11 +1,11 @@
 
 ## Observability
 
-All application observability must use the `palindrom-ai/logging` package (Better Stack).
+All application observability must use the `palindrom-ai/monitoring` package (Better Stack).
 
 ### Requirements
 
-- Use `palindrom-ai/logging` for all logging and error tracking — never integrate Better Stack directly
+- Use `palindrom-ai/monitoring` for all logging and error tracking — never integrate Better Stack directly
 - Use structured JSON logging with consistent fields
 - Include `requestId` in all log entries for correlation
 - Never log secrets, passwords, or unmasked API keys
@@ -14,12 +14,12 @@ All application observability must use the `palindrom-ai/logging` package (Bette
 
 **TypeScript:**
 ```bash
-pnpm add palindrom-ai/logging
+pnpm add palindrom-ai/monitoring
 ```
 
 **Python:**
 ```bash
-uv add palindrom-ai/logging
+uv add palindrom-ai/monitoring
 ```
 
 ### Required Log Fields
@@ -42,4 +42,4 @@ uv add palindrom-ai/logging
 | `warn` | Recoverable issues |
 | `error` | Failures requiring attention |
 
-Refer to [palindrom-ai/logging](https://github.com/palindrom-ai/logging) for implementation details.
+Refer to [palindrom-ai/monitoring](https://github.com/palindrom-ai/monitoring) for implementation details.

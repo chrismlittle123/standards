@@ -48,7 +48,7 @@ All LLM calls must include:
 
 ### Correlation with App Logs
 
-Use the same `requestId` in both `palindrom-ai/logging` and `palindrom-ai/llm` to correlate:
+Use the same `requestId` in both `palindrom-ai/monitoring` and `palindrom-ai/llm` to correlate:
 - Better Stack error → Langfuse LLM trace
 - LLM latency spike → App request that triggered it
 

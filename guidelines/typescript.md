@@ -20,7 +20,7 @@ TypeScript is the default language for almost everything.
 | Infrastructure | SST config, Pulumi |
 | Configuration | ESLint, build tools |
 | CLI tools | Internal tooling |
-| Shared packages | `palindrom-ai/auth`, `palindrom-ai/logging` |
+| Shared packages | `palindrom-ai/auth`, `palindrom-ai/monitoring` |
 
 ### When NOT to Use TypeScript
 

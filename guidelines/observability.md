@@ -8,11 +8,11 @@ tags: [typescript, python, logging, observability, backend]
 
 ## Observability
 
-All application observability must use the `palindrom-ai/monitoring` package (Better Stack).
+All application observability must use the `palindrom-ai/monitoring` package (SigNoz).
 
 ### Requirements
 
-- Use `palindrom-ai/monitoring` for all logging and error tracking — never integrate Better Stack directly
+- Use `palindrom-ai/monitoring` for all logging and error tracking — never integrate SigNoz directly
 - Use structured JSON logging with consistent fields
 - Include `requestId` in all log entries for correlation
 - Never log secrets, passwords, or unmasked API keys

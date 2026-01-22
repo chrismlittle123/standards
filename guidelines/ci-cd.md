@@ -3,7 +3,7 @@ id: ci-cd
 title: CI/CD & Deployment
 category: operations
 priority: 2
-tags: [typescript, python, github-actions, sst, deployment]
+tags: [typescript, python, github-actions, pulumi, deployment]
 ---
 
 ## CI/CD & Deployment
@@ -23,7 +23,7 @@ Use the `palindrom-ai/github-actions` reusable workflows for all CI/CD.
 | `lint` | Run linting and standards checks |
 | `test` | Run tests with coverage reporting |
 | `build` | Build TypeScript/Python packages |
-| `deploy-sst` | Deploy via SST with OIDC auth |
+| `deploy` | Deploy via Pulumi with OIDC auth |
 | `publish-npm` | Publish packages to npm registry |
 | `docker-build` | Build and push Docker images |
 
@@ -62,7 +62,7 @@ All must pass before deploy:
 
 ### Rollback
 
-- **Failed deploy:** SST auto-rollbacks
+- **Failed deploy:** Auto-rollback on failure
 - **Bug in prod:** Revert commit or re-run previous successful deploy
 
 ### What NOT to Do

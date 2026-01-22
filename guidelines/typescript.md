@@ -17,7 +17,7 @@ TypeScript is the default language for almost everything.
 | AWS Lambda functions | API handlers, webhooks |
 | Backend APIs | Fastify services |
 | Frontend | Next.js applications |
-| Infrastructure | SST config, Pulumi |
+| Infrastructure | Pulumi |
 | Configuration | ESLint, build tools |
 | CLI tools | Internal tooling |
 | Shared packages | `palindrom-ai/auth`, `palindrom-ai/monitoring` |

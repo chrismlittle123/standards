@@ -12,9 +12,9 @@ Composable coding standards and guidelines for Palindrom projects.
 | Guideline | Category | Tags |
 |-----------|----------|------|
 | [Authentication](guidelines/auth.md) | security | typescript, python, auth, security, backend |
-| [Secrets Management](guidelines/secrets.md) | security | typescript, python, aws, secrets, security |
+| [Secrets Management](guidelines/secrets.md) | security | typescript, python, secrets, security, cloud |
 | [TypeScript](guidelines/typescript.md) | architecture | typescript, nodejs, backend, frontend |
-| [CI/CD & Deployment](guidelines/ci-cd.md) | operations | typescript, python, github-actions, sst, deployment |
+| [CI/CD & Deployment](guidelines/ci-cd.md) | operations | typescript, python, github-actions, pulumi, deployment |
 | [Observability](guidelines/observability.md) | operations | typescript, python, logging, observability, backend |
 | [Python](guidelines/python.md) | architecture | python, llm, databricks, livekit-agents |
 | [REST APIs](guidelines/rest-apis.md) | architecture | typescript, python, api, zod, pydantic, backend |
@@ -32,6 +32,8 @@ Composable coding standards and guidelines for Palindrom projects.
 | [Python Internal](rulesets/python-internal.md) | Python | Internal |
 | [Python Production](rulesets/python-production.md) | Python | Production |
 | [Python Prototype](rulesets/python-prototype.md) | Python | Prototype |
+| [Typescript Frontend Internal](rulesets/typescript-frontend-internal.md) | Typescript | Frontend |
+| [Typescript Frontend Production](rulesets/typescript-frontend-production.md) | Typescript | Frontend |
 | [Typescript Internal](rulesets/typescript-internal.md) | Typescript | Internal |
 | [Typescript Production](rulesets/typescript-production.md) | Typescript | Production |
 | [Typescript Prototype](rulesets/typescript-prototype.md) | Typescript | Prototype |

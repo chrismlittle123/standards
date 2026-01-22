@@ -16,11 +16,10 @@
 | `max-depth` | { severity: error, max: 4 } |
 | `max-params` | { severity: error, max: 4 } |
 | `max-lines-per-function` | `error` |
-| `max-lines` | `error` |
+| `max-lines` | { severity: error, max: 400 } |
 | `complexity` | `error` |
 | `no-console` | { severity: error, allow: error,warn } |
 | `eqeqeq` | `error` |
-| `curly` | `error` |
 | `prefer-const` | `error` |
 | `no-var` | `error` |
 | `no-eval` | `error` |
@@ -29,7 +28,7 @@
 | `no-template-curly-in-string` | `error` |
 | `consistent-return` | `error` |
 | `import/no-cycle` | { severity: error, maxDepth: 10 } |
-| `@typescript-eslint/no-unused-vars` | `error` |
+| `@typescript-eslint/no-unused-vars` | { severity: error, argsIgnorePattern: ^_, varsIgnorePattern: ^_ } |
 | `@typescript-eslint/no-explicit-any` | `error` |
 | `@typescript-eslint/no-non-null-assertion` | `error` |
 | `@typescript-eslint/no-unnecessary-condition` | `error` |
@@ -41,12 +40,6 @@
 | `@typescript-eslint/no-misused-promises` | `error` |
 | `@typescript-eslint/await-thenable` | `error` |
 | `@typescript-eslint/switch-exhaustiveness-check` | `error` |
-
-### Formatting
-
-#### Prettier
-
-- **enabled**: `true`
 
 ### Types
 

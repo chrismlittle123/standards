@@ -39,7 +39,7 @@ tags: [typescript, database, postgresql, drizzle, orm, backend]
 | `frontend` | typescript, nextjs, react, frontend, vercel | Next.js + `palindrom-ai/ui` + Vercel |
 | `llm-observability` | python, llm, langfuse, observability, ai | Langfuse via `palindrom-ai/llm` |
 | `observability` | typescript, python, logging, observability, backend | Better Stack via `@palindrom/logging` |
-| `secrets` | typescript, python, aws, secrets, security | AWS Secrets Manager |
+| `secrets` | typescript, python, secrets, security, cloud | Platform secrets manager (AWS/GCP/Azure) |
 
 ## Rulesets
 

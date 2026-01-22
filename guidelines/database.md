@@ -19,7 +19,7 @@ All databases use RDS PostgreSQL with Drizzle ORM.
 ### Requirements
 
 - All database access through Drizzle ORM
-- Connection strings stored in AWS Secrets Manager
+- Connection strings stored in the platform's secrets manager
 - Separate databases per environment (dev, staging, production)
 - No direct database access from frontend
 

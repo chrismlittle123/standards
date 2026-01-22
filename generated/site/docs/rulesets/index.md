@@ -10,6 +10,8 @@ Linting and tooling configurations at different strictness tiers.
 
 ## TypeScript
 
+- [Typescript Frontend Internal](typescript-frontend-internal.md)
+- [Typescript Frontend Production](typescript-frontend-production.md)
 - [Typescript Internal](typescript-internal.md)
 - [Typescript Production](typescript-production.md)
 - [Typescript Prototype](typescript-prototype.md)

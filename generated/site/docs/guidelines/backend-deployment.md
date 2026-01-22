@@ -5,7 +5,7 @@ Use the `palindrom-ai/infra` package for all AWS deployments.
 
 ### Requirements
 
-- Use `palindrom-ai/infra` for all infrastructure — never write raw SST/CDK directly
+- Use `palindrom-ai/infra` for all infrastructure — never write raw Pulumi directly
 - Choose the right compute for your workload (see below)
 - All infrastructure changes go through the package
 

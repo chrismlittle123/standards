@@ -69,6 +69,8 @@ nav:
           - "Python Production": rulesets/python-production.md
           - "Python Prototype": rulesets/python-prototype.md
       - TypeScript:
+          - "Typescript Frontend Internal": rulesets/typescript-frontend-internal.md
+          - "Typescript Frontend Production": rulesets/typescript-frontend-production.md
           - "Typescript Internal": rulesets/typescript-internal.md
           - "Typescript Production": rulesets/typescript-production.md
           - "Typescript Prototype": rulesets/typescript-prototype.md

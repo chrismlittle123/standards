@@ -22,7 +22,7 @@ All frontends use Next.js with the `palindrom-ai/ui` component library.
 
 Frontend and backend are separate services but colocated in a monorepo (best practice):
 
-- Separate deployments (Vercel for frontend, AWS for backend)
+- Separate deployments (Vercel for frontend, GCP Cloud Run for backend)
 - Same repository when using a monorepo
 - Frontend imports types from backend (single source of truth)
 - Frontend calls backend APIs — no business logic in Next.js

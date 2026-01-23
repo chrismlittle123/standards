@@ -14,8 +14,8 @@ TypeScript is the default language for almost everything.
 
 | Use Case | Example |
 |----------|---------|
-| AWS Lambda functions | API handlers, webhooks |
-| Backend APIs | Fastify services |
+| Backend APIs | Fastify services on GCP Cloud Run |
+| GCP Cloud Functions | Event-driven endpoints, webhooks |
 | Frontend | Next.js applications |
 | Infrastructure | Pulumi |
 | Configuration | ESLint, build tools |
@@ -24,11 +24,12 @@ TypeScript is the default language for almost everything.
 
 ### When NOT to Use TypeScript
 
-Only use Python when you need an existing Python `palindrom-ai/` package:
+Use Python instead for:
 
 - `palindrom-ai/llm` — LLM services
 - `palindrom-ai/databricks-utils` — Data pipelines
 - `palindrom-ai/livekit-agents` — Voice/video agents
+- **AWS Lambda functions** — Data engineering, ETL triggers (Python Lambda ecosystem is mature)
 
 See [Python guideline](./python.md) for those cases.
 

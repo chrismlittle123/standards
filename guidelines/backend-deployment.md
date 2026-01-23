@@ -28,6 +28,7 @@ pnpm add palindrom-ai/infra
 |----------|-------|-----|
 | APIs (Fastify) | GCP Cloud Run | Fast redeployments, scales to zero |
 | Long-running LLM services | GCP Cloud Run | Fast redeployments, no timeout limits |
+| Databases | AWS RDS | Managed PostgreSQL, set up once |
 | Monitoring infrastructure (SigNoz) | AWS | Set up once, rarely changes |
 | Static infrastructure | AWS | Set up once, rarely changes |
 
@@ -39,7 +40,7 @@ pnpm add palindrom-ai/infra
 |-----------|---------|----------|
 | `Api` | GCP Cloud Run | Fastify APIs, LLM services |
 | `Function` | GCP Cloud Functions | Event-driven, simple endpoints |
-| `Database` | GCP Cloud SQL PostgreSQL | Data storage |
+| `Database` | AWS RDS PostgreSQL | Data storage |
 | `Storage` | GCP Cloud Storage | File uploads |
 
 ### Usage

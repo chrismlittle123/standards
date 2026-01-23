@@ -3,7 +3,7 @@ id: ci-cd
 title: CI/CD & Deployment
 category: operations
 priority: 2
-tags: [typescript, python, github-actions, pulumi, deployment]
+tags: [typescript, python, github-actions, pulumi, deployment, aws, gcp]
 ---
 
 ## CI/CD & Deployment
@@ -13,7 +13,8 @@ Use the `palindrom-ai/github-actions` reusable workflows for all CI/CD.
 ### Requirements
 
 - Use `palindrom-ai/github-actions` for all workflows — never write raw workflow YAML
-- OIDC authentication to AWS (no static keys)
+- OIDC authentication to both AWS and GCP (no static keys)
+- Cross-account OIDC policies enable AWS ↔ GCP access where needed
 - Trunk-based development (merge to main)
 
 ### What the Package Provides

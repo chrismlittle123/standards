@@ -12,13 +12,16 @@ Python is only used when you need an existing Python `palindrom-ai/` package.
 
 ### When to Use Python
 
-| Package | Use Case |
-|---------|----------|
+| Package / Platform | Use Case |
+|--------------------|----------|
 | `palindrom-ai/llm` | LLM services, RAG, evals |
 | `palindrom-ai/databricks-utils` | Data pipelines, PySpark |
 | `palindrom-ai/livekit-agents` | Voice/video agents |
+| AWS Lambda | Data engineering, ETL triggers, S3 event handlers |
 
-If your service doesn't need one of these packages, use TypeScript instead.
+**Why Python for Lambda?** The Python Lambda ecosystem is mature with well-tested patterns for data engineering workflows. All Lambda functions are exclusively for data pipelines, not APIs.
+
+If your service doesn't need one of these, use TypeScript instead.
 
 ### When NOT to Use Python
 

@@ -45,6 +45,40 @@ This is run automatically in CI via the `lint` action.
 | `staging` | Auto after dev passes |
 | `production` | Manual approval |
 
+### Repository to AWS OU Mapping
+
+Each project repository maps to exactly one AWS Organizational Unit (OU). Each OU contains three accounts: dev, stag, and prod. This creates clear ownership, deployment boundaries, and cost attribution.
+
+**Project repositories** deploy infrastructure or applications. Each project repo maps to one OU and deploys only to its three accounts.
+
+**Shared packages** are libraries consumed by other repositories. They contain no deployable infrastructure and do not map to any OU.
+
+#### Structure
+
+```
+/project-api        →  Workloads OU  (dev/stag/prod)
+/project-frontend   →  Workloads OU  (dev/stag/prod)
+/data               →  Data OU       (dev/stag/prod)
+/shared-utils       →  No OU (library only)
+```
+
+#### Cross-OU Access
+
+When resources in one OU need access to another (e.g., application accessing data platform), use explicit cross-account IAM roles. This ensures dependencies are intentional and auditable.
+
+#### Benefits
+
+- **Clear ownership:** one repo, one team, one OU
+- **Simple CI/CD:** each repo deploys to exactly three accounts
+- **Cost tracking:** OU-level billing maps to teams/projects
+- **Security boundaries:** environment isolation by default
+
+#### OU Mapping Anti-Patterns
+
+- ❌ One repo deploying to multiple OUs
+- ❌ Shared packages containing infrastructure
+- ❌ Implicit cross-account access without explicit IAM
+
 ### Deployment Flow
 
 ```

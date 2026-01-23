@@ -3,17 +3,17 @@ id: backend-deployment
 title: Backend Deployment
 category: infrastructure
 priority: 7
-tags: [typescript, python, gcp, cloud-run, cloud-functions, deployment, backend]
+tags: [typescript, python, gcp, aws, cloud-run, cloud-functions, deployment, backend]
 ---
 
 ## Backend Deployment
 
-Use the `palindrom-ai/infra` package for all GCP deployments.
+Use the `palindrom-ai/infra` package for all deployments.
 
 ### Requirements
 
 - Use `palindrom-ai/infra` for all infrastructure — never write raw Pulumi directly
-- Choose the right compute for your workload (see below)
+- Choose the right cloud for your workload (see below)
 - All infrastructure changes go through the package
 
 ### Installation
@@ -22,21 +22,25 @@ Use the `palindrom-ai/infra` package for all GCP deployments.
 pnpm add palindrom-ai/infra
 ```
 
+### Cloud Selection
+
+| Workload | Cloud | Why |
+|----------|-------|-----|
+| APIs (Fastify) | GCP Cloud Run | Fast redeployments, scales to zero |
+| Long-running LLM services | GCP Cloud Run | Fast redeployments, no timeout limits |
+| Monitoring infrastructure (SigNoz) | AWS | Set up once, rarely changes |
+| Static infrastructure | AWS | Set up once, rarely changes |
+
+**Rule of thumb:** If it redeploys frequently, use GCP Cloud Run. If it's set up once and rarely changes, use AWS.
+
 ### What the Package Provides
 
-| Component | GCP Service | Use Case |
-|-----------|-------------|----------|
-| `Api` | Cloud Run | Always-on containers, LLM services |
-| `Function` | Cloud Functions | Event-driven, simple APIs |
-| `Database` | Cloud SQL PostgreSQL | Data storage |
-| `Storage` | Cloud Storage | File uploads |
-
-### When to Use What
-
-| Workload | Component | Why |
-|----------|-----------|-----|
-| LLM services, long requests | `Api` (Cloud Run) | No cold starts, no timeout limits |
-| Simple APIs, low traffic | `Function` (Cloud Functions) | Scales to zero, cost effective |
+| Component | Service | Use Case |
+|-----------|---------|----------|
+| `Api` | GCP Cloud Run | Fastify APIs, LLM services |
+| `Function` | GCP Cloud Functions | Event-driven, simple endpoints |
+| `Database` | GCP Cloud SQL PostgreSQL | Data storage |
+| `Storage` | GCP Cloud Storage | File uploads |
 
 ### Usage
 

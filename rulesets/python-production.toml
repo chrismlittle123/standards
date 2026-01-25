@@ -6,6 +6,7 @@ enabled = true
 
 [code.linting.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "S", "C4", "RUF"]
+ignore = ["E501"]
 
 [code.types.ty]
 enabled = true

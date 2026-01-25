@@ -3,7 +3,6 @@
 
 [code.linting.ruff]
 enabled = true
-line-length = 120
 
 [code.linting.ruff.lint]
 select = ["E", "F"]

@@ -59,8 +59,22 @@ See [Python guideline](./python.md) for those cases.
 
 ### Standards Enforcement
 
+Use `check-my-toolkit` to enforce Palindrom standards.
+
 ```bash
 pnpm add -D check-my-toolkit
 ```
 
-Run `check-my-toolkit` in CI to validate project structure and configuration against Palindrom standards.
+Every repository must have a `check.toml` in the root that specifies which ruleset to use:
+
+```toml
+[check-my-toolkit]
+ruleset = "typescript-production"  # or typescript-internal, typescript-prototype
+```
+
+Available rulesets:
+- `typescript-production` — Customer-facing services (strictest)
+- `typescript-internal` — Internal tools and services
+- `typescript-prototype` — Experimental projects (most relaxed)
+
+Run in CI to validate project structure and configuration against Palindrom standards.

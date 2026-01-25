@@ -49,6 +49,7 @@ Use TypeScript for:
 | Python 3.12+ | Runtime |
 | uv | Package manager (required) |
 | Ruff | Linting |
+| ty | Type checking |
 | pytest | Testing |
 
 ### uv Requirements
@@ -75,3 +76,25 @@ palindrom-ai/livekit-agents/   # LiveKit package
 ```
 
 Application repos import these packages — they don't contain Python source code.
+
+### Standards Enforcement
+
+Use `check-my-toolkit` to enforce Palindrom standards.
+
+```bash
+uv add --dev check-my-toolkit
+```
+
+Every repository must have a `check.toml` in the root that specifies which ruleset to use:
+
+```toml
+[check-my-toolkit]
+ruleset = "python-production"  # or python-internal, python-prototype
+```
+
+Available rulesets:
+- `python-production` — Customer-facing services (strictest)
+- `python-internal` — Internal tools and services
+- `python-prototype` — Experimental projects (most relaxed)
+
+Run in CI to validate project structure and configuration against Palindrom standards.

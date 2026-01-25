@@ -50,7 +50,44 @@ Use TypeScript for:
 | uv | Package manager (required) |
 | Ruff | Linting |
 | ty | Type checking |
+| Pydantic | Data modeling |
 | pytest | Testing |
+
+### Data Modeling
+
+**Never use `dict` when the structure is known.** Use Pydantic models instead.
+
+In 80%+ of cases, the structure of your data is known at development time. When this is the case, always define a Pydantic class rather than passing around dictionaries.
+
+```python
+# Bad - avoid this
+def process_user(user: dict) -> dict:
+    return {"id": user["id"], "name": user["name"].upper()}
+
+# Good - use Pydantic
+class User(BaseModel):
+    id: str
+    name: str
+
+class ProcessedUser(BaseModel):
+    id: str
+    name: str
+
+def process_user(user: User) -> ProcessedUser:
+    return ProcessedUser(id=user.id, name=user.name.upper())
+```
+
+**Why Pydantic over dict:**
+- Type safety and IDE autocompletion
+- Automatic validation at runtime
+- Clear documentation of data shape
+- Easier refactoring
+- Better error messages
+
+**When `dict` is acceptable:**
+- Truly dynamic data with unknown keys
+- Passing through unstructured JSON from external sources (temporarily)
+- Performance-critical hot paths (rare)
 
 ### uv Requirements
 

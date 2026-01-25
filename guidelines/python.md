@@ -48,9 +48,23 @@ Use TypeScript for:
 | Tool | Purpose |
 |------|---------|
 | Python 3.12+ | Runtime |
-| uv | Package manager |
+| uv | Package manager (required) |
 | Ruff | Linting |
 | pytest | Testing |
+
+### uv Requirements
+
+Use Python 3.12+ for all projects. uv is the **only** permitted package manager. Do not use pip, poetry, pipenv, or conda.
+
+```bash
+uv init              # New projects
+uv add <pkg>         # Add dependencies (not pip install)
+uv sync              # Install from lockfile
+uv run <cmd>         # Run commands in venv
+uvx <tool>           # Run CLI tools
+```
+
+Commit both `pyproject.toml` and `uv.lock` to version control.
 
 ### Package Structure
 

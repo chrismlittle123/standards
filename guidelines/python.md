@@ -3,7 +3,7 @@ id: python
 title: Python
 category: architecture
 priority: 2
-tags: [python, llm, databricks, livekit-agents]
+tags: [python, llm, livekit-agents]
 ---
 
 ## Python
@@ -15,7 +15,6 @@ Python is only used when you need an existing Python `palindrom-ai/` package.
 | Package / Platform | Use Case |
 |--------------------|----------|
 | `palindrom-ai/llm` | LLM services, RAG, evals |
-| `palindrom-ai/databricks-utils` | Data pipelines, PySpark |
 | `palindrom-ai/livekit-agents` | Voice/video agents |
 | AWS Lambda | Data engineering, ETL triggers, S3 event handlers |
 
@@ -71,9 +70,8 @@ Commit both `pyproject.toml` and `uv.lock` to version control.
 Python code lives in dedicated package repos:
 
 ```
-palindrom-ai/llm/           # LLM package
-palindrom-ai/livekit-agents/       # LiveKit package
-palindrom-ai/databricks-utils/  # Data utils
+palindrom-ai/llm/              # LLM package
+palindrom-ai/livekit-agents/   # LiveKit package
 ```
 
 Application repos import these packages — they don't contain Python source code.

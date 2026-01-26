@@ -12,12 +12,12 @@ tags: [repository, metadata, standards]
 
 We aim for an **8/10 codebase** at all times in production repositories.
 
-If a team or LLM were asked "how clean/organised/well-designed is this code repo?" they would answer 8/10. No more, no less.
+**The definition:** if you asked 100 instances of Claude Code to review the repository and averaged the scores, what would that score be? It should be 8/10. No more, no less.
 
 - **9/10** — We're wasting time on polish that doesn't deliver value
 - **Below 8/10** — We're creating tech debt that will slow us down
 
-This applies to production-tier repositories only. Prototypes can move faster.
+Prototypes can move faster.
 
 ### Metadata Files
 

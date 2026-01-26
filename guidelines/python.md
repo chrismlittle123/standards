@@ -51,23 +51,7 @@ Use TypeScript for:
 | Ruff | Linting |
 | ty | Type checking |
 | Pydantic | Data modeling |
-| pytest | Testing |
-
-### Test Structure
-
-Tests must be in a standalone `tests/` folder at the project root, never next to the source code.
-
-```
-project/
-├── src/
-│   └── mypackage/
-│       └── ...
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-└── pyproject.toml
-```
+| pytest | Testing (see [Testing guideline](./testing.md)) |
 
 ### Data Modeling
 

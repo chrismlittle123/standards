@@ -55,21 +55,7 @@ See [Python guideline](./python.md) for those cases.
 - Use `check-my-toolkit` to enforce standards
 - Prefer `type` over `interface` for consistency
 - Max 400 lines per file, 50 lines per function
-
-### Test Structure
-
-Tests must be in a standalone `tests/` folder at the project root, never next to the source code.
-
-```
-project/
-├── src/
-│   └── ...
-├── tests/
-│   ├── unit/
-│   ├── integration/
-│   └── e2e/
-└── package.json
-```
+- See [Testing guideline](./testing.md) for test structure
 
 ### Standards Enforcement
 

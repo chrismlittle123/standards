@@ -10,7 +10,7 @@ tags: [testing, unit, integration, e2e]
 
 ### Folder Structure
 
-Tests must be in a standalone `tests/` folder at the project root, never next to the source code.
+Tests must be in a standalone `tests/` folder at the project root (not the repository root), never next to the source code.
 
 ```
 project/

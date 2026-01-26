@@ -8,6 +8,19 @@ tags: [repository, metadata, standards]
 
 ## Repository Standards
 
+### Code Quality (Production)
+
+We aim for an **8/10 codebase** at all times in production repositories.
+
+If a team or LLM were asked "how clean/organised/well-designed is this code repo?" they would answer 8/10. No more, no less.
+
+- **9/10** — We're wasting time on polish that doesn't deliver value
+- **Below 8/10** — We're creating tech debt that will slow us down
+
+This applies to production-tier repositories only. Prototypes can move faster.
+
+### Metadata Files
+
 Every repository must include standard metadata files.
 
 ### repo-metadata.yaml

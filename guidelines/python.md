@@ -145,10 +145,10 @@ Use `check-my-toolkit` to enforce Palindrom standards.
 uv add --dev check-my-toolkit
 ```
 
-Every repository must have a `check.toml` in the root that specifies which ruleset to use:
+Every repository must have a `standards.toml` in the root that specifies which ruleset to use:
 
 ```toml
-[check-my-toolkit]
+[standards]
 ruleset = "python-production"  # or python-internal, python-prototype
 ```
 

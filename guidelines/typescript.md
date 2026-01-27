@@ -57,6 +57,26 @@ See [Python guideline](./python.md) for those cases.
 - Max 400 lines per file, 50 lines per function
 - See [Testing guideline](./testing.md) for test structure
 
+### Constants
+
+Never hard-code values that may need to change. Define constants for replaceability.
+
+```typescript
+// Bad - magic number
+if (retries > 3) { ... }
+
+// Good - named constant
+const MAX_RETRIES = 3;
+if (retries > MAX_RETRIES) { ... }
+```
+
+This applies to:
+- Numeric thresholds and limits
+- URL endpoints and API paths
+- Configuration values
+- Error messages that may need translation
+- Any value that appears more than once
+
 ### Standards Enforcement
 
 Use `check-my-toolkit` to enforce Palindrom standards.

@@ -85,10 +85,10 @@ Use `check-my-toolkit` to enforce Palindrom standards.
 pnpm add -D check-my-toolkit
 ```
 
-Every repository must have a `check.toml` in the root that specifies which ruleset to use:
+Every repository must have a `standards.toml` in the root that specifies which ruleset to use:
 
 ```toml
-[check-my-toolkit]
+[standards]
 ruleset = "typescript-production"  # or typescript-internal, typescript-prototype
 ```
 

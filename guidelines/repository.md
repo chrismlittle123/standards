@@ -19,28 +19,6 @@ We aim for an **8/10 codebase** at all times in production repositories.
 
 Prototypes can move faster.
 
-### Metadata Files
+### standards.toml
 
-Every repository must include standard metadata files.
-
-### repo-metadata.yaml
-
-Every repository must have a `repo-metadata.yaml` file in the root directory.
-
-```yaml
-tier: production  # Required: production, internal, or prototype
-```
-
-**Tiers:**
-
-| Tier | Description |
-|------|-------------|
-| `production` | Customer-facing services, strictest standards |
-| `internal` | Internal tools and services |
-| `prototype` | Experimental projects, relaxed standards |
-
-The tier determines which ruleset `check-my-toolkit` applies and affects CI/CD pipeline behavior.
-
-### check.toml
-
-Every repository must have a `check.toml` file. See [TypeScript](./typescript.md) and [Python](./python.md) guidelines for language-specific configuration.
+Every repository must have a `standards.toml` file. See [TypeScript](./typescript.md) and [Python](./python.md) guidelines for language-specific configuration.

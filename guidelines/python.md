@@ -114,6 +114,29 @@ palindrom-ai/livekit-agents/   # LiveKit package
 
 Application repos import these packages — they don't contain Python source code.
 
+### Constants
+
+Never hard-code values that may need to change. Define constants at the module level for replaceability.
+
+```python
+# Bad - magic numbers/strings
+def calculate_fee(amount: int) -> int:
+    return int(amount * 0.025)  # What is 0.025?
+
+# Good - named constant
+TRANSACTION_FEE_RATE = 0.025
+
+def calculate_fee(amount: int) -> int:
+    return int(amount * TRANSACTION_FEE_RATE)
+```
+
+This applies to:
+- Numeric thresholds and limits
+- URL endpoints and API paths
+- Configuration values
+- Error messages that may need translation
+- Any value that appears more than once
+
 ### Standards Enforcement
 
 Use `check-my-toolkit` to enforce Palindrom standards.

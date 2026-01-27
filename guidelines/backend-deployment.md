@@ -42,17 +42,19 @@ pnpm add palindrom-ai/infra
 | `Function` | GCP Cloud Functions | Event-driven, simple endpoints |
 | `Database` | AWS RDS PostgreSQL | Data storage |
 | `Storage` | GCP Cloud Storage | File uploads |
+| `Secret` | Platform secrets manager | API keys, credentials |
 
 ### Usage
 
 ```typescript
-import { Api, Database, Storage, Function } from 'palindrom-ai/infra';
+import { Api, Database, Storage, Secret } from 'palindrom-ai/infra';
 
 const db = new Database("Main");
 const bucket = new Storage("Uploads");
+const apiKey = new Secret("StripeApiKey");
 
 const api = new Api("Backend", {
-  link: [db, bucket],
+  link: [db, bucket, apiKey],
 });
 ```
 

@@ -15,7 +15,7 @@ Use the `palindrom-ai/github-actions` reusable workflows for all CI/CD.
 - Use `palindrom-ai/github-actions` for all workflows — never write raw workflow YAML
 - OIDC authentication to both AWS and GCP (no static keys)
 - Cross-account OIDC policies enable AWS ↔ GCP access where needed
-- Trunk-based development (merge to main)
+- Branch-per-environment strategy (dev/stag/prod branches)
 
 ### What the Package Provides
 
@@ -38,13 +38,42 @@ pnpm add -D check-my-toolkit
 
 This is run automatically in CI via the `lint` action.
 
-### Environments
+### Git & Deployment Strategy
 
-| Environment | Trigger |
-|-------------|---------|
-| `development` | Auto on push to main |
-| `staging` | Auto after dev passes |
-| `production` | Manual approval |
+Branches mirror environments:
+
+| Branch | URL | AWS Account |
+|--------|-----|-------------|
+| `dev` | dev.yourapp.com | Dev |
+| `stag` | stag.yourapp.com | Stag |
+| `prod` | yourapp.com | Prod |
+
+Each branch auto-deploys to its matching environment with branch-specific environment variables pointing to the corresponding AWS account.
+
+#### Prototype Phase
+
+New projects start simple—just `main` deploying to a preview URL. No extra branches, no ceremony. Ship fast.
+
+#### Once You Have Users
+
+Graduate to the full flow:
+
+- **dev** = active development, prototyping, might break
+- **stag** = pre-production testing, mirrors prod
+- **prod** = production, what users see
+
+Set `dev` as the default branch in GitHub so PRs target it by default. Merging up (`dev → stag → prod`) promotes code through environments.
+
+#### Vercel Setup
+
+- **Production branch:** `prod`
+- **Preview branches:** `dev`, `stag`, feature branches
+- Assign custom domains to each branch
+- Set environment variables per branch (database URLs, AWS credentials, API keys)
+
+#### Key Benefit
+
+Branch names match environment names match AWS accounts. No confusion. Push to a branch, it deploys to the matching environment automatically.
 
 ### Repository to AWS OU Mapping
 
@@ -83,8 +112,10 @@ When resources in one OU need access to another (e.g., application accessing dat
 ### Deployment Flow
 
 ```
-main → dev (auto) → staging (auto) → production (manual approval)
+dev → stag → prod
 ```
+
+Merging up promotes code through environments. Each branch auto-deploys to its matching environment.
 
 ### Required Checks
 
@@ -98,7 +129,7 @@ All must pass before deploy:
 ### Rollback
 
 - **Failed deploy:** Auto-rollback on failure
-- **Bug in prod:** Revert commit or re-run previous successful deploy
+- **Bug in prod:** Revert the merge to prod or re-run previous successful deploy
 
 ### What NOT to Do
 
@@ -106,6 +137,6 @@ All must pass before deploy:
 - Use long-lived AWS keys
 - Write custom workflow YAML
 - Skip checks
-- Deploy directly to production
+- Push directly to prod (always go through dev → stag first)
 
 Refer to [palindrom-ai/github-actions](https://github.com/palindrom-ai/github-actions) for usage.

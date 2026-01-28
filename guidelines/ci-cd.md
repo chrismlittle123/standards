@@ -52,7 +52,7 @@ Each branch auto-deploys to its matching environment with branch-specific enviro
 
 #### Prototype Phase
 
-New projects start simple—just `main` deploying to a preview URL. No extra branches, no ceremony. Ship fast.
+New projects start simple—just `main` branch deploying to the **Dev AWS account**. No extra branches, no ceremony. Ship fast.
 
 #### Once You Have Users
 

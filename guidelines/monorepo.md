@@ -32,8 +32,11 @@ All monorepos use Turborepo with pnpm workspaces.
 my-monorepo/
 ├── apps/
 │   ├── web/              # Next.js frontend
+│   │   └── standards.toml    # Project-specific standards
 │   ├── api/              # Fastify backend
+│   │   └── standards.toml    # Project-specific standards
 │   └── admin/            # Admin dashboard
+│       └── standards.toml    # Project-specific standards
 ├── packages/
 │   ├── ui/               # Shared UI components
 │   ├── db/               # Drizzle schema & client
@@ -41,8 +44,52 @@ my-monorepo/
 │   └── config/           # Shared ESLint, TS configs
 ├── turbo.json
 ├── pnpm-workspace.yaml
-└── package.json
+├── package.json
+└── standards.toml            # Root standards (metadata & processes)
 ```
+
+### standards.toml Configuration
+
+Monorepos require **two levels** of standards.toml:
+
+1. **Root `standards.toml`** - Defines metadata and processes
+2. **Per-project `standards.toml`** - Defines code quality standards and tool enforcement
+
+**Root standards.toml (metadata & processes):**
+```toml
+[metadata]
+name = "my-monorepo"
+type = "monorepo"
+description = "Description of the monorepo"
+
+[processes]
+ci = "turbo run lint test build"
+deploy = "turbo run deploy"
+```
+
+**Project standards.toml (code quality & tools):**
+```toml
+[metadata]
+name = "web"
+type = "typescript-frontend"
+tier = "production"
+
+[tools.eslint]
+enabled = true
+config = "../../packages/config/eslint"
+
+[tools.typescript]
+enabled = true
+strict = true
+
+[tools.prettier]
+enabled = true
+```
+
+Each app and package that contains source code should have its own `standards.toml` defining:
+- The tier (prototype, internal, production)
+- Enabled linting/formatting tools
+- Tool-specific configuration
 
 ### Configuration
 

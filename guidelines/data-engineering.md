@@ -4,6 +4,9 @@ title: Data Engineering
 category: data
 priority: 3
 tags: [python, pyspark, data, etl]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Data engineering standards for ETL pipelines and PySpark"
 ---
 
 ## Data Engineering

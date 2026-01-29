@@ -4,6 +4,9 @@ title: Repository Standards
 category: architecture
 priority: 1
 tags: [repository, metadata, standards]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Repository metadata, structure, and documentation standards"
 ---
 
 ## Repository Standards

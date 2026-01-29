@@ -4,6 +4,9 @@ title: Authentication
 category: security
 priority: 1
 tags: [typescript, python, auth, security, backend]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Authentication patterns and session management standards"
 ---
 
 ## Authentication

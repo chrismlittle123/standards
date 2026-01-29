@@ -4,6 +4,9 @@ title: Database
 category: infrastructure
 priority: 6
 tags: [typescript, database, postgresql, drizzle, orm, backend]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Database standards for PostgreSQL, Drizzle ORM, and migrations"
 ---
 
 ## Database

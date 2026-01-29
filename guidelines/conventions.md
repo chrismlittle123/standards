@@ -4,6 +4,9 @@ title: Data Conventions
 category: architecture
 priority: 1
 tags: [typescript, python, json, api, backend, frontend]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Data format conventions for JSON, dates, IDs, and naming"
 ---
 
 ## Data Conventions

@@ -4,6 +4,9 @@ title: Observability
 category: operations
 priority: 2
 tags: [typescript, python, logging, observability, backend]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Logging, tracing, and monitoring standards"
 ---
 
 ## Observability

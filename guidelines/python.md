@@ -4,6 +4,9 @@ title: Python
 category: architecture
 priority: 2
 tags: [python, llm, livekit-agents]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Python language standards for LLM and data services"
 ---
 
 ## Python

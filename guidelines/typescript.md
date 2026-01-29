@@ -4,6 +4,9 @@ title: TypeScript
 category: architecture
 priority: 1
 tags: [typescript, nodejs, backend, frontend]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "TypeScript language and tooling standards for all services"
 ---
 
 ## TypeScript

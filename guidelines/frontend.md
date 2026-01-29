@@ -4,6 +4,9 @@ title: Frontend
 category: architecture
 priority: 5
 tags: [typescript, nextjs, react, frontend, vercel]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Frontend architecture standards for Next.js and React"
 ---
 
 ## Frontend

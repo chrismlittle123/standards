@@ -4,6 +4,9 @@ title: Monorepo
 category: architecture
 priority: 4
 tags: [typescript, turborepo, pnpm, monorepo]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "Monorepo structure and Turborepo configuration standards"
 ---
 
 ## Monorepo

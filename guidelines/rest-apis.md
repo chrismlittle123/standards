@@ -4,6 +4,9 @@ title: REST APIs
 category: architecture
 priority: 2
 tags: [typescript, python, api, zod, pydantic, backend]
+author: Engineering Team
+lastUpdated: "2024-03-15"
+summary: "REST API design standards including validation and error handling"
 ---
 
 ## REST APIs

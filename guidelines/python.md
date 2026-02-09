@@ -142,10 +142,10 @@ This applies to:
 
 ### Standards Enforcement
 
-Use `check-my-toolkit` to enforce Palindrom standards.
+Use `@standards-kit/conform` to enforce Palindrom standards.
 
 ```bash
-uv add --dev check-my-toolkit
+uv add --dev @standards-kit/conform
 ```
 
 Every repository must have a `standards.toml` in the root that specifies which ruleset to use:

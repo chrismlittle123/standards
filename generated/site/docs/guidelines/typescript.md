@@ -45,14 +45,14 @@ See [Python guideline](./python.md) for those cases.
 - Use strict TypeScript (`strict: true`)
 - Use pnpm (not npm or yarn)
 - Use ESLint for linting
-- Use `check-my-toolkit` to enforce standards
+- Use `@standards-kit/conform` to enforce standards
 - Prefer `type` over `interface` for consistency
 - Max 400 lines per file, 50 lines per function
 
 ### Standards Enforcement
 
 ```bash
-pnpm add -D check-my-toolkit
+pnpm add -D @standards-kit/conform
 ```
 
-Run `check-my-toolkit` in CI to validate project structure and configuration against Palindrom standards.
+Run `@standards-kit/conform` in CI to validate project structure and configuration against Palindrom standards.

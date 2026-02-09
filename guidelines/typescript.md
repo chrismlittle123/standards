@@ -55,7 +55,7 @@ See [Python guideline](./python.md) for those cases.
 - Use strict TypeScript (`strict: true`)
 - Use pnpm (not npm or yarn)
 - Use ESLint for linting
-- Use `check-my-toolkit` to enforce standards
+- Use `@standards-kit/conform` to enforce standards
 - Prefer `type` over `interface` for consistency
 - Max 400 lines per file, 50 lines per function
 - See [Testing guideline](./testing.md) for test structure
@@ -82,10 +82,10 @@ This applies to:
 
 ### Standards Enforcement
 
-Use `check-my-toolkit` to enforce Palindrom standards.
+Use `@standards-kit/conform` to enforce Palindrom standards.
 
 ```bash
-pnpm add -D check-my-toolkit
+pnpm add -D @standards-kit/conform
 ```
 
 Every repository must have a `standards.toml` in the root that specifies which ruleset to use:

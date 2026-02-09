@@ -22,10 +22,10 @@ Use the `palindrom-ai/github-actions` reusable workflows for all CI/CD.
 
 ### Standards Enforcement
 
-All repos must use `check-my-toolkit` to validate against Palindrom standards:
+All repos must use `@standards-kit/conform` to validate against Palindrom standards:
 
 ```bash
-pnpm add -D check-my-toolkit
+pnpm add -D @standards-kit/conform
 ```
 
 This is run automatically in CI via the `lint` action.

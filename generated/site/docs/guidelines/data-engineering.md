@@ -1,33 +1,20 @@
 
 ## Data Engineering
 
-Use `palindrom-ai/databricks-utils` for all data engineering on Databricks.
-
 ### Requirements
 
-- Use `palindrom-ai/databricks-utils` for shared utilities
 - All transformations in Python (PySpark)
-- Deploy with Databricks Asset Bundles
 - Alert failures to SigNoz via `palindrom-ai/monitoring`
-
-### Installation
-
-```bash
-uv add palindrom-ai/databricks-utils
-```
 
 ### Stack
 
 | Area | Choice |
 |------|--------|
-| Platform | Databricks |
 | Language | Python (PySpark) |
 | Architecture | Medallion (bronze/silver/gold) |
 | Storage | Parquet in S3 |
 | Schema registry | Apicurio |
-| Orchestration | Databricks Workflows |
-| Deployment | Databricks Asset Bundles |
-| Testing | Custom pytest |
+| Testing | pytest |
 
 ### Medallion Architecture
 
@@ -37,19 +24,64 @@ uv add palindrom-ai/databricks-utils
 | Silver | Cleaned, validated, deduplicated |
 | Gold | Business-ready, aggregations, features |
 
-### Deployment
-
-```bash
-databricks bundle deploy -t dev
-databricks bundle deploy -t prod
-```
-
 ### What NOT to Do
 
 - Write SQL-only notebooks
 - Use dbt
-- Store data in workspace storage
 - Deploy manually
 - Skip testing
 
-Refer to [palindrom-ai/databricks-utils](https://github.com/palindrom-ai/databricks-utils) for utilities.
+### S3 Bucket Standard
+
+#### Bucket Structure
+
+All projects must use separate buckets by purpose, not prefixes within a single bucket.
+
+| Bucket Suffix | Versioning | Lifecycle | Purpose |
+|---------------|------------|-----------|---------|
+| `-raw-landing` | ON | 90 days | Incoming data uploads |
+| `-warehouse` | ON | 30 days | Iceberg/Delta tables |
+| `-temp` | OFF | 7 days | Intermediate processing |
+| `-artifacts` | ON | None | Models, configs, outputs |
+| `-logs` | OFF | 90 days | Application logs |
+
+#### Naming Convention
+
+```
+{project}-{purpose}-{env}
+```
+
+Example: `analytics-warehouse-prod`, `ml-raw-landing-dev`
+
+#### Required Configuration
+
+**All buckets:**
+- Block public access: enabled
+- Encryption: SSE-S3 (minimum) or SSE-KMS
+- Access logging: enabled, sent to `-logs` bucket
+
+**Versioned buckets:**
+- Lifecycle rule to expire non-current versions per table above
+- Lifecycle rule to abort incomplete multipart uploads after 7 days
+
+**Temp buckets:**
+- Lifecycle rule to delete all objects after 7 days
+
+#### Rationale
+
+Separate buckets enable:
+- Per-bucket versioning and lifecycle policies
+- Simpler IAM policies (bucket-level grants)
+- Independent cost tracking
+- Blast radius containment
+
+#### What Not To Do
+
+- ❌ Single bucket with `/raw/`, `/warehouse/`, `/temp/` prefixes
+- ❌ Versioning on temp/staging data (wasted cost)
+- ❌ No lifecycle rules on versioned buckets (unbounded growth)
+- ❌ Public access on any bucket
+
+#### Enforcement
+
+New buckets require review. Non-compliant buckets flagged in monthly audit.

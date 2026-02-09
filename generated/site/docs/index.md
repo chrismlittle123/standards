@@ -12,18 +12,20 @@ Composable coding standards and guidelines for Palindrom projects.
 | Guideline | Category | Tags |
 |-----------|----------|------|
 | [Authentication](guidelines/auth.md) | security | typescript, python, auth, security, backend |
-| [Secrets Management](guidelines/secrets.md) | security | typescript, python, secrets, security, cloud |
+| [Data Conventions](guidelines/conventions.md) | architecture | typescript, python, json, api, backend, frontend |
+| [Repository Standards](guidelines/repository.md) | architecture | repository, metadata, standards |
 | [TypeScript](guidelines/typescript.md) | architecture | typescript, nodejs, backend, frontend |
-| [CI/CD & Deployment](guidelines/ci-cd.md) | operations | typescript, python, github-actions, pulumi, deployment |
+| [CI/CD & Deployment](guidelines/ci-cd.md) | operations | typescript, python, github-actions, pulumi, deployment, aws, gcp |
 | [Observability](guidelines/observability.md) | operations | typescript, python, logging, observability, backend |
-| [Python](guidelines/python.md) | architecture | python, llm, databricks, livekit-agents |
+| [Python](guidelines/python.md) | architecture | python, llm, livekit-agents |
 | [REST APIs](guidelines/rest-apis.md) | architecture | typescript, python, api, zod, pydantic, backend |
-| [Data Engineering](guidelines/data-engineering.md) | data | python, databricks, pyspark, data, etl |
+| [Testing](guidelines/testing.md) | architecture | testing, unit, integration, e2e |
+| [Data Engineering](guidelines/data-engineering.md) | data | python, pyspark, data, etl |
 | [LLM Services](guidelines/llm.md) | operations | python, llm, langfuse, observability, ai, rag, evals |
-| [Monorepo](guidelines/monorepo.md) | architecture | typescript, turborepo, pnpm, monorepo |
+| [Monorepo](guidelines/monorepo.md) | architecture | typescript, pnpm, monorepo |
 | [Frontend](guidelines/frontend.md) | architecture | typescript, nextjs, react, frontend, vercel |
 | [Database](guidelines/database.md) | infrastructure | typescript, database, postgresql, drizzle, orm, backend |
-| [Backend Deployment](guidelines/backend-deployment.md) | infrastructure | typescript, python, gcp, cloud-run, cloud-functions, deployment, backend |
+| [Backend Deployment](guidelines/backend-deployment.md) | infrastructure | typescript, python, gcp, aws, cloud-run, cloud-functions, deployment, backend |
 
 ## Rulesets Overview
 

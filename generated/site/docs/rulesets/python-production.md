@@ -12,6 +12,7 @@
 #### Lint
 
 - **select**: `E`, `F`, `I`, `UP`, `B`, `S`, `C4`, `RUF`
+- **ignore**: `E501`
 
 ### Types
 

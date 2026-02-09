@@ -45,10 +45,13 @@ nav:
   - Guidelines:
       - guidelines/index.md
       - Architecture:
+          - "Data Conventions": guidelines/conventions.md
           - "Frontend": guidelines/frontend.md
           - "Monorepo": guidelines/monorepo.md
           - "Python": guidelines/python.md
+          - "Repository Standards": guidelines/repository.md
           - "REST APIs": guidelines/rest-apis.md
+          - "Testing": guidelines/testing.md
           - "TypeScript": guidelines/typescript.md
       - Data & AI:
           - "Data Engineering": guidelines/data-engineering.md
@@ -61,7 +64,6 @@ nav:
           - "Observability": guidelines/observability.md
       - Security:
           - "Authentication": guidelines/auth.md
-          - "Secrets Management": guidelines/secrets.md
   - Rulesets:
       - rulesets/index.md
       - Python:

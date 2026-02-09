@@ -2,7 +2,7 @@
   "mcpServers": {
     "cm-standards": {
       "command": "npx",
-      "args": ["check-my-toolkit@latest", "mcp"]
+      "args": ["@standards-kit/conform@latest", "mcp"]
     }
   }
 }

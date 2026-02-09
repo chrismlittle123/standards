@@ -62,7 +62,7 @@ pnpm generate
 
 ## Usage
 
-This repo is consumed by the `check-my-toolkit` MCP server, which dynamically composes relevant guidelines based on project context.
+This repo is consumed by the `@standards-kit/conform` MCP server, which dynamically composes relevant guidelines based on project context.
 
 The MCP server:
 1. Reads guideline metadata and tags

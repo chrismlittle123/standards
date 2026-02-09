@@ -3,30 +3,27 @@ id: monorepo
 title: Monorepo
 category: architecture
 priority: 4
-tags: [typescript, turborepo, pnpm, monorepo]
+tags: [typescript, pnpm, monorepo]
 author: Engineering Team
 lastUpdated: "2024-03-15"
-summary: "Monorepo structure and Turborepo configuration standards"
+summary: "Monorepo structure and pnpm workspace standards"
 ---
 
 ## Monorepo
 
-All monorepos use Turborepo with pnpm workspaces.
+All monorepos use pnpm workspaces.
 
 ### Stack
 
 | Tool | Purpose |
 |------|---------|
-| Turborepo | Task orchestration, caching |
-| pnpm workspaces | TypeScript package management |
+| pnpm workspaces | Package management, task orchestration |
 | uv | Python package management |
 
 ### Requirements
 
-- Use Turborepo for all monorepos (works with multiple languages)
-- Use pnpm workspaces for TypeScript package linking
+- Use pnpm workspaces for package management and task orchestration
 - Use uv for Python dependencies
-- Enable remote caching in CI (via Vercel)
 - Never use npm or yarn
 
 ### Standard Structure
@@ -45,7 +42,6 @@ my-monorepo/
 │   ├── db/               # Drizzle schema & client
 │   ├── types/            # Shared TypeScript types
 │   └── config/           # Shared ESLint, TS configs
-├── turbo.json
 ├── pnpm-workspace.yaml
 ├── package.json
 └── standards.toml            # Root standards (metadata & processes)
@@ -66,8 +62,8 @@ type = "monorepo"
 description = "Description of the monorepo"
 
 [processes]
-ci = "turbo run lint test build"
-deploy = "turbo run deploy"
+ci = "pnpm -r lint && pnpm -r test && pnpm -r build"
+deploy = "pnpm -r deploy"
 ```
 
 **Project standards.toml (code quality & tools):**
@@ -103,30 +99,6 @@ packages:
   - 'packages/*'
 ```
 
-**turbo.json:**
-```json
-{
-  "$schema": "https://turbo.build/schema.json",
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "lint": {
-      "dependsOn": ["^build"]
-    },
-    "test": {
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    }
-  }
-}
-```
-
 ### Commands
 
 ```bash
@@ -150,17 +122,6 @@ my-monorepo/
 │   └── shared/           # Shared types (pnpm)
 ├── python/
 │   └── llm-service/      # Python LLM service (uv)
-├── turbo.json
 ├── pnpm-workspace.yaml
 └── pyproject.toml        # Root Python config
 ```
-
-Turborepo orchestrates tasks across both ecosystems.
-
-### Why Turborepo
-
-- Intelligent caching (never rebuild unchanged packages)
-- Parallel task execution
-- Remote caching for CI
-- Simple configuration (single `turbo.json`)
-- Works with pnpm workspaces and uv

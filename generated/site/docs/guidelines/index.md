@@ -5,13 +5,15 @@ Architectural and implementation standards for Palindrom projects.
 ## Security
 
 - [Authentication](auth.md)
-- [Secrets Management](secrets.md)
 
 ## Architecture
 
+- [Data Conventions](conventions.md)
+- [Repository Standards](repository.md)
 - [TypeScript](typescript.md)
 - [Python](python.md)
 - [REST APIs](rest-apis.md)
+- [Testing](testing.md)
 - [Monorepo](monorepo.md)
 - [Frontend](frontend.md)
 

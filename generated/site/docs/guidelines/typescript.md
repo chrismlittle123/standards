@@ -7,8 +7,8 @@ TypeScript is the default language for almost everything.
 
 | Use Case | Example |
 |----------|---------|
-| AWS Lambda functions | API handlers, webhooks |
-| Backend APIs | Fastify services |
+| Backend APIs | Fastify services on GCP Cloud Run |
+| GCP Cloud Functions | Event-driven endpoints, webhooks |
 | Frontend | Next.js applications |
 | Infrastructure | Pulumi |
 | Configuration | ESLint, build tools |
@@ -17,11 +17,11 @@ TypeScript is the default language for almost everything.
 
 ### When NOT to Use TypeScript
 
-Only use Python when you need an existing Python `palindrom-ai/` package:
+Use Python instead for:
 
 - `palindrom-ai/llm` — LLM services
-- `palindrom-ai/databricks-utils` — Data pipelines
 - `palindrom-ai/livekit-agents` — Voice/video agents
+- **AWS Lambda functions** — Data engineering, ETL triggers (Python Lambda ecosystem is mature)
 
 See [Python guideline](./python.md) for those cases.
 
@@ -48,11 +48,46 @@ See [Python guideline](./python.md) for those cases.
 - Use `@standards-kit/conform` to enforce standards
 - Prefer `type` over `interface` for consistency
 - Max 400 lines per file, 50 lines per function
+- See [Testing guideline](./testing.md) for test structure
+
+### Constants
+
+Never hard-code values that may need to change. Define constants for replaceability.
+
+```typescript
+// Bad - magic number
+if (retries > 3) { ... }
+
+// Good - named constant
+const MAX_RETRIES = 3;
+if (retries > MAX_RETRIES) { ... }
+```
+
+This applies to:
+- Numeric thresholds and limits
+- URL endpoints and API paths
+- Configuration values
+- Error messages that may need translation
+- Any value that appears more than once
 
 ### Standards Enforcement
+
+Use `@standards-kit/conform` to enforce Palindrom standards.
 
 ```bash
 pnpm add -D @standards-kit/conform
 ```
 
-Run `@standards-kit/conform` in CI to validate project structure and configuration against Palindrom standards.
+Every repository must have a `standards.toml` in the root that specifies which ruleset to use:
+
+```toml
+[standards]
+ruleset = "typescript-production"  # or typescript-internal, typescript-prototype
+```
+
+Available rulesets:
+- `typescript-production` — Customer-facing services (strictest)
+- `typescript-internal` — Internal tools and services
+- `typescript-prototype` — Experimental projects (most relaxed)
+
+Run in CI to validate project structure and configuration against Palindrom standards.

@@ -41,9 +41,25 @@ pnpm add -D @standards-kit/conform
 
 This is run automatically in CI via the `lint` action.
 
-### Git & Deployment Strategy
+### Git & Branching Strategy
 
 Branches mirror environments:
+
+| Branch | Environment |
+|--------|-------------|
+| `dev` | Development — active work, may break |
+| `stag` | Staging — pre-production, mirrors prod |
+| `prod` | Production — what users see |
+
+Set `dev` as the default branch in GitHub so PRs target it by default. Merging up (`dev → stag → prod`) promotes code through environments.
+
+#### Prototype Phase
+
+New projects start simple — just `main` branch, no extra branches, no ceremony. Ship fast. Graduate to the full `dev → stag → prod` flow once you have users.
+
+### Backend Deployment
+
+Backend services deploy to AWS/GCP via Pulumi through `palindrom-ai/github-actions`.
 
 | Branch | URL | AWS Account |
 |--------|-----|-------------|
@@ -51,32 +67,16 @@ Branches mirror environments:
 | `stag` | stag.yourapp.com | Stag |
 | `prod` | yourapp.com | Prod |
 
-Each branch auto-deploys to its matching environment with branch-specific environment variables pointing to the corresponding AWS account.
+Each branch auto-deploys to its matching environment with branch-specific environment variables pointing to the corresponding AWS account. Branch names match environment names match AWS accounts — no confusion.
 
-#### Prototype Phase
+### Frontend Deployment
 
-New projects start simple—just `main` branch deploying to the **Dev AWS account**. No extra branches, no ceremony. Ship fast.
-
-#### Once You Have Users
-
-Graduate to the full flow:
-
-- **dev** = active development, prototyping, might break
-- **stag** = pre-production testing, mirrors prod
-- **prod** = production, what users see
-
-Set `dev` as the default branch in GitHub so PRs target it by default. Merging up (`dev → stag → prod`) promotes code through environments.
-
-#### Vercel Setup
+Frontends deploy to Vercel. The same branch strategy applies:
 
 - **Production branch:** `prod`
 - **Preview branches:** `dev`, `stag`, feature branches
 - Assign custom domains to each branch
-- Set environment variables per branch (database URLs, AWS credentials, API keys)
-
-#### Key Benefit
-
-Branch names match environment names match AWS accounts. No confusion. Push to a branch, it deploys to the matching environment automatically.
+- Set environment variables per branch (API URLs, feature flags)
 
 ### Repository to AWS OU Mapping
 

@@ -57,7 +57,7 @@ See [Python guideline](./python.md) for those cases.
 - Use ESLint for linting
 - Use `@standards-kit/conform` to enforce standards
 
-- Max 400 lines per file, 50 lines per function
+
 - See [Testing guideline](./testing.md) for test structure
 
 ### Constants

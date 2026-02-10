@@ -28,7 +28,6 @@ If your service doesn't need one of these, use TypeScript instead.
 ### When NOT to Use Python
 
 Use TypeScript for:
-- AWS Lambda functions
 - Backend APIs (use Fastify via `palindrom-ai/fastify-base`)
 - Frontend
 - Infrastructure config

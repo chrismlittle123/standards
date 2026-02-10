@@ -56,7 +56,7 @@ See [Python guideline](./python.md) for those cases.
 - Use pnpm (not npm or yarn)
 - Use ESLint for linting
 - Use `@standards-kit/conform` to enforce standards
-- Prefer `type` over `interface` for consistency
+
 - Max 400 lines per file, 50 lines per function
 - See [Testing guideline](./testing.md) for test structure
 

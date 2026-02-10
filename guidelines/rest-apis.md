@@ -15,7 +15,7 @@ All APIs must use the standard base packages with Zod as the single source of tr
 
 ### Requirements
 
-- Use `palindrom-ai/fastify-base` for TypeScript APIs (Fastify)
+- Use `palindrom-ai/fastify-api` for TypeScript APIs (Fastify)
 - Use `palindrom-ai/llm` for Python LLM APIs (FastAPI is wrapped inside — never build FastAPI directly)
 - Define all schemas in Zod (TypeScript)
 - Generate OpenAPI from Zod, generate Pydantic from OpenAPI
@@ -25,14 +25,14 @@ All APIs must use the standard base packages with Zod as the single source of tr
 ### Type Flow
 
 ```
-Zod schemas ──► fastify-base ──► openapi.yaml ──► llm package ──► Pydantic
+Zod schemas ──► fastify-api ──► openapi.yaml ──► llm package ──► Pydantic
 ```
 
 ### Installation
 
 **TypeScript:**
 ```bash
-pnpm add palindrom-ai/fastify-base
+pnpm add palindrom-ai/fastify-api
 ```
 
 **Python:**

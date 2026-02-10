@@ -28,7 +28,7 @@ If your service doesn't need one of these, use TypeScript instead.
 ### When NOT to Use Python
 
 Use TypeScript for:
-- Backend APIs (use Fastify via `palindrom-ai/fastify-base`)
+- Backend APIs (use Fastify via `palindrom-ai/fastify-api`)
 - Frontend
 - Infrastructure config
 - CLI tools

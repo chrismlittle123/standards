@@ -1,0 +1,59 @@
+# Agent Instructions
+
+## Project Overview
+
+<!-- 3-5 lines: what is this project, language/framework, tier -->
+
+{{PROJECT_NAME}} is a {{PROJECT_TYPE}} built with {{LANGUAGE/FRAMEWORK}}.
+
+- **Tier:** {{internal|production}}
+- **Package:** {{PACKAGE_NAME}}
+
+## Quick Reference
+
+| Task | Command |
+|------|---------|
+| Install | `{{INSTALL_CMD}}` |
+| Build | `{{BUILD_CMD}}` |
+| Test | `{{TEST_CMD}}` |
+| Lint | `{{LINT_CMD}}` |
+| Type check | `{{TYPECHECK_CMD}}` |
+
+## Architecture
+
+<!-- 5-10 lines: high-level structure, key directories -->
+
+```
+{{DIRECTORY_TREE}}
+```
+
+See `docs/` for detailed architecture documentation.
+
+## Standards & Guidelines
+
+This project uses [@standards-kit/conform](https://github.com/chrismlittle123/standards-kit) for coding standards.
+
+- **Config:** `standards.toml` (extends `{{RULESET}}` from the standards registry)
+- **Guidelines:** https://chrismlittle123.github.io/standards/
+
+Use the MCP tools to query standards at any time:
+
+| Tool | Purpose |
+|------|---------|
+| `get_standards` | Get guidelines matching a context (e.g., `typescript fastapi`) |
+| `list_guidelines` | List all available guidelines |
+| `get_guideline` | Get a specific guideline by ID |
+| `get_ruleset` | Get a tool configuration ruleset (e.g., `typescript-production`) |
+
+## Workflow
+
+- **Branch:** Create feature branches from `main`
+- **CI:** {{CI_DESCRIPTION}}
+- **Deploy:** {{DEPLOY_DESCRIPTION}}
+- **Commits:** Use conventional commits (`feat:`, `fix:`, `chore:`, etc.)
+
+## Project-Specific Notes
+
+<!-- 0-30 lines: anything unique to this project -->
+
+{{PROJECT_NOTES}}

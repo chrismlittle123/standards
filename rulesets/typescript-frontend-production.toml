@@ -114,3 +114,22 @@ folder_case = "kebab-case"
 
 [code.quality.disable-comments]
 enabled = true
+
+# =============================================================================
+# Process - Git Hooks
+# =============================================================================
+
+[process.hooks]
+enabled = true
+require_husky = true
+require_hooks = ["pre-push", "commit-msg"]
+
+# =============================================================================
+# Process - Commit Conventions
+# =============================================================================
+
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100

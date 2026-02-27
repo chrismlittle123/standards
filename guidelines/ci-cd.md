@@ -28,7 +28,6 @@ Use the `chrismlittle123/github-actions` reusable workflows for all CI/CD.
 | `test` | Run tests with coverage reporting |
 | `build` | Build TypeScript/Python packages |
 | `deploy` | Deploy via Pulumi with OIDC auth |
-| `publish-npm` | Publish packages to npm registry |
 | `docker-build` | Build and push Docker images |
 
 ### Standards Enforcement

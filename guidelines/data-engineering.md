@@ -3,9 +3,9 @@ id: data-engineering
 title: Data Engineering
 category: data
 priority: 3
-tags: [python, pyspark, data, etl]
+tags: [python, pyspark, data, etl, gcs, gcp]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Data engineering standards for ETL pipelines and PySpark"
 ---
 
@@ -14,7 +14,7 @@ summary: "Data engineering standards for ETL pipelines and PySpark"
 ### Requirements
 
 - All transformations in Python (PySpark)
-- Alert failures to SigNoz via `palindrom-ai/monitoring`
+- Alert failures to SigNoz using the OpenTelemetry Python SDK (`opentelemetry-api`, `opentelemetry-sdk`)
 
 ### Stack
 
@@ -22,7 +22,7 @@ summary: "Data engineering standards for ETL pipelines and PySpark"
 |------|--------|
 | Language | Python (PySpark) |
 | Architecture | Medallion (bronze/silver/gold) |
-| Storage | Parquet in S3 |
+| Storage | Parquet in GCS |
 | Schema registry | Apicurio |
 | Testing | pytest |
 
@@ -41,7 +41,7 @@ summary: "Data engineering standards for ETL pipelines and PySpark"
 - Deploy manually
 - Skip testing
 
-### S3 Bucket Standard
+### GCS Bucket Standard
 
 #### Bucket Structure
 
@@ -66,12 +66,12 @@ Example: `analytics-warehouse-prod`, `ml-raw-landing-dev`
 #### Required Configuration
 
 **All buckets:**
-- Block public access: enabled
-- Encryption: SSE-S3 (minimum) or SSE-KMS
+- Uniform bucket-level access: enabled
+- Encryption: Google-managed (minimum) or CMEK
 - Access logging: enabled, sent to `-logs` bucket
 
 **Versioned buckets:**
-- Lifecycle rule to expire non-current versions per table above
+- Lifecycle rule to delete non-current versions per table above
 - Lifecycle rule to abort incomplete multipart uploads after 7 days
 
 **Temp buckets:**
@@ -87,10 +87,10 @@ Separate buckets enable:
 
 #### What Not To Do
 
-- ❌ Single bucket with `/raw/`, `/warehouse/`, `/temp/` prefixes
-- ❌ Versioning on temp/staging data (wasted cost)
-- ❌ No lifecycle rules on versioned buckets (unbounded growth)
-- ❌ Public access on any bucket
+- Single bucket with `/raw/`, `/warehouse/`, `/temp/` prefixes
+- Versioning on temp/staging data (wasted cost)
+- No lifecycle rules on versioned buckets (unbounded growth)
+- Public access on any bucket
 
 #### Enforcement
 

@@ -1,0 +1,35 @@
+[metadata]
+tier = "internal"
+
+[extends]
+registry = "github:progression-labs-development/standards"
+rulesets = ["base-internal"]
+
+[process.hooks]
+enabled = false
+
+[process.branches]
+enabled = false
+
+[process.docs]
+enabled = true
+allowlist = [
+  "README.md",
+  "CLAUDE.md",
+  "guidelines/auth.md",
+  "guidelines/backend-deployment.md",
+  "guidelines/ci-cd.md",
+  "guidelines/conventions.md",
+  "guidelines/data-engineering.md",
+  "guidelines/database.md",
+  "guidelines/frontend.md",
+  "guidelines/llm.md",
+  "guidelines/monorepo.md",
+  "guidelines/observability.md",
+  "guidelines/python.md",
+  "guidelines/repository.md",
+  "guidelines/rest-apis.md",
+  "guidelines/secrets.md",
+  "guidelines/testing.md",
+  "guidelines/typescript.md",
+]

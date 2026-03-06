@@ -1,5 +1,6 @@
 # TypeScript - Frontend Production
-# For React/frontend projects with strict checks
+# Strict checks for production-grade frontend code
+# Inherits from typescript-production with frontend-specific overrides
 
 # =============================================================================
 # ESLint
@@ -12,11 +13,11 @@ max-warnings = 0
 
 [code.linting.eslint.rules]
 
-# Code quality limits (frontend-specific: higher limits for components)
+# Code quality limits
 "max-depth" = { severity = "error", max = 4 }
 "max-params" = { severity = "error", max = 4 }
 "max-lines-per-function" = { severity = "error", max = 100 }
-"max-lines" = { severity = "error", max = 500 }
+"max-lines" = { severity = "error", max = 400 }
 "complexity" = "error"
 "no-console" = { severity = "error", allow = ["error", "warn"] }
 
@@ -84,6 +85,9 @@ enabled = true
 [code.security.pnpmaudit]
 enabled = true
 
+[code.security.dotenv]
+enabled = true
+
 # =============================================================================
 # Dead Code Detection
 # =============================================================================
@@ -114,3 +118,38 @@ folder_case = "kebab-case"
 
 [code.quality.disable-comments]
 enabled = true
+
+# =============================================================================
+# Dependencies
+# =============================================================================
+
+[code.dependencies]
+enabled = true
+forbidden_lockfiles = ["yarn.lock", "package-lock.json"]
+
+# =============================================================================
+# Imports
+# =============================================================================
+
+[code.imports]
+enabled = true
+
+[[code.imports.blocked]]
+modules = ["node-fetch", "axios", "request"]
+message = "Use built-in fetch"
+
+# =============================================================================
+# Testing
+# =============================================================================
+
+[code.testing]
+enabled = true
+no_network = true
+
+# =============================================================================
+# Coverage
+# =============================================================================
+
+[code.coverage_run]
+enabled = true
+min_threshold = 80

@@ -2,63 +2,78 @@
 id: backend-deployment
 title: Backend Deployment
 category: infrastructure
-priority: 7
-tags: [typescript, python, gcp, aws, cloud-run, cloud-functions, deployment, backend]
+priority: 3
+tags: [typescript, python, gcp, cloud-run, cloud-functions, deployment, backend, pulumi, gcs]
 author: Engineering Team
-lastUpdated: "2024-03-15"
-summary: "Deployment standards for backend services on GCP and AWS"
+lastUpdated: "2026-03-02"
+summary: "Deployment standards for backend services — GCP by default"
 ---
 
 ## Backend Deployment
 
-Use the `palindrom-ai/infra` package for all deployments.
+Use the `progression-labs-development/infra` package for all deployments.
+
+### Primary Cloud
+
+**GCP is our primary cloud.** All internal Progression Labs projects default to GCP services. When working inside a client's organisation, use whatever cloud that client uses.
 
 ### Requirements
 
-- Use `palindrom-ai/infra` for all infrastructure — never write raw Pulumi directly
-- Choose the right cloud for your workload (see below)
+- Use `progression-labs-development/infra` for all infrastructure — never write raw Pulumi directly
+- Default to GCP services unless there is a specific reason to use another provider
 - All infrastructure changes go through the package
+- Pulumi state backend must use GCS — never Pulumi Cloud or local file state
+
+### Pulumi State Backend
+
+**GCS is the required state backend for all Pulumi stacks.** Do not use Pulumi Cloud or local file state.
+
+- Bucket naming convention: `{project}-pulumi-state`
+- Versioning must be enabled on state buckets (protects against accidental state corruption)
+- One state bucket per project, shared across environments (dev/stag/prod stacks live in the same bucket)
+- When working in a client organisation, use their cloud's equivalent object storage (S3 for AWS, Azure Blob Storage for Azure)
 
 ### Installation
 
 ```bash
-pnpm add palindrom-ai/infra
+pnpm add progression-labs-development/infra
 ```
 
 ### Cloud Selection
 
-| Workload | Cloud | Why |
-|----------|-------|-----|
+Default to GCP. Only use AWS/Azure when working in a client organisation that requires it, or for a specific service that GCP does not offer an equivalent for.
+
+| Workload | Service | Notes |
+|----------|---------|-------|
 | APIs (Fastify) | GCP Cloud Run | Fast redeployments, scales to zero |
 | Long-running LLM services | GCP Cloud Run | Fast redeployments, no timeout limits |
-| Databases | AWS RDS | Managed PostgreSQL, set up once |
-| Monitoring infrastructure (SigNoz) | AWS | Set up once, rarely changes |
-| Static infrastructure | AWS | Set up once, rarely changes |
-
-**Rule of thumb:** If it redeploys frequently, use GCP Cloud Run. If it's set up once and rarely changes, use AWS.
+| Databases | GCP Cloud SQL | Managed PostgreSQL |
+| File storage | GCP Cloud Storage | File uploads |
+| Event-driven endpoints | GCP Cloud Functions | Simple triggers with no HTTP routing |
+| Monitoring infrastructure (SigNoz) | GCP Compute Engine | Self-hosted observability stack |
 
 ### What the Package Provides
 
 | Component | Service | Use Case |
 |-----------|---------|----------|
 | `Api` | GCP Cloud Run | Fastify APIs, LLM services |
-| `Function` | GCP Cloud Functions | Event-driven, simple endpoints |
-| `Database` | AWS RDS PostgreSQL | Data storage |
+| `Function` | GCP Cloud Functions | Event-driven endpoints (use `Api` for most workloads — Cloud Functions only for simple triggers with no HTTP routing) |
+| `Database` | GCP Cloud SQL | Data storage (managed PostgreSQL) |
 | `Storage` | GCP Cloud Storage | File uploads |
-| `Secret` | Platform secrets manager | API keys, credentials |
+| `Secret` | GCP Secret Manager | API keys, credentials |
 
 ### Usage
 
 ```typescript
-import { Api, Database, Storage, Secret } from 'palindrom-ai/infra';
+import { Api, Database, Storage, Secret } from 'progression-labs-development/infra';
 
 const db = new Database("Main");
 const bucket = new Storage("Uploads");
-const apiKey = new Secret("StripeApiKey");
+const apiKey = new Secret("stripe-api-key");
 
 const api = new Api("Backend", {
   link: [db, bucket, apiKey],
 });
 ```
 
-Refer to [palindrom-ai/infra](https://github.com/palindrom-ai/infra) for full documentation.
+Refer to [progression-labs-development/infra](https://github.com/progression-labs-development/infra) for full documentation.

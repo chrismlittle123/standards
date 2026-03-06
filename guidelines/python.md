@@ -2,47 +2,47 @@
 id: python
 title: Python
 category: architecture
-priority: 2
-tags: [python, llm, livekit-agents]
+priority: 1
+tags: [python, uv, pydantic, ruff, llm, livekit-agent]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Python language standards for LLM and data services"
 ---
 
 ## Python
 
-Python is only used when you need an existing Python `palindrom-ai/` package.
+Python is only used when you need an existing Python `progression-labs-development/` package.
 
 ### When to Use Python
 
 | Package / Platform | Use Case |
 |--------------------|----------|
-| `palindrom-ai/llm` | LLM services, RAG, evals |
-| `palindrom-ai/livekit-agents` | Voice/video agents |
-| AWS Lambda | Data engineering, ETL triggers, S3 event handlers |
+| `progression-labs-development/llm` | LLM services, RAG, evals |
+| `progression-labs-development/livekit-agent` | Voice/video agents |
+| GCP Cloud Functions | Data engineering, ETL triggers, event handlers |
 
-**Why Python for Lambda?** The Python Lambda ecosystem is mature with well-tested patterns for data engineering workflows. All Lambda functions are exclusively for data pipelines, not APIs.
+**Why Python for Cloud Functions?** The Python ecosystem is mature with well-tested patterns for data engineering workflows. All Cloud Functions are exclusively for data pipelines, not APIs.
 
 If your service doesn't need one of these, use TypeScript instead.
 
 ### When NOT to Use Python
 
 Use TypeScript for:
-- Backend APIs (use Fastify via `palindrom-ai/fastify-api`)
+- Backend APIs (use Fastify via `progression-labs-development/fastify-api`)
 - Frontend
 - Infrastructure config
 - CLI tools
 - General backend services
 
-**Note:** FastAPI is only used internally within `palindrom-ai/llm` — never build FastAPI services directly.
+**Note:** FastAPI is only used internally within `progression-labs-development/llm` — never build FastAPI services directly.
 
 ### Requirements
 
-- All significant Python code should be abstracted into `palindrom-ai/` packages
+- All significant Python code should be abstracted into `progression-labs-development/` packages
 - Standalone Python scripts are allowed but should be kept minimal (e.g., one-off scripts, simple utilities)
 - If you're writing substantial Python, you're either:
   1. Contributing to an existing package, or
-  2. Creating a new `palindrom-ai/` package
+  2. Creating a new `progression-labs-development/` package
 
 ### Stack
 
@@ -52,6 +52,7 @@ Use TypeScript for:
 | uv | Package manager (required) |
 | Ruff | Linting |
 | ty | Type checking |
+| Vulture | Dead code detection (production/internal only) |
 | Pydantic | Data modeling |
 | pytest | Testing (see [Testing guideline](./testing.md)) |
 
@@ -110,8 +111,8 @@ Commit both `pyproject.toml` and `uv.lock` to version control.
 Python code lives in dedicated package repos:
 
 ```
-palindrom-ai/llm/              # LLM package
-palindrom-ai/livekit-agents/   # LiveKit package
+progression-labs-development/llm/              # LLM package
+progression-labs-development/livekit-agent/   # LiveKit package
 ```
 
 Application repos import these packages — they don't contain Python source code.
@@ -141,22 +142,24 @@ This applies to:
 
 ### Standards Enforcement
 
-Use `@standards-kit/conform` to enforce Palindrom standards.
+Use `@progression-labs-development/conform` to enforce Progression Labs standards. This is an npm package — install it from the TypeScript side of your monorepo or run it via `npx`:
 
 ```bash
-uv add --dev @standards-kit/conform
+npx @progression-labs-development/conform validate
 ```
 
-Every repository must have a `standards.toml` in the root that specifies which ruleset to use:
+Each project needs a `standards.toml` that specifies which code ruleset to use:
 
 ```toml
 [standards]
 ruleset = "python-production"  # or python-internal, python-prototype
 ```
 
-Available rulesets:
+Available code rulesets:
 - `python-production` — Customer-facing services (strictest)
 - `python-internal` — Internal tools and services
 - `python-prototype` — Experimental projects (most relaxed)
 
-Run in CI to validate project structure and configuration against Palindrom standards.
+The root `standards.toml` handles process standards (commits, hooks, branch protection) separately — see [Repository guideline](./repository.md).
+
+Run in CI to validate project structure and configuration against Progression Labs standards.

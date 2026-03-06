@@ -5,7 +5,7 @@ category: architecture
 priority: 2
 tags: [typescript, python, api, zod, pydantic, backend]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "REST API design standards including validation and error handling"
 ---
 
@@ -15,8 +15,8 @@ All APIs must use the standard base packages with Zod as the single source of tr
 
 ### Requirements
 
-- Use `palindrom-ai/fastify-api` for TypeScript APIs (Fastify)
-- Use `palindrom-ai/llm` for Python LLM APIs (FastAPI is wrapped inside — never build FastAPI directly)
+- Use `progression-labs-development/fastify-api` for TypeScript APIs (Fastify)
+- Use `progression-labs-development/llm` for Python LLM APIs (FastAPI is wrapped inside — never build FastAPI directly)
 - Define all schemas in Zod (TypeScript)
 - Generate OpenAPI from Zod, generate Pydantic from OpenAPI
 - Check generated files into version control
@@ -32,12 +32,12 @@ Zod schemas ──► fastify-api ──► openapi.yaml ──► llm package �
 
 **TypeScript:**
 ```bash
-pnpm add palindrom-ai/fastify-api
+pnpm add progression-labs-development/fastify-api
 ```
 
 **Python:**
 ```bash
-uv add palindrom-ai/llm
+uv add progression-labs-development/llm
 ```
 
 ### Generation Commands
@@ -65,7 +65,7 @@ pnpm generate:types --check # CI validation (fails if drift)
 import { z } from 'zod';
 
 export const UserSchema = z.object({
-  id: z.string().uuid(),
+  id: z.string(),  // Prefixed nanoid — see conventions guideline
   email: z.string().email(),
   name: z.string().min(1),
 });

@@ -1,8 +1,11 @@
 {
   "mcpServers": {
-    "cm-standards": {
+    "standards": {
       "command": "npx",
-      "args": ["@standards-kit/conform@latest", "mcp"]
+      "args": [
+        "@progression-labs-development/conform",
+        "mcp"
+      ]
     }
   }
 }

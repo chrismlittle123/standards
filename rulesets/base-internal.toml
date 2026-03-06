@@ -1,0 +1,107 @@
+# Base - Internal
+# Process standards for internal repositories (root standards.toml)
+
+# =============================================================================
+# Process - Git Hooks
+# =============================================================================
+
+[process.hooks]
+enabled = true
+require_husky = true
+require_hooks = ["pre-push", "commit-msg"]
+
+[process.hooks.templates]
+commit-msg = 'npx @progression-labs-development/conform process check-commit "$1"'
+pre-push = "npx @progression-labs-development/conform process check-branch"
+
+# =============================================================================
+# Process - Commit Conventions
+# =============================================================================
+
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100
+
+# =============================================================================
+# Process - Repository Settings
+# =============================================================================
+
+[process.repo]
+enabled = true
+require_branch_protection = true
+
+[process.repo.ruleset]
+branch = "prod"  # Library repos override to "main" in their standards.toml
+enforcement = "active"
+required_reviews = 1
+
+# =============================================================================
+# Process - CI
+# =============================================================================
+
+[process.ci]
+enabled = true
+
+# =============================================================================
+# Process - Branch Naming
+# =============================================================================
+
+[process.branches]
+enabled = true
+pattern = "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release)/.+"
+exclude = ["main", "prod", "stag", "dev"]
+
+# =============================================================================
+# Process - Documentation
+# =============================================================================
+
+[process.docs]
+enabled = true
+path = "docs/"
+enforcement = "block"
+required_files = ["README.md", "CLAUDE.md", "docs/ARCHITECTURE.md", "docs/FEATURES.md"]
+allowlist = ["README.md", "CLAUDE.md", "CHANGELOG.md", "LICENSE.md"]
+
+[process.docs.types.architecture]
+frontmatter = ["title", "owner", "last_reviewed", "tracks"]
+required_sections = ["Overview"]
+
+[process.docs.types.features]
+frontmatter = ["title", "owner", "last_reviewed"]
+
+# =============================================================================
+# Process - Forbidden Files
+# =============================================================================
+
+[process.forbidden_files]
+enabled = true
+files = [".env", ".env.local", "*.pem", "*.key"]
+
+# =============================================================================
+# Process - Workflows
+# =============================================================================
+
+[process.workflows]
+enabled = true
+allowed_sources = ["progression-labs-development/github-actions"]
+allowed_actions = ["progression-labs-development/github-actions/", "google-github-actions/", "pnpm/"]
+require_oidc = true
+
+# =============================================================================
+# Process - Coverage
+# =============================================================================
+
+[process.coverage]
+enabled = true
+min_threshold = 80
+
+# =============================================================================
+# Process - Pull Requests
+# =============================================================================
+
+[process.pr]
+enabled = true
+max_files = 30
+max_lines = 1000

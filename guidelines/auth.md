@@ -5,27 +5,27 @@ category: security
 priority: 1
 tags: [typescript, python, auth, security, backend]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Authentication patterns and session management standards"
 ---
 
 ## Authentication
 
-All authentication must use the `palindrom-ai/auth` package for web applications.
+All authentication uses Clerk, accessed through the appropriate wrapper for each layer.
 
 ### Requirements
 
-- Use `palindrom-ai/auth` for all web app authentication — never integrate Clerk directly
+- **Backend APIs:** Use `progression-labs-development/auth` (Fastify plugin wrapping `@clerk/backend`) — never import `@clerk/backend` directly in application code
+- **Frontends:** Use `@clerk/nextjs` directly — the auth package does not cover the frontend layer
 - Enable only the auth methods your project needs (Google, Microsoft, Email/Password)
 - MFA is optional and configured per-project
-- Refer to the [palindrom-ai/auth](https://github.com/palindrom-ai/auth) repository for implementation details
+- Refer to the [progression-labs-development/auth](https://github.com/progression-labs-development/auth) repository for implementation details
 
 ### Integration
 
-Auth is integrated into the base packages — you don't install it directly:
-
-- **TypeScript APIs:** `palindrom-ai/fastify-api` includes auth middleware
-- **Python LLM services:** `palindrom-ai/llm` includes auth validation
+- **TypeScript APIs:** `progression-labs-development/fastify-api` includes the auth middleware from `progression-labs-development/auth`
+- **Python LLM services:** `progression-labs-development/llm` includes auth validation
+- **Frontends:** Use `@clerk/nextjs` for client-side auth (sign-in, sign-up, session management)
 - **Frontend BFF:** Auth token exchange in Next.js API routes is allowed for the BFF layer
 
 ### Supported Methods
@@ -40,4 +40,4 @@ Auth is integrated into the base packages — you don't install it directly:
 
 ### Deviations
 
-If your project needs auth features not in `palindrom-ai/auth`, extend the package rather than bypassing it. Document any project-specific deviations in an ADR.
+If your project needs auth features not in `progression-labs-development/auth`, extend the package rather than bypassing it. Document any project-specific deviations in an ADR.

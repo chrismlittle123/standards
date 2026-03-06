@@ -3,9 +3,9 @@ id: monorepo
 title: Monorepo
 category: architecture
 priority: 4
-tags: [typescript, pnpm, monorepo]
+tags: [typescript, python, pnpm, uv, monorepo]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Monorepo structure and pnpm workspace standards"
 ---
 
@@ -51,44 +51,22 @@ my-monorepo/
 
 Monorepos require **two levels** of standards.toml:
 
-1. **Root `standards.toml`** - Defines metadata and processes
-2. **Per-project `standards.toml`** - Defines code quality standards and tool enforcement
+1. **Root `standards.toml`** — Process standards (commits, hooks, branch protection). Uses a `base-*` ruleset.
+2. **Per-project `standards.toml`** — Code standards (linting, types, security). Uses a language-specific ruleset.
 
-**Root standards.toml (metadata & processes):**
+**Root standards.toml (process):**
 ```toml
-[metadata]
-name = "my-monorepo"
-type = "monorepo"
-description = "Description of the monorepo"
-
-[processes]
-ci = "pnpm -r lint && pnpm -r test && pnpm -r build"
-deploy = "pnpm -r deploy"
+[standards]
+ruleset = "base-production"
 ```
 
-**Project standards.toml (code quality & tools):**
+**Per-project standards.toml (code):**
 ```toml
-[metadata]
-name = "web"
-type = "typescript-frontend"
-tier = "production"
-
-[tools.eslint]
-enabled = true
-config = "../../packages/config/eslint"
-
-[tools.typescript]
-enabled = true
-strict = true
-
-[tools.prettier]
-enabled = true
+[standards]
+ruleset = "typescript-frontend-production"
 ```
 
-Each app and package that contains source code should have its own `standards.toml` defining:
-- The tier (prototype, internal, production)
-- Enabled linting/formatting tools
-- Tool-specific configuration
+Each app and package that contains source code should have its own `standards.toml` referencing the appropriate code ruleset for its language and tier.
 
 ### Configuration
 

@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+branch=$(git symbolic-ref --short HEAD)
+
+# Skip checks on protected branches
+case "$branch" in
+  main|prod|stag|dev) exit 0 ;;
+esac
+
+# Validate branch naming convention
+pattern="^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release)/.+"
+
+if ! echo "$branch" | grep -qE "$pattern"; then
+  echo "Branch name '$branch' does not follow the naming convention."
+  echo "Expected: <type>/<description>"
+  echo "Types: feat, fix, chore, docs, refactor, test, style, perf, ci, build, hotfix, release"
+  exit 1
+fi

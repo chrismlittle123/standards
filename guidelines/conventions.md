@@ -5,7 +5,7 @@ category: architecture
 priority: 1
 tags: [typescript, python, json, api, backend, frontend]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Data format conventions for JSON, dates, IDs, and naming"
 ---
 

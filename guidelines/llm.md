@@ -1,28 +1,28 @@
 ---
 id: llm
 title: LLM Services
-category: operations
+category: architecture
 priority: 3
 tags: [python, llm, langfuse, observability, ai, rag, evals]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Standards for LLM services, RAG pipelines, and AI observability"
 ---
 
 ## LLM Services
 
-Use the `palindrom-ai/llm` package for all LLM functionality.
+Use the `progression-labs-development/llm` package for all LLM functionality.
 
 ### Requirements
 
-- Use `palindrom-ai/llm` for all LLM calls — never integrate providers directly
-- Use `palindrom-ai/llm` for all LLM observability — never integrate Langfuse directly
-- Use `palindrom-ai/llm` for RAG and evaluations
+- Use `progression-labs-development/llm` for all LLM calls — never integrate providers directly
+- Use `progression-labs-development/llm` for all LLM observability — never integrate Langfuse directly
+- Use `progression-labs-development/llm` for RAG and evaluations
 
 ### Installation
 
 ```bash
-uv add palindrom-ai/llm
+uv add progression-labs-development/llm
 ```
 
 ### What the Package Provides
@@ -58,7 +58,7 @@ All LLM calls must include:
 
 ### Correlation with App Logs
 
-Use the same `requestId` in both `palindrom-ai/monitoring` and `palindrom-ai/llm` to correlate:
+Use the same `requestId` in both `progression-labs-development/monitoring` and `progression-labs-development/llm` to correlate:
 - SigNoz error → Langfuse LLM trace
 - LLM latency spike → App request that triggered it
 
@@ -69,4 +69,4 @@ Use the same `requestId` in both `palindrom-ai/monitoring` and `palindrom-ai/llm
 - Skip metadata on LLM calls
 - Use different correlation IDs between app and LLM logs
 
-Refer to [palindrom-ai/llm](https://github.com/palindrom-ai/llm) for full documentation.
+Refer to [progression-labs-development/llm](https://github.com/progression-labs-development/llm) for full documentation.

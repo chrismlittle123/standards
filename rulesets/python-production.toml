@@ -5,7 +5,7 @@
 enabled = true
 
 [code.linting.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "S", "C4", "RUF"]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "RUF"]
 ignore = ["E501"]
 
 [code.types.ty]
@@ -14,8 +14,63 @@ enabled = true
 [code.unused.vulture]
 enabled = true
 
+# =============================================================================
+# Security
+# =============================================================================
+
 [code.security.secrets]
 enabled = true
 
 [code.security.pipaudit]
 enabled = true
+
+[code.security.dotenv]
+enabled = true
+
+# =============================================================================
+# Naming Conventions
+# =============================================================================
+
+[code.naming]
+enabled = true
+
+[[code.naming.rules]]
+extensions = ["py"]
+file_case = "snake_case"
+folder_case = "snake_case"
+
+# =============================================================================
+# Dependencies
+# =============================================================================
+
+[code.dependencies]
+enabled = true
+forbidden_lockfiles = ["requirements.txt", "Pipfile", "Pipfile.lock", "poetry.lock"]
+
+# =============================================================================
+# Imports
+# =============================================================================
+
+[code.imports]
+enabled = true
+
+[[code.imports.blocked]]
+modules = ["openai", "anthropic", "langfuse"]
+message = "Use progression-labs-development/llm"
+
+# =============================================================================
+# Testing
+# =============================================================================
+
+[code.testing]
+enabled = true
+no_network = true
+
+# =============================================================================
+# Coverage
+# =============================================================================
+
+[code.coverage_run]
+enabled = true
+min_threshold = 80
+runner = "pytest"

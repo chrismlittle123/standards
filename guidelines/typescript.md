@@ -3,9 +3,9 @@ id: typescript
 title: TypeScript
 category: architecture
 priority: 1
-tags: [typescript, nodejs, backend, frontend]
+tags: [typescript, nodejs, pnpm, eslint, backend, frontend]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "TypeScript language and tooling standards for all services"
 ---
 
@@ -23,15 +23,15 @@ TypeScript is the default language for almost everything.
 | Infrastructure | Pulumi |
 | Configuration | ESLint, build tools |
 | CLI tools | Internal tooling |
-| Shared packages | `palindrom-ai/auth`, `palindrom-ai/monitoring` |
+| Shared packages | `progression-labs-development/auth`, `progression-labs-development/fastify-api` |
 
 ### When NOT to Use TypeScript
 
 Use Python instead for:
 
-- `palindrom-ai/llm` — LLM services
-- `palindrom-ai/livekit-agents` — Voice/video agents
-- **AWS Lambda functions** — Data engineering, ETL triggers (Python Lambda ecosystem is mature)
+- `progression-labs-development/llm` — LLM services
+- `progression-labs-development/livekit-agent` — Voice/video agents
+- **GCP Cloud Functions** — Data engineering, ETL triggers
 
 See [Python guideline](./python.md) for those cases.
 
@@ -43,6 +43,8 @@ See [Python guideline](./python.md) for those cases.
 | pnpm | Package manager |
 | TypeScript 5.4+ | Language |
 | ESLint | Linting |
+| Knip | Dead code detection |
+| Husky | Git hooks (pre-push, commit-msg) |
 
 ### Naming Conventions
 
@@ -55,9 +57,7 @@ See [Python guideline](./python.md) for those cases.
 - Use strict TypeScript (`strict: true`)
 - Use pnpm (not npm or yarn)
 - Use ESLint for linting
-- Use `@standards-kit/conform` to enforce standards
-
-
+- Use `@progression-labs-development/conform` to enforce standards
 - See [Testing guideline](./testing.md) for test structure
 
 ### Constants
@@ -82,22 +82,26 @@ This applies to:
 
 ### Standards Enforcement
 
-Use `@standards-kit/conform` to enforce Palindrom standards.
+Use `@progression-labs-development/conform` to enforce Progression Labs standards.
 
 ```bash
-pnpm add -D @standards-kit/conform
+pnpm add -D @progression-labs-development/conform
 ```
 
-Every repository must have a `standards.toml` in the root that specifies which ruleset to use:
+Each project needs a `standards.toml` that specifies which code ruleset to use:
 
 ```toml
 [standards]
 ruleset = "typescript-production"  # or typescript-internal, typescript-prototype
 ```
 
-Available rulesets:
+Available code rulesets:
 - `typescript-production` — Customer-facing services (strictest)
 - `typescript-internal` — Internal tools and services
 - `typescript-prototype` — Experimental projects (most relaxed)
 
-Run in CI to validate project structure and configuration against Palindrom standards.
+For frontend projects, use the frontend-specific rulesets instead — see [Frontend guideline](./frontend.md).
+
+The root `standards.toml` handles process standards (commits, hooks, branch protection) separately — see [Repository guideline](./repository.md).
+
+Run in CI to validate project structure and configuration against Progression Labs standards.

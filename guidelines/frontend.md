@@ -5,20 +5,20 @@ category: architecture
 priority: 5
 tags: [typescript, nextjs, react, frontend, vercel]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Frontend architecture standards for Next.js and React"
 ---
 
 ## Frontend
 
-All frontends use Next.js with the `palindrom-ai/ui` component library.
+All frontends use Next.js. New frontends should use the `progression-labs-development/ui` component library for consistency.
 
 ### Stack
 
 - Next.js (App Router)
 - TypeScript
 - Tailwind CSS
-- `palindrom-ai/ui` (shared component library)
+- `progression-labs-development/ui` (shared component library)
 - Vercel for deployment
 
 ### Architecture
@@ -38,24 +38,40 @@ Only allowed as a thin BFF layer:
 - Aggregating backend calls
 - Proxying to avoid CORS
 
-**Not allowed:** Business logic, database access, anything requiring unit tests.
+**Not allowed:** Business logic, database access, or anything complex enough to need unit tests. API routes should be simple pass-throughs.
 
 ### Components
 
-Use `palindrom-ai/ui` for all standard components. This gives all Palindrom apps a consistent look and feel.
+New frontends should use `progression-labs-development/ui` for standard components. This gives all Progression Labs apps a consistent look and feel.
 
 ```bash
-pnpm add palindrom-ai/ui
+pnpm add progression-labs-development/ui
 ```
 
-- Use `palindrom-ai/ui` components by default for simplicity
+- Use `progression-labs-development/ui` components for new projects
 - Custom components are allowed when needed, but prefer extending the library
-- Built with React + Tailwind CSS
+- Built with React + Tailwind CSS + Radix UI primitives
 
 ### API Client Generation
 
-`palindrom-ai/ui` includes tooling to generate a typed API client from your backend's OpenAPI spec. Works with both TypeScript (Fastify) and Python (FastAPI via `palindrom-ai/llm`) backends.
+`progression-labs-development/ui` includes tooling to generate a typed API client from your backend's OpenAPI spec. Works with both TypeScript (Fastify) and Python (FastAPI via `progression-labs-development/llm`) backends.
 
 - Type-safe frontend API calls
 - Stays in sync with backend schemas (Zod → OpenAPI → client)
 - No manual API client code
+
+### Standards Enforcement
+
+Frontend projects use frontend-specific code rulesets that include React and Next.js rules on top of the base TypeScript rules:
+
+```toml
+[standards]
+ruleset = "typescript-frontend-production"  # or typescript-frontend-internal
+```
+
+Available code rulesets:
+- `typescript-frontend-production` — Customer-facing frontends (strictest)
+- `typescript-frontend-internal` — Internal dashboards and tools
+- `typescript-frontend-prototype` — Experimental frontends (most relaxed)
+
+The root `standards.toml` handles process standards separately — see [Repository guideline](./repository.md).

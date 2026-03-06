@@ -2,10 +2,10 @@
 id: database
 title: Database
 category: infrastructure
-priority: 6
+priority: 4
 tags: [typescript, database, postgresql, drizzle, orm, backend]
 author: Engineering Team
-lastUpdated: "2024-03-15"
+lastUpdated: "2025-02-26"
 summary: "Database standards for PostgreSQL, Drizzle ORM, and migrations"
 ---
 
@@ -23,7 +23,7 @@ All databases use RDS PostgreSQL with Drizzle ORM.
 
 - All database access through Drizzle ORM
 - Connection strings stored in the platform's secrets manager
-- Separate databases per environment (dev, staging, production)
+- Separate databases per environment (dev, stag, prod)
 - No direct database access from frontend
 
 ### Migrations

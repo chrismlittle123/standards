@@ -1,5 +1,6 @@
 # TypeScript - Frontend Internal
-# For React/frontend projects with moderate checks
+# Strict checks for internal frontend tools and services
+# Inherits from typescript-internal with frontend-specific overrides
 
 # =============================================================================
 # ESLint
@@ -12,11 +13,11 @@ max-warnings = 0
 
 [code.linting.eslint.rules]
 
-# Code quality limits (frontend-specific: higher limits for components)
+# Code quality limits
 "max-depth" = { severity = "error", max = 4 }
 "max-params" = { severity = "error", max = 4 }
 "max-lines-per-function" = { severity = "error", max = 100 }
-"max-lines" = { severity = "error", max = 500 }
+"max-lines" = { severity = "error", max = 400 }
 "complexity" = "error"
 "no-console" = { severity = "error", allow = ["error", "warn"] }
 
@@ -37,11 +38,24 @@ max-warnings = 0
 # Import plugin (disabled for frontend - too slow on large React codebases)
 "import/no-cycle" = "off"
 
-# TypeScript-ESLint - Basic checks (AST-based, fast)
+# TypeScript-ESLint - Type safety
 "@typescript-eslint/no-unused-vars" = { severity = "error", argsIgnorePattern = "^_", varsIgnorePattern = "^_" }
 "@typescript-eslint/no-explicit-any" = "error"
 "@typescript-eslint/no-non-null-assertion" = "error"
+"@typescript-eslint/no-unnecessary-condition" = "error"
+"@typescript-eslint/no-unsafe-assignment" = "error"
+"@typescript-eslint/no-unsafe-call" = "error"
+"@typescript-eslint/no-unsafe-member-access" = "error"
+"@typescript-eslint/no-unsafe-return" = "error"
 "@typescript-eslint/no-empty-object-type" = "off"
+
+# TypeScript-ESLint - Async/Promise safety
+"@typescript-eslint/no-floating-promises" = "error"
+"@typescript-eslint/no-misused-promises" = "error"
+"@typescript-eslint/await-thenable" = "error"
+
+# TypeScript-ESLint - Exhaustiveness
+"@typescript-eslint/switch-exhaustiveness-check" = "error"
 
 # =============================================================================
 # TypeScript Compiler
@@ -71,6 +85,9 @@ enabled = true
 [code.security.pnpmaudit]
 enabled = true
 
+[code.security.dotenv]
+enabled = true
+
 # =============================================================================
 # Dead Code Detection
 # =============================================================================
@@ -94,3 +111,45 @@ folder_case = "kebab-case"
 extensions = ["tsx"]
 file_case = "kebab-case"
 folder_case = "kebab-case"
+
+# =============================================================================
+# Disable Comments Detection
+# =============================================================================
+
+[code.quality.disable-comments]
+enabled = true
+
+# =============================================================================
+# Dependencies
+# =============================================================================
+
+[code.dependencies]
+enabled = true
+forbidden_lockfiles = ["yarn.lock", "package-lock.json"]
+
+# =============================================================================
+# Imports
+# =============================================================================
+
+[code.imports]
+enabled = true
+
+[[code.imports.blocked]]
+modules = ["node-fetch", "axios", "request"]
+message = "Use built-in fetch"
+
+# =============================================================================
+# Testing
+# =============================================================================
+
+[code.testing]
+enabled = true
+no_network = true
+
+# =============================================================================
+# Coverage
+# =============================================================================
+
+[code.coverage_run]
+enabled = true
+min_threshold = 80

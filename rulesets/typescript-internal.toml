@@ -1,5 +1,5 @@
 # TypeScript - Internal
-# Moderate checks for internal tools and services
+# Strict checks for internal tools and services
 
 # =============================================================================
 # ESLint
@@ -15,8 +15,8 @@ max-warnings = 0
 # Code quality limits
 "max-depth" = { severity = "error", max = 4 }
 "max-params" = { severity = "error", max = 4 }
-"max-lines-per-function" = "error"
-"max-lines" = { severity = "error", max = 400 }
+"max-lines-per-function" = { severity = "error", max = 100 }
+"max-lines" = { severity = "error", max = 500 }
 "complexity" = "error"
 "no-console" = { severity = "error", allow = ["error", "warn"] }
 
@@ -37,7 +37,7 @@ max-warnings = 0
 # Import plugin
 "import/no-cycle" = { severity = "error", maxDepth = 2 }
 
-# TypeScript-ESLint - Basic checks (AST-based, fast)
+# TypeScript-ESLint - Type safety
 "@typescript-eslint/no-unused-vars" = { severity = "error", argsIgnorePattern = "^_", varsIgnorePattern = "^_" }
 "@typescript-eslint/no-explicit-any" = "error"
 "@typescript-eslint/no-non-null-assertion" = "error"
@@ -51,11 +51,6 @@ enabled = true
 
 [code.types.tsc.require]
 strict = true
-noImplicitAny = true
-strictNullChecks = true
-noUnusedLocals = true
-noImplicitReturns = true
-noFallthroughCasesInSwitch = true
 esModuleInterop = true
 skipLibCheck = true
 forceConsistentCasingInFileNames = true
@@ -68,6 +63,9 @@ forceConsistentCasingInFileNames = true
 enabled = true
 
 [code.security.pnpmaudit]
+enabled = true
+
+[code.security.dotenv]
 enabled = true
 
 # =============================================================================
@@ -88,3 +86,50 @@ enabled = true
 extensions = ["ts"]
 file_case = "kebab-case"
 folder_case = "kebab-case"
+
+[[code.naming.rules]]
+extensions = ["tsx"]
+file_case = "kebab-case"
+folder_case = "kebab-case"
+
+# =============================================================================
+# Disable Comments Detection
+# =============================================================================
+
+[code.quality.disable-comments]
+enabled = true
+
+# =============================================================================
+# Dependencies
+# =============================================================================
+
+[code.dependencies]
+enabled = true
+forbidden_lockfiles = ["yarn.lock", "package-lock.json"]
+
+# =============================================================================
+# Imports
+# =============================================================================
+
+[code.imports]
+enabled = true
+
+[[code.imports.blocked]]
+modules = ["node-fetch", "axios", "request"]
+message = "Use built-in fetch"
+
+# =============================================================================
+# Testing
+# =============================================================================
+
+[code.testing]
+enabled = true
+no_network = true
+
+# =============================================================================
+# Coverage
+# =============================================================================
+
+[code.coverage_run]
+enabled = true
+min_threshold = 80

@@ -1,0 +1,38 @@
+# Base - Prototype
+# Process standards for prototype repositories (root standards.toml)
+
+# =============================================================================
+# Process - Commit Conventions
+# =============================================================================
+
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100
+
+# =============================================================================
+# Process - Documentation
+# =============================================================================
+
+[process.docs]
+enabled = true
+path = "docs/"
+enforcement = "block"
+required_files = ["README.md", "CLAUDE.md", "docs/ARCHITECTURE.md", "docs/FEATURES.md"]
+allowlist = ["README.md", "CLAUDE.md", "CHANGELOG.md", "LICENSE.md"]
+
+[process.docs.types.architecture]
+frontmatter = ["title", "owner", "last_reviewed", "tracks"]
+required_sections = ["Overview"]
+
+[process.docs.types.features]
+frontmatter = ["title", "owner", "last_reviewed"]
+
+# =============================================================================
+# Process - Forbidden Files
+# =============================================================================
+
+[process.forbidden_files]
+enabled = true
+files = [".env", ".env.local", "*.pem", "*.key"]

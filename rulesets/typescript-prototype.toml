@@ -3,3 +3,21 @@
 
 [code.linting.eslint]
 enabled = true
+
+# =============================================================================
+# Security
+# =============================================================================
+
+[code.security.secrets]
+enabled = true
+
+[code.security.dotenv]
+enabled = true
+
+# =============================================================================
+# Dependencies
+# =============================================================================
+
+[code.dependencies]
+enabled = true
+forbidden_lockfiles = ["yarn.lock", "package-lock.json"]

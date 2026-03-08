@@ -3,7 +3,7 @@
     "standards": {
       "command": "npx",
       "args": [
-        "@progression-labs-development/conform",
+        "@progression-labs/conform",
         "mcp"
       ]
     }

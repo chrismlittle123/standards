@@ -11,8 +11,8 @@ require_husky = true
 require_hooks = ["pre-push", "commit-msg"]
 
 [process.hooks.templates]
-commit-msg = 'npx @progression-labs-development/conform process check-commit "$1"'
-pre-push = "npx @progression-labs-development/conform process check-branch"
+commit-msg = 'npx @progression-labs/conform process check-commit "$1"'
+pre-push = "npx @progression-labs/conform process check-branch"
 
 # =============================================================================
 # Process - Commit Conventions

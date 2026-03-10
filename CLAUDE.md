@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is the central registry of coding standards, guidelines, and rulesets for Progression Labs. It is consumed by the `@progression-labs-development/conform` MCP server, which dynamically composes relevant guidelines based on project context.
+This is the central registry of coding standards, guidelines, and rulesets for Progression Labs. It is consumed by the `@progression-labs-dev/conform` MCP server, which dynamically composes relevant guidelines based on project context.
 
 ## Commands
 
 | Task | Command |
 |------|---------|
-| Validate rulesets | `npx @progression-labs-development/conform validate registry` |
-| Validate guidelines | `npx @progression-labs-development/conform validate guidelines ./guidelines` |
+| Validate rulesets | `npx @progression-labs-dev/conform validate registry` |
+| Validate guidelines | `npx @progression-labs-dev/conform validate guidelines ./guidelines` |
 
 ## Structure
 

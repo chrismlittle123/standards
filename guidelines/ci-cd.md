@@ -11,12 +11,12 @@ summary: "CI/CD pipeline standards using GitHub Actions and Pulumi"
 
 ## CI/CD & Deployment
 
-Use the `progression-labs-development/github-actions` reusable workflows for all CI/CD.
+Use the `progression-labs-dev/github-actions` reusable workflows for all CI/CD.
 
 ### Requirements
 
-- Use `progression-labs-development/github-actions` reusable actions for CI workflows (lint, test, build, standards checks)
-- Infrastructure deployments must use the `deploy` reusable action from `progression-labs-development/github-actions`
+- Use `progression-labs-dev/github-actions` reusable actions for CI workflows (lint, test, build, standards checks)
+- Infrastructure deployments must use the `deploy` reusable action from `progression-labs-dev/github-actions`
 - Publish workflows may use custom YAML but must follow OIDC patterns below
 - OIDC authentication to GCP (no static keys). When working in a client org, use their cloud's OIDC equivalent
 - Branch-per-environment strategy (dev/stag/prod branches) for service repos
@@ -34,10 +34,10 @@ Use the `progression-labs-development/github-actions` reusable workflows for all
 
 ### Standards Enforcement
 
-All repos must use `@progression-labs-development/conform` to validate against Progression Labs standards:
+All repos must use `@progression-labs-dev/conform` to validate against Progression Labs standards:
 
 ```bash
-pnpm add -D @progression-labs-development/conform
+pnpm add -D @progression-labs-dev/conform
 ```
 
 This is run automatically in CI via the `lint` action.
@@ -62,7 +62,7 @@ New projects start simple — just `prod` branch, no extra branches, no ceremony
 
 ### Backend Deployment
 
-All Pulumi deployments must use the `deploy` reusable action from `progression-labs-development/github-actions`. Do not write custom deployment workflow YAML for Pulumi — the `deploy` action handles OIDC auth, state backend configuration, and environment targeting.
+All Pulumi deployments must use the `deploy` reusable action from `progression-labs-dev/github-actions`. Do not write custom deployment workflow YAML for Pulumi — the `deploy` action handles OIDC auth, state backend configuration, and environment targeting.
 
 | Branch | URL | GCP Project |
 |--------|-----|-------------|
@@ -146,4 +146,4 @@ All must pass before deploy:
 - Skip checks
 - Push directly to prod (always go through dev → stag first)
 
-Refer to [progression-labs-development/github-actions](https://github.com/progression-labs-development/github-actions) for usage.
+Refer to [progression-labs-dev/github-actions](https://github.com/progression-labs-dev/github-actions) for usage.

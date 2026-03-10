@@ -49,7 +49,7 @@ project/
 
 ### CI Integration
 
-Tests run automatically in CI via `progression-labs-development/github-actions`:
+Tests run automatically in CI via `progression-labs-dev/github-actions`:
 
 - Unit and integration tests run on every PR
 - E2E tests run before merging to `stag` and `prod`

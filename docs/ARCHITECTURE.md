@@ -32,7 +32,7 @@ Repositories consume this repo by extending shared rulesets:
 
 ```toml
 [extends]
-registry = "github:progression-labs-development/standards"
+registry = "github:progression-labs-dev/standards"
 rulesets = ["base-internal"]
 ```
 

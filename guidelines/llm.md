@@ -11,18 +11,18 @@ summary: "Standards for LLM services, RAG pipelines, and AI observability"
 
 ## LLM Services
 
-Use the `progression-labs-development/llm` package for all LLM functionality.
+Use the `progression-labs-dev/llm` package for all LLM functionality.
 
 ### Requirements
 
-- Use `progression-labs-development/llm` for all LLM calls — never integrate providers directly
-- Use `progression-labs-development/llm` for all LLM observability — never integrate Langfuse directly
-- Use `progression-labs-development/llm` for RAG and evaluations
+- Use `progression-labs-dev/llm` for all LLM calls — never integrate providers directly
+- Use `progression-labs-dev/llm` for all LLM observability — never integrate Langfuse directly
+- Use `progression-labs-dev/llm` for RAG and evaluations
 
 ### Installation
 
 ```bash
-uv add progression-labs-development/llm
+uv add progression-labs-dev/llm
 ```
 
 ### What the Package Provides
@@ -58,7 +58,7 @@ All LLM calls must include:
 
 ### Correlation with App Logs
 
-Use the same `requestId` in both `progression-labs-development/monitoring` and `progression-labs-development/llm` to correlate:
+Use the same `requestId` in both `progression-labs-dev/monitoring` and `progression-labs-dev/llm` to correlate:
 - SigNoz error → Langfuse LLM trace
 - LLM latency spike → App request that triggered it
 
@@ -69,4 +69,4 @@ Use the same `requestId` in both `progression-labs-development/monitoring` and `
 - Skip metadata on LLM calls
 - Use different correlation IDs between app and LLM logs
 
-Refer to [progression-labs-development/llm](https://github.com/progression-labs-development/llm) for full documentation.
+Refer to [progression-labs-dev/llm](https://github.com/progression-labs-dev/llm) for full documentation.

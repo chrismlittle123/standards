@@ -17,15 +17,15 @@ All secrets must be stored in the cloud platform's secrets manager and registere
 
 Secrets are managed through two layers:
 
-1. **Infrastructure** — `progression-labs-development/infra` creates the secret resource in the cloud platform's secrets manager
+1. **Infrastructure** — `progression-labs-dev/infra` creates the secret resource in the cloud platform's secrets manager
 2. **Registry** — `pglabs registry secrets` tracks secret metadata (ownership, rotation, expiry)
 
 #### Step 1: Create the Secret Resource
 
-Create the secret resource using the `progression-labs-development/infra` package. Never use `gcloud`, `aws`, or `az` CLI commands to create or delete secret resources.
+Create the secret resource using the `progression-labs-dev/infra` package. Never use `gcloud`, `aws`, or `az` CLI commands to create or delete secret resources.
 
 ```typescript
-import { Secret } from 'progression-labs-development/infra';
+import { Secret } from 'progression-labs-dev/infra';
 
 const apiKey = new Secret("api/stripe-api-key");
 ```
@@ -91,7 +91,7 @@ Internal projects use GCP Secret Manager by default. When working inside a clien
 
 - No `.env` files — never store secrets locally
 - All secrets in the platform's secrets manager
-- All secret resources created through `progression-labs-development/infra`
+- All secret resources created through `progression-labs-dev/infra`
 - All secret values set through `pglabs` CLI
 - All secrets registered in the `pglabs` secret registry
 - Local dev authenticates via `gcloud auth` (or client platform CLI when working in a client org)
@@ -111,7 +111,7 @@ Secrets are loaded automatically by the base packages. CLI usage is only for aut
 
 ### GitHub Actions
 
-Prefer using `progression-labs-development/github-actions` reusable workflows which handle OIDC automatically. If writing custom workflows, use GCP Workload Identity Federation:
+Prefer using `progression-labs-dev/github-actions` reusable workflows which handle OIDC automatically. If writing custom workflows, use GCP Workload Identity Federation:
 
 ```yaml
 permissions:
@@ -137,7 +137,7 @@ Use kebab-case names scoped to the service:
 
 Examples: `api/stripe-api-key`, `llm-service/openai-key`
 
-The `progression-labs-development/infra` package automatically namespaces secrets by environment (via the Pulumi stack), so do not include the environment in the secret name.
+The `progression-labs-dev/infra` package automatically namespaces secrets by environment (via the Pulumi stack), so do not include the environment in the secret name.
 
 ### What NOT to Do
 
@@ -148,5 +148,5 @@ The `progression-labs-development/infra` package automatically namespaces secret
 - Put sensitive values in Pulumi code, config, or stack outputs
 - Commit secrets to git
 - Share secrets via Slack
-- Write raw Pulumi secret resources instead of using `progression-labs-development/infra`
+- Write raw Pulumi secret resources instead of using `progression-labs-dev/infra`
 - Skip registering secrets in the `pglabs` registry

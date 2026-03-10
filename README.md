@@ -60,11 +60,11 @@ Tool configurations at different strictness levels:
 
 ## Validation
 
-Validate guidelines and rulesets using `@progression-labs-development/conform`:
+Validate guidelines and rulesets using `@progression-labs-dev/conform`:
 
 ```bash
-npx @progression-labs-development/conform validate registry       # Validate rulesets/*.toml
-npx @progression-labs-development/conform validate guidelines ./guidelines  # Validate guideline frontmatter
+npx @progression-labs-dev/conform validate registry       # Validate rulesets/*.toml
+npx @progression-labs-dev/conform validate guidelines ./guidelines  # Validate guideline frontmatter
 ```
 
 ## Repository Docs Contract
@@ -108,7 +108,7 @@ Additional requirements:
 
 ## Usage
 
-This repo is consumed by the `@progression-labs-development/conform` MCP server, which dynamically composes relevant guidelines based on project context.
+This repo is consumed by the `@progression-labs-dev/conform` MCP server, which dynamically composes relevant guidelines based on project context.
 
 The MCP server:
 1. Reads guideline metadata and tags

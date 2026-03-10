@@ -11,7 +11,7 @@ summary: "Deployment standards for backend services — GCP by default"
 
 ## Backend Deployment
 
-Use the `progression-labs-development/infra` package for all deployments.
+Use the `progression-labs-dev/infra` package for all deployments.
 
 ### Primary Cloud
 
@@ -19,7 +19,7 @@ Use the `progression-labs-development/infra` package for all deployments.
 
 ### Requirements
 
-- Use `progression-labs-development/infra` for all infrastructure — never write raw Pulumi directly
+- Use `progression-labs-dev/infra` for all infrastructure — never write raw Pulumi directly
 - Default to GCP services unless there is a specific reason to use another provider
 - All infrastructure changes go through the package
 - Pulumi state backend must use GCS — never Pulumi Cloud or local file state
@@ -36,7 +36,7 @@ Use the `progression-labs-development/infra` package for all deployments.
 ### Installation
 
 ```bash
-pnpm add progression-labs-development/infra
+pnpm add progression-labs-dev/infra
 ```
 
 ### Cloud Selection
@@ -65,7 +65,7 @@ Default to GCP. Only use AWS/Azure when working in a client organisation that re
 ### Usage
 
 ```typescript
-import { Api, Database, Storage, Secret } from 'progression-labs-development/infra';
+import { Api, Database, Storage, Secret } from 'progression-labs-dev/infra';
 
 const db = new Database("Main");
 const bucket = new Storage("Uploads");
@@ -76,4 +76,4 @@ const api = new Api("Backend", {
 });
 ```
 
-Refer to [progression-labs-development/infra](https://github.com/progression-labs-development/infra) for full documentation.
+Refer to [progression-labs-dev/infra](https://github.com/progression-labs-dev/infra) for full documentation.

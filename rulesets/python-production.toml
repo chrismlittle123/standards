@@ -64,7 +64,6 @@ message = "Use progression-labs-development/llm"
 
 [code.testing]
 enabled = true
-no_network = true
 
 # =============================================================================
 # Coverage

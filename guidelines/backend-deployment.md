@@ -28,9 +28,9 @@ Use the `progression-labs-dev/infra` package for all deployments.
 
 **GCS is the required state backend for all Pulumi stacks.** Do not use Pulumi Cloud or local file state.
 
-- Bucket naming convention: `{project}-pulumi-state`
+- Bucket naming convention: `{project}-pulumi-state-{env}` (e.g., `platform-pulumi-state-platform`, `brief-pulumi-state-dev`)
+- One state bucket per project per environment
 - Versioning must be enabled on state buckets (protects against accidental state corruption)
-- One state bucket per project, shared across environments (dev/stag/prod stacks live in the same bucket)
 - When working in a client organisation, use their cloud's equivalent object storage (S3 for AWS, Azure Blob Storage for Azure)
 
 ### Installation

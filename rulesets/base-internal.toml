@@ -11,8 +11,8 @@ require_husky = true
 require_hooks = ["pre-push", "commit-msg"]
 
 [process.hooks.templates]
-commit-msg = 'pnpm dlx @progression-labs-development/conform process check-commit "$1"'
-pre-push = "pnpm dlx @progression-labs-development/conform process check-branch"
+commit-msg = 'pnpm dlx @progression-labs-dev/conform process check-commit "$1"'
+pre-push = "pnpm dlx @progression-labs-dev/conform process check-branch"
 
 # =============================================================================
 # Process - Commit Conventions
@@ -85,7 +85,7 @@ files = [".env", ".env.local", "*.pem", "*.key"]
 
 [process.workflows]
 enabled = true
-allowed_sources = ["progression-labs-development/github-actions"]
+allowed_sources = ["progression-labs-dev/github-actions"]
 require_oidc = true
 
 # =============================================================================

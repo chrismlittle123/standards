@@ -23,14 +23,14 @@ TypeScript is the default language for almost everything.
 | Infrastructure | Pulumi |
 | Configuration | ESLint, build tools |
 | CLI tools | Internal tooling |
-| Shared packages | `progression-labs-development/auth`, `progression-labs-development/fastify-api` |
+| Shared packages | `progression-labs-dev/auth`, `progression-labs-dev/fastify-api` |
 
 ### When NOT to Use TypeScript
 
 Use Python instead for:
 
-- `progression-labs-development/llm` — LLM services
-- `progression-labs-development/livekit-agent` — Voice/video agents
+- `progression-labs-dev/llm` — LLM services
+- `progression-labs-dev/livekit-agent` — Voice/video agents
 - **GCP Cloud Functions** — Data engineering, ETL triggers
 
 See [Python guideline](./python.md) for those cases.
@@ -57,7 +57,7 @@ See [Python guideline](./python.md) for those cases.
 - Use strict TypeScript (`strict: true`)
 - Use pnpm (not npm or yarn)
 - Use ESLint for linting
-- Use `@progression-labs-development/conform` to enforce standards
+- Use `@progression-labs-dev/conform` to enforce standards
 - See [Testing guideline](./testing.md) for test structure
 
 ### Constants
@@ -82,10 +82,10 @@ This applies to:
 
 ### Standards Enforcement
 
-Use `@progression-labs-development/conform` to enforce Progression Labs standards.
+Use `@progression-labs-dev/conform` to enforce Progression Labs standards.
 
 ```bash
-pnpm add -D @progression-labs-development/conform
+pnpm add -D @progression-labs-dev/conform
 ```
 
 Each project needs a `standards.toml` that specifies which code ruleset to use:

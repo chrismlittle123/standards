@@ -13,12 +13,12 @@ summary: "Logging, tracing, and monitoring standards"
 
 Observability has two parts: the **instrumentation** (in your app) and the **backend** (where telemetry goes).
 
-- **Instrumentation:** Built into `progression-labs-development/fastify-api`. Every Fastify API gets OpenTelemetry tracing, logging, and metrics automatically — no manual setup needed.
-- **Backend:** `progression-labs-development/monitoring` deploys and manages the SigNoz observability stack on GCP Compute Engine.
+- **Instrumentation:** Built into `progression-labs-dev/fastify-api`. Every Fastify API gets OpenTelemetry tracing, logging, and metrics automatically — no manual setup needed.
+- **Backend:** `progression-labs-dev/monitoring` deploys and manages the SigNoz observability stack on GCP Compute Engine.
 
 ### Requirements
 
-- Use `progression-labs-development/fastify-api` for TypeScript API instrumentation — never import `@opentelemetry/*` packages directly in application code
+- Use `progression-labs-dev/fastify-api` for TypeScript API instrumentation — never import `@opentelemetry/*` packages directly in application code
 - Use structured JSON logging with consistent fields
 - Include `requestId` in all log entries for correlation
 - Never log secrets, passwords, or unmasked API keys
@@ -27,8 +27,8 @@ Observability has two parts: the **instrumentation** (in your app) and the **bac
 
 Instrumentation is automatic when using the standard packages:
 
-- **TypeScript APIs:** `progression-labs-development/fastify-api` includes OpenTelemetry tracing, metrics, and structured logging out of the box
-- **Python LLM services:** `progression-labs-development/llm` includes observability via Langfuse
+- **TypeScript APIs:** `progression-labs-dev/fastify-api` includes OpenTelemetry tracing, metrics, and structured logging out of the box
+- **Python LLM services:** `progression-labs-dev/llm` includes observability via Langfuse
 
 ### Required Log Fields
 
@@ -52,6 +52,6 @@ Instrumentation is automatic when using the standard packages:
 
 ### Observability Backend
 
-The `progression-labs-development/monitoring` repo deploys and manages the SigNoz stack (the backend that receives and visualizes telemetry data). This is infrastructure — not an application-level library.
+The `progression-labs-dev/monitoring` repo deploys and manages the SigNoz stack (the backend that receives and visualizes telemetry data). This is infrastructure — not an application-level library.
 
-Refer to [progression-labs-development/monitoring](https://github.com/progression-labs-development/monitoring) for infrastructure setup and [progression-labs-development/fastify-api](https://github.com/progression-labs-development/fastify-api) for instrumentation details.
+Refer to [progression-labs-dev/monitoring](https://github.com/progression-labs-dev/monitoring) for infrastructure setup and [progression-labs-dev/fastify-api](https://github.com/progression-labs-dev/fastify-api) for instrumentation details.

@@ -3,10 +3,17 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v1.1.0 (2026-10-15)
+
+- The production templates use conform's new names for the two coverage
+  checks: `code.coverage_measured` (was `code.coverage_run`) and
+  `process.coverage_configured` (was `process.coverage`). conform still reads
+  the old names, so a repository on either tag passes or fails exactly as
+  before, whichever spelling its own `standards.toml` uses.
+
 ## standards-v1.0.0 (2026-10-15)
 
 The first tag. Nothing extended the old rulesets, so no repository breaks.
-
 
 - Nine templates replace the twelve old rulesets: `typescript`,
   `typescript-react` and `python`, each at prototype, internal and production.

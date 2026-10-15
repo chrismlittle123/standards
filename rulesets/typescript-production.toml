@@ -61,7 +61,7 @@ folder_case = "kebab-case"
 # Production's floor: the suite runs and line coverage must reach 80%. A repo
 # measured under it writes its real number here locally, with a comment saying
 # it ratchets back up.
-[code.coverage_run]
+[code.coverage_measured]
 enabled = true
 min_threshold = 80
 
@@ -76,7 +76,7 @@ base_branch = "main"
 # The runner's own config (vitest, jest or nyc) keeps coverage thresholds, so
 # nobody quietly deletes them. TypeScript only: conform cannot read a pytest
 # threshold, and there is no CI to enforce one in.
-[process.coverage]
+[process.coverage_configured]
 enabled = true
 enforce_in = "config"
 

@@ -43,9 +43,9 @@ rulesets = ["typescript-production"]
 min_threshold = 64
 ```
 
-`standards-v1.1.0` needs a conform newer than 0.5.4, which rejects its renamed
-coverage checks; on conform 0.5.4, pin `standards-v1.0.0` and write
-`[code.coverage_run]`.
+`standards-v1.1.0` and later need conform 1.0.0 or later (`conform-v1.0.0`),
+since 0.5.4 rejects their renamed coverage checks; on conform 0.5.4, pin
+`standards-v1.0.0` and write `[code.coverage_run]`.
 
 Always pin a tag, never a branch: a template change then reaches a repository
 only when that repository moves its pin, and the pin is the record of which

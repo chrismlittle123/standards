@@ -33,7 +33,7 @@ folder_case = "snake_case"
 # Production's floor: the suite runs and line coverage must reach 80%. A repo
 # measured under it writes its real number here locally, with a comment saying
 # it ratchets back up.
-[code.coverage_run]
+[code.coverage_measured]
 enabled = true
 min_threshold = 80
 

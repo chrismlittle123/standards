@@ -3,6 +3,13 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v1.1.2 (2026-10-15)
+
+Docs only; nothing checked changes.
+
+- The README names the conform that `standards-v1.1.0` and later need:
+  1.0.0, now released.
+
 ## standards-v1.1.1 (2026-10-15)
 
 Comments and docs only; nothing checked changes.

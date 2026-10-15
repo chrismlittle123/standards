@@ -1,35 +1,26 @@
+# standards - internal. The registry itself: nine ruleset templates, no
+# guidelines and no hooks folder. No TypeScript and no Python, so no language
+# ruleset applies and it names none.
 [metadata]
 tier = "internal"
+project = "standards"
 
-[extends]
-registry = "github:progression-labs-dev/standards"
-rulesets = ["base-internal"]
+[code.security.secrets]
+enabled = true
+scan_mode = "branch"
+base_branch = "main"
 
-[process.hooks]
-enabled = false
+[process.forbidden_files]
+enabled = true
+scope = "git"
+files = ["**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/id_rsa*"]
+ignore = ["**/.env.example", "**/*.pub"]
 
-[process.branches]
-enabled = false
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+max_subject_length = 100
 
 [process.docs]
 enabled = true
-allowlist = [
-  "README.md",
-  "CLAUDE.md",
-  "guidelines/auth.md",
-  "guidelines/backend-deployment.md",
-  "guidelines/ci-cd.md",
-  "guidelines/conventions.md",
-  "guidelines/data-engineering.md",
-  "guidelines/database.md",
-  "guidelines/frontend.md",
-  "guidelines/llm.md",
-  "guidelines/monorepo.md",
-  "guidelines/observability.md",
-  "guidelines/python.md",
-  "guidelines/repository.md",
-  "guidelines/rest-apis.md",
-  "guidelines/secrets.md",
-  "guidelines/testing.md",
-  "guidelines/typescript.md",
-]
+allowlist = ["README.md", "CLAUDE.md", "CHANGELOG.md"]

@@ -1,0 +1,78 @@
+# TypeScript React - Internal
+# Prototype, plus the checks that stop a repo rotting quietly, which are the
+# ones that cannot be satisfied without doing the work.
+#
+# A repo with its own commit prefixes adds them to types.
+
+[code.linting.eslint]
+enabled = true
+max-warnings = 0
+ignore = ["**/dist/**", "**/build/**", "**/node_modules/**", "**/coverage/**"]
+
+# Prototype's two, plus the effect and ref rules. Deliberately no
+# react-refresh rules: those are specific to Vite's fast refresh and are wrong
+# in a Next.js app, so they stay in the repos that use Vite.
+[code.linting.eslint.rules]
+"react-hooks/rules-of-hooks" = "error"
+"react-hooks/exhaustive-deps" = "error"
+"react-hooks/set-state-in-effect" = "error"
+"react-hooks/refs" = "error"
+
+[code.types.tsc]
+enabled = true
+
+[code.types.tsc.require]
+strict = true
+noUnusedLocals = true
+noUnusedParameters = true
+noImplicitReturns = true
+noFallthroughCasesInSwitch = true
+esModuleInterop = true
+forceConsistentCasingInFileNames = true
+
+[code.unused.knip]
+enabled = true
+
+# No budget on purpose: a repo paying down existing suppressions sets its own
+# `max` locally and lowers it as they go.
+[code.quality.disable-comments]
+enabled = true
+extensions = ["ts", "tsx", "js", "mjs"]
+
+# File and folder names: kebab-case for code. Only these extensions are judged,
+# so README.md, CLAUDE.md, configs and scripts are never checked, and a folder
+# is judged only when it holds a file a rule matched.
+[code.naming]
+enabled = true
+
+[[code.naming.rules]]
+extensions = ["ts", "tsx", "js", "jsx", "mjs", "cjs"]
+file_case = "kebab-case"
+folder_case = "kebab-case"
+allow_dynamic_routes = true
+
+[code.security.secrets]
+enabled = true
+scan_mode = "branch"
+base_branch = "main"
+
+[process.forbidden_files]
+enabled = true
+scope = "git"
+files = [
+  "**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*",
+  "coverage/**", "dist/**", "build/**", "**/*.tsbuildinfo",
+]
+ignore = ["**/node_modules/**", "**/.env.example", "**/*.pub"]
+message = "Credentials belong in the environment and build output in .gitignore."
+
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100
+
+[process.branches]
+enabled = true
+pattern = "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release|session)/[a-z0-9][a-z0-9._-]*$"
+exclude = ["main"]

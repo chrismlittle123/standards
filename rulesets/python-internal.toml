@@ -1,12 +1,11 @@
 # Python - Internal
-# Moderate checks for internal tools and services
+# Prototype, plus types, dead code and no silencing a check instead of fixing
+# it.
+#
+# A repo with its own commit prefixes adds them to types.
 
 [code.linting.ruff]
 enabled = true
-
-[code.linting.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM"]
-ignore = ["E501"]
 
 [code.types.ty]
 enabled = true
@@ -14,23 +13,13 @@ enabled = true
 [code.unused.vulture]
 enabled = true
 
-# =============================================================================
-# Security
-# =============================================================================
-
-[code.security.secrets]
+[code.quality.disable-comments]
 enabled = true
+extensions = ["py"]
 
-[code.security.pipaudit]
-enabled = true
-
-[code.security.dotenv]
-enabled = true
-
-# =============================================================================
-# Naming Conventions
-# =============================================================================
-
+# File and folder names: snake_case, because a module with a hyphen cannot be
+# imported. Names starting with an underscore (__init__.py, _private.py) are
+# skipped by conform, and only .py files are judged.
 [code.naming]
 enabled = true
 
@@ -39,37 +28,28 @@ extensions = ["py"]
 file_case = "snake_case"
 folder_case = "snake_case"
 
-# =============================================================================
-# Dependencies
-# =============================================================================
-
-[code.dependencies]
+[code.security.secrets]
 enabled = true
-forbidden_lockfiles = ["requirements.txt", "Pipfile", "Pipfile.lock", "poetry.lock"]
+scan_mode = "branch"
+base_branch = "main"
 
-# =============================================================================
-# Imports
-# =============================================================================
-
-[code.imports]
+[process.forbidden_files]
 enabled = true
+scope = "git"
+files = [
+  "**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*",
+  "**/__pycache__/**", "**/*.egg-info/**", "coverage/**", ".coverage",
+]
+ignore = ["**/.venv/**", "**/.env.example", "**/*.pub"]
+message = "Credentials belong in the environment and build output in .gitignore."
 
-[[code.imports.blocked]]
-modules = ["openai", "anthropic", "langfuse"]
-message = "Use progression-labs-dev/llm"
-
-# =============================================================================
-# Testing
-# =============================================================================
-
-[code.testing]
+[process.commits]
 enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100
 
-# =============================================================================
-# Coverage
-# =============================================================================
-
-[code.coverage_run]
+[process.branches]
 enabled = true
-min_threshold = 80
-runner = "pytest"
+pattern = "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release|session)/[a-z0-9][a-z0-9._-]*$"
+exclude = ["main"]

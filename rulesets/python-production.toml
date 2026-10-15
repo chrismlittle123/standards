@@ -1,12 +1,10 @@
 # Python - Production
-# Strict checks for production-grade code
+# Internal, plus the dependencies audited. Coverage has an 80% floor.
+#
+# A repo with its own commit prefixes adds them to types.
 
 [code.linting.ruff]
 enabled = true
-
-[code.linting.ruff.lint]
-select = ["E", "F", "I", "UP", "B", "SIM", "C4", "RUF"]
-ignore = ["E501"]
 
 [code.types.ty]
 enabled = true
@@ -14,23 +12,16 @@ enabled = true
 [code.unused.vulture]
 enabled = true
 
-# =============================================================================
-# Security
-# =============================================================================
-
-[code.security.secrets]
+[code.quality.disable-comments]
 enabled = true
+extensions = ["py"]
 
 [code.security.pipaudit]
 enabled = true
 
-[code.security.dotenv]
-enabled = true
-
-# =============================================================================
-# Naming Conventions
-# =============================================================================
-
+# File and folder names: snake_case, because a module with a hyphen cannot be
+# imported. Names starting with an underscore (__init__.py, _private.py) are
+# skipped by conform, and only .py files are judged.
 [code.naming]
 enabled = true
 
@@ -39,37 +30,35 @@ extensions = ["py"]
 file_case = "snake_case"
 folder_case = "snake_case"
 
-# =============================================================================
-# Dependencies
-# =============================================================================
-
-[code.dependencies]
-enabled = true
-forbidden_lockfiles = ["requirements.txt", "Pipfile", "Pipfile.lock", "poetry.lock"]
-
-# =============================================================================
-# Imports
-# =============================================================================
-
-[code.imports]
-enabled = true
-
-[[code.imports.blocked]]
-modules = ["openai", "anthropic", "langfuse"]
-message = "Use progression-labs-dev/llm"
-
-# =============================================================================
-# Testing
-# =============================================================================
-
-[code.testing]
-enabled = true
-
-# =============================================================================
-# Coverage
-# =============================================================================
-
+# Production's floor: the suite runs and line coverage must reach 80%. A repo
+# measured under it writes its real number here locally, with a comment saying
+# it ratchets back up.
 [code.coverage_run]
 enabled = true
 min_threshold = 80
-runner = "pytest"
+
+[code.security.secrets]
+enabled = true
+scan_mode = "branch"
+base_branch = "main"
+
+[process.forbidden_files]
+enabled = true
+scope = "git"
+files = [
+  "**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*",
+  "**/__pycache__/**", "**/*.egg-info/**", "coverage/**", ".coverage",
+]
+ignore = ["**/.venv/**", "**/.env.example", "**/*.pub"]
+message = "Credentials belong in the environment and build output in .gitignore."
+
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100
+
+[process.branches]
+enabled = true
+pattern = "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release|session)/[a-z0-9][a-z0-9._-]*$"
+exclude = ["main"]

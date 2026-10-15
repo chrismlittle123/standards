@@ -1,0 +1,50 @@
+# TypeScript React - Prototype
+# The plain TypeScript prototype template, for a React app.
+#
+# Named for React rather than for "frontend" because every rule it adds is a
+# React rule. A browser project that is not React (an Astro site, a plain HTML
+# page) takes the plain typescript template instead.
+
+[code.linting.eslint]
+enabled = true
+max-warnings = 0
+ignore = ["**/dist/**", "**/build/**", "**/node_modules/**", "**/coverage/**"]
+
+# What makes this a frontend template rather than the plain TypeScript one: a
+# pinned list of React rules. These two are the floor. rules-of-hooks catches a
+# hook called conditionally, which is a crash rather than a style problem, and
+# exhaustive-deps catches the stale-closure bug that every React codebase grows.
+# Needs eslint-plugin-react-hooks installed.
+[code.linting.eslint.rules]
+"react-hooks/rules-of-hooks" = "error"
+"react-hooks/exhaustive-deps" = "error"
+
+[code.types.tsc]
+enabled = true
+
+[code.types.tsc.require]
+strict = true
+
+# File and folder names: kebab-case for code. Only these extensions are judged,
+# so README.md, CLAUDE.md, configs and scripts are never checked, and a folder
+# is judged only when it holds a file a rule matched.
+[code.naming]
+enabled = true
+
+[[code.naming.rules]]
+extensions = ["ts", "tsx", "js", "jsx", "mjs", "cjs"]
+file_case = "kebab-case"
+folder_case = "kebab-case"
+allow_dynamic_routes = true
+
+[code.security.secrets]
+enabled = true
+scan_mode = "branch"
+base_branch = "main"
+
+[process.forbidden_files]
+enabled = true
+scope = "git"
+files = ["**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*"]
+ignore = ["**/node_modules/**", "**/.env.example", "**/*.pub"]
+message = "Credentials belong in the environment, not in the repository."

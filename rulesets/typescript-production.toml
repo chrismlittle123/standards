@@ -1,152 +1,102 @@
 # TypeScript - Production
-# Strict checks for production-grade code
-
-# =============================================================================
-# ESLint
-# =============================================================================
+# Internal, plus a pinned list of rules nobody can quietly downgrade, one more
+# compiler flag, an 80% coverage floor and the dependencies audited.
+#
+# A repo with its own commit prefixes adds them to types.
 
 [code.linting.eslint]
 enabled = true
-ignore = ["**/dist/**", "**/node_modules/**", "**/build/**"]
 max-warnings = 0
-
-[code.linting.eslint.rules]
-
-# Code quality limits
-"max-depth" = { severity = "error", max = 4 }
-"max-params" = { severity = "error", max = 4 }
-"max-lines-per-function" = { severity = "error", max = 100 }
-"max-lines" = { severity = "error", max = 400 }
-"complexity" = "error"
-"no-console" = { severity = "error", allow = ["error", "warn"] }
-
-# Core ESLint - Best practices
-"eqeqeq" = "error"
-"prefer-const" = "error"
-"no-var" = "error"
-
-# Core ESLint - Security
-"no-eval" = "error"
-"no-implied-eval" = "error"
-
-# Core ESLint - Bug prevention
-"array-callback-return" = "error"
-"no-template-curly-in-string" = "error"
-"consistent-return" = "error"
-
-# Import plugin
-"import/no-cycle" = { severity = "error", maxDepth = 2 }
-
-# TypeScript-ESLint - Type safety
-"@typescript-eslint/no-unused-vars" = { severity = "error", argsIgnorePattern = "^_", varsIgnorePattern = "^_" }
-"@typescript-eslint/no-explicit-any" = "error"
-"@typescript-eslint/no-non-null-assertion" = "error"
-"@typescript-eslint/no-unnecessary-condition" = "error"
-"@typescript-eslint/no-unsafe-assignment" = "error"
-"@typescript-eslint/no-unsafe-call" = "error"
-"@typescript-eslint/no-unsafe-member-access" = "error"
-"@typescript-eslint/no-unsafe-return" = "error"
-
-# TypeScript-ESLint - Async/Promise safety
-"@typescript-eslint/no-floating-promises" = "error"
-"@typescript-eslint/no-misused-promises" = "error"
-"@typescript-eslint/await-thenable" = "error"
-
-# TypeScript-ESLint - Exhaustiveness
-"@typescript-eslint/switch-exhaustiveness-check" = "error"
-
-# =============================================================================
-# TypeScript Compiler
-# =============================================================================
+ignore = ["**/dist/**", "**/build/**", "**/node_modules/**", "**/coverage/**"]
 
 [code.types.tsc]
 enabled = true
 
 [code.types.tsc.require]
 strict = true
-noImplicitAny = true
-strictNullChecks = true
 noUnusedLocals = true
+noUnusedParameters = true
 noImplicitReturns = true
 noFallthroughCasesInSwitch = true
 esModuleInterop = true
-skipLibCheck = true
 forceConsistentCasingInFileNames = true
+exactOptionalPropertyTypes = true
 
-# =============================================================================
-# Security
-# =============================================================================
-
-[code.security.secrets]
-enabled = true
-
-[code.security.pnpmaudit]
-enabled = true
-
-[code.security.dotenv]
-enabled = true
-
-# =============================================================================
-# Dead Code Detection
-# =============================================================================
+# Short on purpose, and all correctness rather than style: every one catches a
+# bug that ships. Style limits (max-lines, complexity) are left out because the
+# cheapest way to satisfy them is to split a file badly.
+[code.linting.eslint.rules]
+"@typescript-eslint/no-floating-promises" = "error"
+"@typescript-eslint/no-misused-promises" = "error"
+"@typescript-eslint/await-thenable" = "error"
+"@typescript-eslint/no-for-in-array" = "error"
+"@typescript-eslint/no-unnecessary-type-assertion" = "error"
+"@typescript-eslint/no-base-to-string" = "error"
+"@typescript-eslint/no-explicit-any" = "error"
+"eqeqeq" = "error"
+"no-var" = "error"
+"prefer-const" = "error"
+"no-eval" = "error"
 
 [code.unused.knip]
 enabled = true
 
-# =============================================================================
-# Naming Conventions
-# =============================================================================
+# No budget on purpose: a repo paying down existing suppressions sets its own
+# `max` locally and lowers it as they go.
+[code.quality.disable-comments]
+enabled = true
+extensions = ["ts", "tsx", "js", "mjs"]
 
+# File and folder names: kebab-case for code. Only these extensions are judged,
+# so README.md, CLAUDE.md, configs and scripts are never checked, and a folder
+# is judged only when it holds a file a rule matched.
 [code.naming]
 enabled = true
 
 [[code.naming.rules]]
-extensions = ["ts"]
+extensions = ["ts", "tsx", "js", "jsx", "mjs", "cjs"]
 file_case = "kebab-case"
 folder_case = "kebab-case"
 
-[[code.naming.rules]]
-extensions = ["tsx"]
-file_case = "kebab-case"
-folder_case = "kebab-case"
-
-# =============================================================================
-# Disable Comments Detection
-# =============================================================================
-
-[code.quality.disable-comments]
-enabled = true
-
-# =============================================================================
-# Dependencies
-# =============================================================================
-
-[code.dependencies]
-enabled = true
-forbidden_lockfiles = ["yarn.lock", "package-lock.json"]
-
-# =============================================================================
-# Imports
-# =============================================================================
-
-[code.imports]
-enabled = true
-
-[[code.imports.blocked]]
-modules = ["node-fetch", "axios", "request"]
-message = "Use built-in fetch"
-
-# =============================================================================
-# Testing
-# =============================================================================
-
-[code.testing]
-enabled = true
-
-# =============================================================================
-# Coverage
-# =============================================================================
-
+# Production's floor: the suite runs and line coverage must reach 80%. A repo
+# measured under it writes its real number here locally, with a comment saying
+# it ratchets back up.
 [code.coverage_run]
 enabled = true
 min_threshold = 80
+
+[code.security.pnpmaudit]
+enabled = true
+
+[code.security.secrets]
+enabled = true
+scan_mode = "branch"
+base_branch = "main"
+
+# The runner's own config (vitest, jest or nyc) keeps coverage thresholds, so
+# nobody quietly deletes them. TypeScript only: conform cannot read a pytest
+# threshold, and there is no CI to enforce one in.
+[process.coverage]
+enabled = true
+enforce_in = "config"
+
+[process.forbidden_files]
+enabled = true
+scope = "git"
+files = [
+  "**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*",
+  "coverage/**", "dist/**", "build/**", "**/*.tsbuildinfo",
+]
+ignore = ["**/node_modules/**", "**/.env.example", "**/*.pub"]
+message = "Credentials belong in the environment and build output in .gitignore."
+
+[process.commits]
+enabled = true
+types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
+require_scope = false
+max_subject_length = 100
+
+[process.branches]
+enabled = true
+pattern = "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release|session)/[a-z0-9][a-z0-9._-]*$"
+exclude = ["main"]

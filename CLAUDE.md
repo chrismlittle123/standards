@@ -1,50 +1,30 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## What this is
 
-## Project Overview
-
-This is the central registry of coding standards, guidelines, and rulesets for Progression Labs. It is consumed by the `@progression-labs-dev/conform` MCP server, which dynamically composes relevant guidelines based on project context.
+The ruleset registry conform reads through a repository's `[extends]`: nine
+TOML templates in `rulesets/`, one per language (TypeScript, TypeScript and
+React, Python) and tier (prototype, internal, production). Nothing else lives
+here: no guidelines, no hooks, no code.
 
 ## Commands
 
 | Task | Command |
 |------|---------|
-| Validate rulesets | `npx @progression-labs-dev/conform validate registry` |
-| Validate guidelines | `npx @progression-labs-dev/conform validate guidelines ./guidelines` |
+| Validate the templates | `conform validate registry` (from standards-kit: `node packages/conform/dist/cli.js validate registry`) |
+| Check this repo | `conform check` |
 
-## Structure
+## Rules for changing a template
 
-```
-guidelines/    # Markdown guideline documents
-rulesets/      # TOML ruleset definitions (e.g., typescript-production.toml)
-```
-
-### Guidelines
-
-Markdown files in `guidelines/` with YAML frontmatter. Required frontmatter fields:
-- `id` — kebab-case identifier (must match `^[a-z][a-z0-9-]*$`)
-- `title` — display name
-- `category` — one of: `security`, `architecture`, `infrastructure`, `operations`, `data`, `reliability`
-- `priority` — integer >= 1 (lower = higher priority, controls sort order)
-- `tags` — array of kebab-case strings used by the MCP server for context matching
-
-### Rulesets
-
-TOML files in `rulesets/` defining tool configurations at different strictness tiers (production/internal/prototype) for TypeScript and Python. The TOML structure uses nested sections (e.g., `[code.linting.eslint.rules]`).
+- A template cannot extend another template, so each one is standalone and
+  repeats what the tier below it has.
+- Every change gets a `CHANGELOG.md` line and a tag, `standards-vX.Y.Z`.
+  Major when a repository that passed can now fail, minor for a new template or
+  a loosening, patch for comments only. The changelog names which repositories
+  a major will break.
+- Never move a tag that exists. Repositories pin tags and move their own pin.
+- Validate all nine before tagging.
 
 ## Workflow
 
-- This is a library repo — create feature branches from `main`
-- Use conventional commits (`feat:`, `fix:`, `chore:`, etc.)
-
-## MCP Tools
-
-Use these to query the standards registry at any time:
-
-| Tool | Purpose |
-|------|---------|
-| `get_standards` | Get guidelines matching a context string (e.g., `typescript fastapi`) |
-| `list_guidelines` | List all available guidelines with metadata |
-| `get_guideline` | Get a specific guideline by ID |
-| `get_ruleset` | Get a ruleset by ID (e.g., `typescript-production`) |
+- Conventional commits (`feat:`, `fix:`, `chore:`, `docs:`, ...).

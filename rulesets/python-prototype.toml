@@ -1,27 +1,29 @@
 # Python - Prototype
-# Relaxed checks for rapid prototyping
+# Nothing is lost if this repo breaks, but a leaked key costs the same here as
+# anywhere. So: it must lint, and nothing secret is committed.
 
 [code.linting.ruff]
 enabled = true
 
-[code.linting.ruff.lint]
-select = ["E", "F"]
-ignore = ["E501", "F401", "F841"]
+# File and folder names: snake_case, because a module with a hyphen cannot be
+# imported. Names starting with an underscore (__init__.py, _private.py) are
+# skipped by conform, and only .py files are judged.
+[code.naming]
+enabled = true
 
-# =============================================================================
-# Security
-# =============================================================================
+[[code.naming.rules]]
+extensions = ["py"]
+file_case = "snake_case"
+folder_case = "snake_case"
 
 [code.security.secrets]
 enabled = true
+scan_mode = "branch"
+base_branch = "main"
 
-[code.security.dotenv]
+[process.forbidden_files]
 enabled = true
-
-# =============================================================================
-# Dependencies
-# =============================================================================
-
-[code.dependencies]
-enabled = true
-forbidden_lockfiles = ["requirements.txt", "Pipfile", "Pipfile.lock", "poetry.lock"]
+scope = "git"
+files = ["**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*"]
+ignore = ["**/.venv/**", "**/.env.example", "**/*.pub"]
+message = "Credentials belong in the environment, not in the repository."

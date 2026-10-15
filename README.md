@@ -19,12 +19,13 @@ One per language and tier. A repository names exactly one.
 - **internal**: prototype, plus the checks that stop a repository rotting
   quietly: unused code, no silenced checks, stricter compiler flags,
   conventional commits and branch names.
-- **production**: internal, plus pinned correctness rules, an 80% line
-  coverage floor and a dependency audit.
+- **production**: internal, plus an 80% line coverage floor and a dependency
+  audit, and for TypeScript pinned correctness rules.
 
-The React templates differ from the plain TypeScript ones only by React rules
-(hooks, and accessibility at production). A browser project that is not React
-takes the plain template.
+The React templates differ from the plain TypeScript ones by React rules
+(hooks, and accessibility at production) and by allowing dynamic route folder
+names such as `[id]` and `(group)`. A browser project that is not React takes
+the plain template.
 
 ## Using one
 
@@ -33,14 +34,18 @@ takes the plain template.
 tier = "production"
 
 [extends]
-registry = "github:chrismlittle123/standards@standards-v1.0.0"
+registry = "github:chrismlittle123/standards@standards-v1.1.0"
 rulesets = ["typescript-production"]
 
 # Anything below overrides what the template set. Tables merge key by key;
 # an array replaces the template's whole.
-[code.coverage_run]
+[code.coverage_measured]
 min_threshold = 64
 ```
+
+`standards-v1.1.0` needs a conform newer than 0.5.4, which rejects its renamed
+coverage checks; on conform 0.5.4, pin `standards-v1.0.0` and write
+`[code.coverage_run]`.
 
 Always pin a tag, never a branch: a template change then reaches a repository
 only when that repository moves its pin, and the pin is the record of which
@@ -60,5 +65,8 @@ Tagged `standards-vX.Y.Z` for the whole registry, recorded in
 ```bash
 conform validate registry
 ```
+
+conform is not on npm. From a standards-kit checkout, run it as
+`node packages/conform/dist/cli.js validate registry` after `pnpm build`.
 
 Every template must pass before a tag is cut.

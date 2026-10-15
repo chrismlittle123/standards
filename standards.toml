@@ -1,5 +1,5 @@
 # standards - internal. The registry itself: nine ruleset templates, no
-# guidelines and no hooks folder. No TypeScript and no Python, so no language
+# guidelines and no git hooks. No TypeScript and no Python, so no language
 # ruleset applies and it names none.
 [metadata]
 tier = "internal"

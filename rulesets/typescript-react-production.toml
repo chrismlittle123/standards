@@ -23,9 +23,8 @@ forceConsistentCasingInFileNames = true
 exactOptionalPropertyTypes = true
 
 # The full react-hooks set, plus accessibility. The last five hooks rules come
-# from the compiler-aware plugin (version 7), which is what guitar already runs
-# with these promoted to error after being driven to zero. The jsx-a11y rules
-# need eslint-plugin-jsx-a11y installed; nothing has it yet.
+# from the compiler-aware plugin (version 7), promoted to error. The jsx-a11y
+# rules need eslint-plugin-jsx-a11y installed in the repository.
 #
 # Deliberately no react-refresh rules: Vite-specific, wrong in Next.js, so they
 # live in the repos that use Vite.
@@ -65,8 +64,10 @@ enabled = true
 extensions = ["ts", "tsx", "js", "mjs"]
 
 # File and folder names: kebab-case for code. Only these extensions are judged,
-# so README.md, CLAUDE.md, configs and scripts are never checked, and a folder
-# is judged only when it holds a file a rule matched.
+# so README.md, CLAUDE.md and JSON or YAML files are never checked. Scripts
+# in .js or .mjs are code and are judged like any other; a dotted config name
+# such as vite.config.ts passes. A folder is judged only when it holds a file a
+# rule matched.
 [code.naming]
 enabled = true
 

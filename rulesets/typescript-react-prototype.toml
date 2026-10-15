@@ -26,8 +26,10 @@ enabled = true
 strict = true
 
 # File and folder names: kebab-case for code. Only these extensions are judged,
-# so README.md, CLAUDE.md, configs and scripts are never checked, and a folder
-# is judged only when it holds a file a rule matched.
+# so README.md, CLAUDE.md and JSON or YAML files are never checked. Scripts
+# in .js or .mjs are code and are judged like any other; a dotted config name
+# such as vite.config.ts passes. A folder is judged only when it holds a file a
+# rule matched.
 [code.naming]
 enabled = true
 

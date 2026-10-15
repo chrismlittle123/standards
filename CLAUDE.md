@@ -5,7 +5,8 @@
 The ruleset registry conform reads through a repository's `[extends]`: nine
 TOML templates in `rulesets/`, one per language (TypeScript, TypeScript and
 React, Python) and tier (prototype, internal, production). Nothing else lives
-here: no guidelines, no hooks, no code.
+here: no guidelines, no git hooks, no code. `.claude/` holds only Claude Code's
+own settings.
 
 ## Commands
 

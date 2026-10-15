@@ -3,7 +3,10 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
-## Unreleased
+## standards-v1.0.0 (2026-10-15)
+
+The first tag. Nothing extended the old rulesets, so no repository breaks.
+
 
 - Nine templates replace the twelve old rulesets: `typescript`,
   `typescript-react` and `python`, each at prototype, internal and production.

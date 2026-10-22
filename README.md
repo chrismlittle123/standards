@@ -34,8 +34,8 @@ the plain template.
 tier = "production"
 
 [extends]
-registry = "github:chrismlittle123/standards@standards-v1.2.0"
-rulesets = ["typescript-production"]
+registry = "github:chrismlittle123/standards@standards-v1.2.1"
+ruleset = "typescript-production"
 
 # Anything below overrides what the template set. Tables merge key by key;
 # an array replaces the template's whole.
@@ -43,9 +43,9 @@ rulesets = ["typescript-production"]
 min_threshold = 64
 ```
 
-`standards-v1.1.0` and later need conform 1.0.0 or later (`conform-v1.0.0`),
-since 0.5.4 rejects their renamed coverage checks; on conform 0.5.4, pin
-`standards-v1.0.0` and write `[code.coverage_run]`.
+`standards-v1.1.0` and later need conform 1.0.0 or later. `ruleset = "x"`
+needs conform 2.0.0 (`conform-v2.0.0`); conform 2 still reads the older
+`rulesets = ["x"]` until 3.0.0.
 
 Always pin a tag, never a branch: a template change then reaches a repository
 only when that repository moves its pin, and the pin is the record of which
@@ -67,6 +67,6 @@ conform validate registry
 ```
 
 conform is not on npm. From a standards-kit checkout, run it as
-`node packages/conform/dist/cli.js validate registry` after `pnpm build`.
+`node dist/cli.js validate registry` after `pnpm build`.
 
 Every template must pass before a tag is cut.

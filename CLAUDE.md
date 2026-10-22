@@ -12,7 +12,7 @@ own settings.
 
 | Task | Command |
 |------|---------|
-| Validate the templates | `conform validate registry` (from standards-kit: `node packages/conform/dist/cli.js validate registry`) |
+| Validate the templates | `conform validate registry` (from standards-kit: `node dist/cli.js validate registry`) |
 | Check this repo | `conform check` |
 
 ## Rules for changing a template

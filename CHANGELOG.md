@@ -3,6 +3,14 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v1.2.1 (2026-10-22)
+
+Docs only; nothing checked changes.
+
+- The README uses conform 2.0.0's `ruleset = "x"` and its CLI path,
+  `dist/cli.js`. No template changes for conform 2.0.0: nothing in them is
+  rejected by it.
+
 ## standards-v1.2.0 (2026-10-22)
 
 A loosening: no repository that passed can now fail.

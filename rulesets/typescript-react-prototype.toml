@@ -31,9 +31,12 @@ strict = true
 enabled = true
 min_tokens = 100
 threshold = 5
+# Tests are code written to read alike, so they're left out: test files by
+# name anywhere, and the top-level test folders. A folder named tests deeper
+# in the source (a quiz's UI, say) is code like any other and is checked.
 ignore = [
-  "**/*.test.*", "**/*.spec.*", "**/test/**", "**/tests/**", "**/__tests__/**",
-  "**/e2e/**",
+  "**/*.test.*", "**/*.spec.*", "test/**", "tests/**", "e2e/**",
+  "**/__tests__/**",
 ]
 
 # File and folder names: kebab-case for code. Only these extensions are judged,

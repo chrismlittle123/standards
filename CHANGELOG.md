@@ -3,6 +3,16 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v3.0.0 (2026-10-22)
+
+Major: a repository that passed can now fail. Needs conform 2.1.2.
+
+- The TypeScript templates' duplication check leaves out test files by name
+  anywhere, and the top-level `test/`, `tests/` and `e2e/` folders, in place
+  of any folder named `tests` or `test` at any depth. A folder named tests
+  deeper in the source (guitar's quiz UI) is code and is now checked.
+- Breaks, until its clones are merged: guitar (37 clones).
+
 ## standards-v2.0.0 (2026-10-22)
 
 Major: a repository that passed can now fail. Needs conform 2.1.0 and jscpd as

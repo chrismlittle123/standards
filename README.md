@@ -2,7 +2,8 @@
 
 The ruleset registry for every repository under `chrismlittle123`: nine
 templates that a repository's `standards.toml` extends, checked by
-[conform](https://github.com/chrismlittle123/standards-kit).
+conform, the standards checker in the private `chrismlittle123/standards-kit`
+repository.
 
 ## The templates
 
@@ -17,8 +18,7 @@ One per language and tier. A repository names exactly one.
 - **prototype**: it lints, it compiles, nothing secret is committed, and files
   are named consistently. Nothing is lost if it breaks.
 - **internal**: prototype, plus the checks that stop a repository rotting
-  quietly: unused code, no silenced checks, stricter compiler flags,
-  conventional commits and branch names.
+  quietly: unused code, no silenced checks, stricter compiler flags.
 - **production**: internal, plus an 80% line coverage floor and a dependency
   audit, and for TypeScript pinned correctness rules.
 
@@ -34,7 +34,7 @@ the plain template.
 tier = "production"
 
 [extends]
-registry = "github:chrismlittle123/standards@standards-v1.1.0"
+registry = "github:chrismlittle123/standards@standards-v1.2.0"
 rulesets = ["typescript-production"]
 
 # Anything below overrides what the template set. Tables merge key by key;

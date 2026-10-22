@@ -1,20 +1,9 @@
-# Dependencies
-node_modules/
-
-# Build artifacts
-*.tsbuildinfo
-
 # Environment files
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
-# IDE
+# OS and editors
+.DS_Store
 .idea/
 .vscode/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db

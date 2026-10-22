@@ -1,8 +1,6 @@
 # TypeScript - Internal
 # Prototype, plus the checks that stop a repo rotting quietly, which are the
 # ones that cannot be satisfied without doing the work.
-#
-# A repo with its own commit prefixes adds them to types.
 
 [code.linting.eslint]
 enabled = true
@@ -57,14 +55,3 @@ files = [
 ]
 ignore = ["**/node_modules/**", "**/.env.example", "**/*.pub"]
 message = "Credentials belong in the environment and build output in .gitignore."
-
-[process.commits]
-enabled = true
-types = ["feat", "fix", "chore", "docs", "refactor", "test", "style", "perf", "ci", "build"]
-require_scope = false
-max_subject_length = 100
-
-[process.branches]
-enabled = true
-pattern = "^(feat|fix|chore|docs|refactor|test|style|perf|ci|build|hotfix|release|session)/[a-z0-9][a-z0-9._-]*$"
-exclude = ["main"]

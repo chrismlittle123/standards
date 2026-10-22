@@ -3,6 +3,20 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v2.0.0 (2026-10-22)
+
+Major: a repository that passed can now fail. Needs conform 2.1.0 and jscpd as
+a dev dependency.
+
+- The six TypeScript templates turn on `code.duplication.jscpd`, which finds
+  code written twice, outside the tests. production: every clone of 50 tokens
+  or more is a finding. internal: 100 tokens or more. prototype: 100 tokens or
+  more, allowed up to 5% of the code. No percentage at internal or
+  production: the only way to clear a clone is to merge the copies. The Python
+  templates don't change (jscpd needs Node).
+- Breaks, until their clones are merged: flaude (21 clones), guitar (196),
+  standards-kit (10).
+
 ## standards-v1.2.1 (2026-10-22)
 
 Docs only; nothing checked changes.

@@ -31,6 +31,16 @@ forceConsistentCasingInFileNames = true
 [code.unused.knip]
 enabled = true
 
+# Code written twice: every clone of 100 tokens or more outside the tests is a
+# finding. The only way to clear one is to merge the copies.
+[code.duplication.jscpd]
+enabled = true
+min_tokens = 100
+ignore = [
+  "**/*.test.*", "**/*.spec.*", "**/test/**", "**/tests/**", "**/__tests__/**",
+  "**/e2e/**",
+]
+
 # No budget on purpose: a repo paying down existing suppressions sets its own
 # `max` locally and lowers it as they go.
 [code.quality.disable-comments]

@@ -3,6 +3,16 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v1.2.0 (2026-10-22)
+
+A loosening: no repository that passed can now fail.
+
+- Branch names and commit messages leave the internal and production
+  templates (`process.branches`, `process.commits`). They belong to the coding
+  agent that makes them, not to a repository's standard (standards-kit's
+  decision D4). A repository that wants them names them in its own
+  `standards.toml`.
+
 ## standards-v1.1.2 (2026-10-15)
 
 Docs only; nothing checked changes.

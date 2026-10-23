@@ -16,6 +16,18 @@ extensions = ["py"]
 file_case = "snake_case"
 folder_case = "snake_case"
 
+# Code written twice, outside the tests: clones of 100 tokens or more are
+# allowed up to 5% of the code. Tests are code written to read alike, so
+# they're left out: test files by name anywhere, and the top-level test
+# folders.
+[code.duplication.jscpd]
+enabled = true
+min_tokens = 100
+threshold = 5
+ignore = [
+  "**/test_*.py", "**/*_test.py", "**/conftest.py", "test/**", "tests/**",
+]
+
 [code.security.secrets]
 enabled = true
 scan_mode = "branch"

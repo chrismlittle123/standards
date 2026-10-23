@@ -100,6 +100,14 @@ min_threshold = 80
 [code.security.pnpmaudit]
 enabled = true
 
+# Mutation testing: conform changes the code in small ways and runs the
+# tests against each change. The score is the share of changes the tests
+# catch, of those in code they run. 60 at production. A repo measured under
+# it writes its real number here locally, with a comment saying it ratchets.
+[code.mutation_score]
+enabled = true
+min_score = 60
+
 [code.security.secrets]
 enabled = true
 scan_mode = "branch"

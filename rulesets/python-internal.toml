@@ -26,6 +26,24 @@ extensions = ["py"]
 file_case = "snake_case"
 folder_case = "snake_case"
 
+# Code written twice, outside the tests. Every clone of 100 tokens or more
+# is a finding. Tests are code written to read alike, so they're left
+# out: test files by name anywhere, and the top-level test folders.
+[code.duplication.jscpd]
+enabled = true
+min_tokens = 100
+ignore = [
+  "**/test_*.py", "**/*_test.py", "**/conftest.py", "test/**", "tests/**",
+]
+
+# Mutation testing: conform changes the code in small ways and runs the
+# tests against each change. The score is the share of changes the tests
+# catch, of those in code they run. 40 at internal. A repo measured under it
+# writes its real number here locally, with a comment saying it ratchets.
+[code.mutation_score]
+enabled = true
+min_score = 40
+
 [code.security.secrets]
 enabled = true
 scan_mode = "branch"
@@ -36,7 +54,7 @@ enabled = true
 scope = "git"
 files = [
   "**/.env", "**/.env.*", "**/*.pem", "**/*.key", "**/*.p12", "**/id_rsa*",
-  "**/__pycache__/**", "**/*.egg-info/**", "coverage/**", ".coverage",
+  "**/__pycache__/**", "**/*.egg-info/**", "coverage/**", ".coverage", "mutants/**",
 ]
 ignore = ["**/.venv/**", "**/.env.example", "**/*.pub"]
 message = "Credentials belong in the environment and build output in .gitignore."

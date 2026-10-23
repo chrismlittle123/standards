@@ -3,6 +3,31 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v4.0.0 (2026-10-23)
+
+Major: a repository that passed can now fail. Needs conform 2.2.0.
+
+- The production and internal templates, TypeScript and Python, turn on
+  `code.mutation_score`, mutation testing. The tests run against small
+  changes to the code, and the score is the share they catch, of the changes
+  in code they run. production: 60. internal: 40. prototype: off. A
+  TypeScript repo adds `@stryker-mutator/core` and the runner for its vitest
+  or jest. A Python repo adds `mutmut`, puts `mutants/` in .gitignore, and
+  names `source_paths` in `[tool.mutmut]`. A repo with no tests turns the
+  check off in its own config, as it does coverage.
+- The Python templates turn on `code.duplication.jscpd`, which conform 2.2.0
+  runs from its own install. It's the same tiers as TypeScript: production,
+  every clone of 50 tokens or more; internal, 100 or more; prototype, 100 or
+  more, allowed up to 5% of the code. Test files and the top-level test
+  folders are left out. `mutants/` joins the Python production template's
+  forbidden files.
+- Breaks, until each is set up: every production and internal repo, until
+  the mutation tool is installed. After that:
+  - life-admin: 102 clones, and a score of about 54%.
+  - guitar: a test that reads the source fails in Stryker's sandbox.
+  - flaude: its code is in `server/`, so `mutate` must be set.
+  - my-site, cv-builder and personal-vault: no tests.
+
 ## standards-v3.0.0 (2026-10-22)
 
 Major: a repository that passed can now fail. Needs conform 2.1.2.

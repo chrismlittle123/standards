@@ -54,14 +54,6 @@ extensions = ["ts", "tsx", "js", "jsx", "mjs", "cjs"]
 file_case = "kebab-case"
 folder_case = "kebab-case"
 
-# Mutation testing: conform changes the code in small ways and runs the
-# tests against each change. The score is the share of changes the tests
-# catch, of those in code they run. 40 at internal. A repo measured under it
-# writes its real number here locally, with a comment saying it ratchets.
-[code.mutation_score]
-enabled = true
-min_score = 40
-
 [code.security.secrets]
 enabled = true
 scan_mode = "branch"

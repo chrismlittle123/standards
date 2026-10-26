@@ -3,6 +3,17 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v4.1.0 (2026-10-26)
+
+Minor: a loosening, so nothing that passed can fail.
+
+- The internal templates, TypeScript, TypeScript and React, and Python, turn
+  `code.mutation_score` off: mutation testing is for production only (60).
+  At internal it needed a tool and per-repo setup in every repository for a
+  weak signal at 40, and several internal repositories have no tests to run
+  it against. `mutants/` leaves the Python internal template's forbidden
+  files with it.
+
 ## standards-v4.0.0 (2026-10-23)
 
 Major: a repository that passed can now fail. Needs conform 2.2.0.

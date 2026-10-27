@@ -49,9 +49,13 @@ ignore = [
 # tests against each change. The score is the share of changes the tests
 # catch, of those in code they run. 60 at production. A repo measured under
 # it writes its real number here locally, with a comment saying it ratchets.
+# Only the code a branch changes against main is mutated, so a run costs
+# about what the change does; on main itself the check is skipped.
 [code.mutation_score]
 enabled = true
 min_score = 60
+scope = "changed"
+base_branch = "main"
 
 [code.security.secrets]
 enabled = true

@@ -100,13 +100,11 @@ min_threshold = 80
 [code.security.pnpmaudit]
 enabled = true
 
-# Mutation testing: conform changes the code in small ways and runs the
-# tests against each change. The score is the share of changes the tests
-# catch, of those in code they run. 60 at production. A repo measured under
-# it writes its real number here locally, with a comment saying it ratchets.
+# No mutation testing for a front end: most of its mutants change markup
+# or text no sensible test checks, and a run took hours. It's for back ends
+# (the TypeScript and Python production templates).
 [code.mutation_score]
-enabled = true
-min_score = 60
+enabled = false
 
 [code.security.secrets]
 enabled = true

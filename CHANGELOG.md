@@ -3,6 +3,22 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v5.0.0 (2026-10-27)
+
+Major: a repository that passed can now fail.
+
+- The TypeScript and Python production templates set `code.mutation_score`'s
+  `scope = "changed"`: only the code a branch changes against main is
+  mutated, and the score (still 60) is that code's. A run costs about what
+  the change does instead of hours, and on main the check is skipped. A
+  branch whose changed code scores under 60 now fails where the whole repo's
+  average carried it.
+- The TypeScript and React production template turns `code.mutation_score`
+  off: mutation testing is for back ends. pomelo's crm-web had 4,299
+  mutants, most of them markup, and a run of over 4 hours.
+- Breaks on moving the pin, if a branch's changed code scores under 60:
+  pomelo's back-end packages, standards-kit, flaude and life-admin.
+
 ## standards-v4.1.0 (2026-10-26)
 
 Minor: a loosening, so nothing that passed can fail.

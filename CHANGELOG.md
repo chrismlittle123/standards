@@ -3,6 +3,27 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v7.0.0 (2026-10-30)
+
+Major: a repository that passed can now fail.
+
+- The TypeScript and React production template pins the same size and
+  complexity rules as TypeScript production (`standards-v6.0.0`), with 150
+  lines a function instead of 80, since a component's markup is long without
+  being complex.
+- The Python production template adds C901 (complexity over 15), PLR0913
+  (more than 5 arguments) and PLR0915 (more than 50 statements) to the
+  repo's own ruff rules. Ruff has no rule for a file's length, and its
+  nesting rule is in preview only. Needs conform 2.6.0.
+- A repository over them sets its own higher limits in its standards.toml,
+  with a comment saying they ratchet down.
+- Breaks on moving the pin, counting source and not tests: guitar (about
+  180), pomelo's crm-web (50) and life-admin (69). flashcards and my-site
+  weren't measured.
+- Correction to `standards-v6.0.0`'s list: pomelo's TypeScript production
+  packages break on it too: packages/shared (72), apps/crm-api (47),
+  apps/knowledge-api (38) and infra (4).
+
 ## standards-v6.0.0 (2026-10-30)
 
 Major: a repository that passed can now fail.

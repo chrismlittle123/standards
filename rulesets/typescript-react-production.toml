@@ -51,6 +51,15 @@ exactOptionalPropertyTypes = true
 "jsx-a11y/anchor-is-valid" = "error"
 "jsx-a11y/aria-props" = "error"
 "jsx-a11y/role-has-required-aria-props" = "error"
+# Size and complexity, loose enough to catch only the outliers, as in the
+# TypeScript template, but 150 lines a function: a component's markup is
+# long without being complex. A repo over them sets its own higher `max`
+# locally, with a comment saying it ratchets down.
+"complexity" = { severity = "error", max = 15 }
+"max-depth" = { severity = "error", max = 4 }
+"max-params" = { severity = "error", max = 5 }
+"max-lines-per-function" = { severity = "error", max = 150, skipBlankLines = true, skipComments = true }
+"max-lines" = { severity = "error", max = 500, skipBlankLines = true, skipComments = true }
 
 [code.unused.knip]
 enabled = true

@@ -23,8 +23,9 @@ One per language and tier. A repository names exactly one.
   TypeScript no code written twice (clones of 100 tokens or more).
 - **production**: internal, plus an 80% line coverage floor, a mutation score
   of 60 (the share of small changes to the code its tests catch), a dependency
-  audit, and no clones of 50 tokens or more; for TypeScript, pinned
-  correctness rules.
+  audit, no clones of 50 tokens or more, and size and complexity limits
+  loose enough to catch only the outliers (complexity 15, 5 arguments);
+  for TypeScript, pinned correctness rules.
 
 The React templates differ from the plain TypeScript ones by React rules
 (hooks, and accessibility at production) and by allowing dynamic route folder

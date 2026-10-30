@@ -1,8 +1,19 @@
 # Python - Production
-# Internal, plus the dependencies audited. Coverage has an 80% floor.
+# Internal, plus the dependencies audited, and size and complexity limits.
+# Coverage has an 80% floor.
 
+# On top of the repo's own ruff rules: complexity over 15 (C901), more than 5
+# arguments (PLR0913) and more than 50 statements in a function (PLR0915),
+# loose enough to catch only the outliers, as in the TypeScript template.
+# A repo over them sets its own higher numbers here locally, with a comment
+# saying they ratchet down. Needs conform 2.6.0.
 [code.linting.ruff]
 enabled = true
+
+[code.linting.ruff.lint]
+extend-select = ["C901", "PLR0913", "PLR0915"]
+mccabe = { max-complexity = 15 }
+pylint = { max-args = 5, max-statements = 50 }
 
 [code.types.ty]
 enabled = true

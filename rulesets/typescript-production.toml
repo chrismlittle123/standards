@@ -1,6 +1,7 @@
 # TypeScript - Production
-# Internal, plus a pinned list of rules nobody can quietly downgrade, one more
-# compiler flag, an 80% coverage floor and the dependencies audited.
+# Internal, plus a pinned list of rules nobody can quietly downgrade, size and
+# complexity limits among them, one more compiler flag, an 80% coverage floor
+# and the dependencies audited.
 
 [code.linting.eslint]
 enabled = true
@@ -20,9 +21,12 @@ esModuleInterop = true
 forceConsistentCasingInFileNames = true
 exactOptionalPropertyTypes = true
 
-# Short on purpose, and all correctness rather than style: every one catches a
-# bug that ships. Style limits (max-lines, complexity) are left out because the
-# cheapest way to satisfy them is to split a file badly.
+# Short on purpose. The first eleven are correctness: every one catches a bug
+# that ships. The last five are size and complexity limits, set loose enough
+# to catch only the outliers (a function of 80 lines, a file of 500), because
+# the cheapest way to satisfy a tight one is to split code badly. A repo over
+# them sets its own higher `max` here locally, with a comment saying it
+# ratchets down, as with coverage.
 [code.linting.eslint.rules]
 "@typescript-eslint/no-floating-promises" = "error"
 "@typescript-eslint/no-misused-promises" = "error"
@@ -35,6 +39,11 @@ exactOptionalPropertyTypes = true
 "no-var" = "error"
 "prefer-const" = "error"
 "no-eval" = "error"
+"complexity" = { severity = "error", max = 15 }
+"max-depth" = { severity = "error", max = 4 }
+"max-params" = { severity = "error", max = 5 }
+"max-lines-per-function" = { severity = "error", max = 80, skipBlankLines = true, skipComments = true }
+"max-lines" = { severity = "error", max = 500, skipBlankLines = true, skipComments = true }
 
 [code.unused.knip]
 enabled = true

@@ -3,6 +3,22 @@
 Every tag of the registry, newest first. A major version names the
 repositories it will break.
 
+## standards-v6.0.0 (2026-10-30)
+
+Major: a repository that passed can now fail.
+
+- The TypeScript production template pins five size and complexity rules,
+  loose enough to catch only the outliers: `complexity` 15, `max-depth` 4,
+  `max-params` 5, `max-lines-per-function` 80 and `max-lines` 500 (both
+  counting neither blank lines nor comments). The repository's ESLint config
+  must set each with exactly these options, and the code must pass them.
+- A repository over them sets its own higher `max` under
+  `[code.linting.eslint.rules]` in its standards.toml, with a comment saying
+  it ratchets down.
+- Breaks on moving the pin: standards-kit (8 findings, fixed with the pin)
+  and flaude (about 190 across its source and tests). band-website was not
+  measured.
+
 ## standards-v5.0.0 (2026-10-27)
 
 Major: a repository that passed can now fail.
